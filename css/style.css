@@ -1,0 +1,136 @@
+body{font-size:14px;font-family:'微软雅黑',"宋体","Arial Narrow",Helvetica,sans-serif;color:#191f25;line-height:1.2;text-align:left;}
+.clearfix:after{visibility:hidden;display: block;font-size:0;content:" ";clear:both;height:0;}
+a{color:rgba(25,31,37,0.72);text-decoration:none;}
+.fl{float:left;}
+.fr{float:right;}
+h1,h2,h3,h4{padding:0;margin:0;font-weight: normal}
+.list-block{
+    font-size:0.7rem;
+    margin:0;
+}
+.content-block{
+    margin:1rem 0;
+}
+.list-block .item-inner:after{
+    height:2px;
+}
+/*lists*/
+.weui-navbar{
+    position: fixed;
+}
+.lists{
+
+}
+.list-block .lists li{
+    position: relative;
+    padding: 15px 15px 15px 55px;
+    border-bottom:1px solid #f7f7f7;
+}
+.list-block .lists li i{
+    position: absolute;
+    left:18px;
+    top:30px;
+}
+.list-block .lists li time{
+    color:#999;
+}
+.listsInfo h4{
+    color:#0668b3;
+    font-size:14px;
+    margin-bottom:10px;
+}
+/*tab*/
+.buttons-row,.buttons-tab {
+    -webkit-align-self: center;
+    align-self: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-lines: single;
+    -moz-box-lines: single;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap
+}
+.buttons-tab {
+    background: #fff;
+    position: relative
+}
+
+.buttons-tab:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: auto;
+    top: auto;
+    height: 1px;
+    width: 100%;
+    background-color: #d0d0d0;
+    display: block;
+    z-index: 15;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio:2) {
+    .buttons-tab:after {
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5)
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio:3) {
+    .buttons-tab:after {
+        -webkit-transform: scaleY(.33);
+        transform: scaleY(.33)
+    }
+}
+
+.buttons-tab .button {
+    color: #5f646e;
+    font-size: .8rem;
+    width: 100%;
+    height: 2rem;
+    line-height: 2rem;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0
+}
+
+.button {
+    border: 1px solid #0894ec;
+    color: #0894ec;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    border-radius: .25rem;
+    line-height: 1.25rem;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    background: 0 0;
+    padding: 0 .5rem;
+    margin: 0;
+    height: 1.35rem;
+    white-space: nowrap;
+    position: relative;
+    text-overflow: ellipsis;
+    font-size: .7rem;
+    font-family: inherit;
+    cursor: pointer
+}
+.buttons-tab .button.active {
+    color: #0894ec;
+    border-color: #0894ec;
+    z-index: 100
+}
+
+.buttons-fixed {
+    position: fixed;
+    z-index: 99;
+    width: 100%
+}
