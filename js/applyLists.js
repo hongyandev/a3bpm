@@ -10,7 +10,7 @@ $(function(){
 function getData() {
     $.ajax({
         type:'post',
-        url:'http://172.30.8.95:9999/bpm/tzgg/sydb',
+        url: Global.baseUrl + '/bpm/tzgg/sydb',
         contentType:'application/json',
         data:JSON.stringify({"DanWeiBH":"GLZZ201905240001","YongHuBH":"XTYH201905300002","PageRow":1}),
         success:function (res) {

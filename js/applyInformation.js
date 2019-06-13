@@ -20,7 +20,7 @@ $(function () {
 
     $.ajax({
         type:'post',
-        url:'http://172.30.8.95:9999/bpm/dbsp/detail',
+        url: Global.baseUrl + '/bpm/dbsp/detail',
         contentType:'application/json',
         data:JSON.stringify({"BianHao":theRequest.BianHao,"RenWuID": "", "LiuChengId":theRequest.LiuChengId,"DangQianJD": ""}),
         success:function (res) {
