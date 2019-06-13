@@ -326,7 +326,7 @@ a:active {
     text-transform: uppercase;
     line-height: 1;
     color: #6d6d72;
-    margin: 1.75rem .75rem .5rem
+    margin: 1rem .75rem .5rem
 }
 
 .content-block-title+.card,.content-block-title+.content-block,.content-block-title+.list-block {
@@ -1495,9 +1495,9 @@ a:active {
     margin-left: .25rem
 }
 
-.list-block .item-media+.item-inner {
+/*.list-block .item-media+.item-inner {
     margin-left: .75rem
-}
+}*/
 
 .list-block .item-inner {
     padding-right: .75rem;
@@ -1886,7 +1886,9 @@ a:active {
     resize: none;
     line-height: 1.4;
     padding-top: .4rem;
-    padding-bottom: .35rem
+    padding-bottom: .35rem;
+    font-size:0.7rem;
+    color:#6d6d72;
 }
 
 .label-switch {
