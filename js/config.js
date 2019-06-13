@@ -42,7 +42,8 @@ var config = function (options) {
                                         options.onSuccess(res.data);
                                     }
                                 } else {
-                                    document.location.href = Global.baseUrl + "h5/userBind.html?url=" + document.location.href
+                                    // document.location.href = Global.baseUrl + "h5/userBind.html?url=" + document.location.href
+
                                 }
                             },
                             error: function (request, error) {
