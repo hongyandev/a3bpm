@@ -2,8 +2,13 @@ var Global = {
     baseUrl : "http://wxdev.hongyancloud.com:8082/a3bpm",
     appKey : "dingoe9bkbhog7ygthvb"
 }
-var _config = {};
-var _userinfo = {}; //JSON.parse($.fn.cookie("userinfo")||"{}");
+var _config, _userinfo;
+$(function () {
+    var cookie = $.fn.cookie('userinfo');
+    if(cookie){
+        _userinfo = JSON.parse(cookie);
+    }
+});
 var config = function (options) {
     var auth = options.auth || false;
     $.get(Global.baseUrl + "/dingtalk/jsapi/config?appkey="+Global.appKey+"&auth="+auth, function (res) {
