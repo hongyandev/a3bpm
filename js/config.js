@@ -20,8 +20,10 @@ var config = function (options) {
         dd.error(function (err) {
             alert('dd error: ' + JSON.stringify(err));
         });
-        if(_userinfo && _userinfo.extattr && _userinfo.extattr.YongHuBH && options.onSuccess) {
-            options.onSuccess(_userinfo);
+        if(_userinfo && _userinfo.extattr && _userinfo.extattr.YongHuBH) {
+            if(options.onSuccess){
+                options.onSuccess(_userinfo);
+            }
         } else {
             dd.ready(function () {
                 dd.runtime.permission.requestAuthCode({
