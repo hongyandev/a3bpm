@@ -1,6 +1,336 @@
+function GetRequest() {
+    var url = location.search; //获取url中"?"符后的字串
+    var theRequest = new Object();
+    if(url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for(var i = 0; i < strs.length; i++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        }
+    }
+    return theRequest;
+}
 $(function () {
+    var theRequest = GetRequest();
     $(".buttons-tab a").click(function(){
+        $(this).addClass('active').siblings().removeClass('active');
         var idx=$(this).index();
         $(".tabs .tab").eq(idx).show().siblings().hide();
-    })
+    });
+
+    $.ajax({
+        type:'post',
+        url:'http://172.30.8.95:9999/bpm/dbsp/detail',
+        contentType:'application/json',
+        data:JSON.stringify({"BianHao":theRequest.BianHao,"RenWuID": "", "LiuChengId":theRequest.LiuChengId,"DangQianJD": ""}),
+        success:function (res) {
+            console.info(res);
+            if(res.msgCode=='1'){
+                $(".sqbt").html(res.DanJuXX.BaoXiaoSY);
+                $(".sqje").html(res.DanJuXX.ShenQingJE);
+                $(".DanWeiMC").html(res.DanJuXX.DanWeiMC);
+                $(".BuMenMC").html(res.DanJuXX.BuMenMC);
+                $(".bxr").html(res.DanJuXX.BaoXiaoBM);
+                $(".zbmc").html(res.DanJuXX.ZhiBiaoMC);
+                $(".kyye").html(res.DanJuXX.KeYongYE);
+                $(".bxbm").html(res.DanJuXX.BaoXiaoBM);
+                $(".bxr").html(res.DanJuXX.BaoXiaoR);
+                $(".zcsx").html(res.DanJuXX.ZhiChuSX);
+                $(".bxsy").html(res.DanJuXX.BaoXiaoSY);
+                var fjList='';
+                if(res.DanJuXX.DanJuFJ.length>0){
+                    $.each(res.DanJuXX.DanJuFJ,function (index,val){
+                        fjList+="<li>\n" +
+                            "     <div class=\"item-content\">\n" +
+                            "          <div class=\"item-media\"><i class=\"icon icon-form-email\"></i></div>\n" +
+                            "          <div class=\"item-inner\">\n" +
+                            "               <a  href='"+val.FuJianLJ+"' download>"+val.FuJianMC+"</a>\n" +
+                            "          </div>\n" +
+                            "     </div>\n" +
+                            "</li>"
+                    });
+                    $(".fjLists").html(fjList);
+                }else{
+                    $(".djfj").hide();
+                }
+                $(".bxje").html(res.DanJuXX.ShenQingJE);
+
+                // 支出明细
+                var str='';
+                $.each(res.ZhiChuMX,function (index,val){
+                    str+="<li>\n" +
+                        "      <div class=\"item-content\">\n" +
+                        "          <div class=\"item-media\"><i class=\"icon icon-form-email\"></i></div>\n" +
+                        "          <div class=\"item-inner\">\n" +
+                        "              <div class=\"item-title label\">"+val.MingXiMC+"</div>\n" +
+                        "                  <div class=\"item-input\">\n" +
+                        "                       <span>"+val.MingXiJE+"</span>\n" +
+                        "                  </div>\n" +
+                        "             </div>\n" +
+                        "         </div>\n" +
+                        "</li>"
+                });
+                $("#zcmx").html(str);
+                $(".img img").attr("src",res.DanJuXX.LiuChengTuLJ);
+                //审批
+                var ysxx="";
+                if(res.YaoSuXX.length>0){
+                    $.erch(res.YaoSuXX,function (index,val) {
+                        ysxx+="<li>\n" +
+                            "      <div class=\"item-content\">\n" +
+                            "         <div class=\"item-media\"><i class=\"icon icon-form-gender\"></i></div>\n" +
+                            "            <div class=\"item-inner\">\n" +
+                            "              <div class=\"item-title label\">"+val.YaoSuMC+"</div>\n" +
+                            "              <div class=\"item-input\">\n" +
+                            "                 <select>\n";
+                                $.earch(val.YaoSuZ,function (i,o) {
+                                        ysxx+="<option>"+o[i]+"</option>\n" ;
+                                })
+                                ysxx+="      </select>\n" +
+                            "            </div>\n" +
+                            "         </div>\n" +
+                            "      </div>\n" +
+                            "</li>"
+                    })
+                }
+                $(".ysXX").html(ysxx);
+                var spFjLists = "";
+                if(res.ShenPiXX.length>0){
+                    $.each(res.ShenPiXX,function (index,val) {
+                        spFjLists+="<div class='list-block'>"+
+                            "<div class=\"weui-cells weui-cells_form\">\n" +
+                            "           <div class=\"weui-cell\">\n" +
+                            "               <div class=\"weui-cell__bd\">\n";
+                        if(val.ShenPiYJ){
+                            spFjLists+="<textarea style=\"height:2rem;\" class=\"weui-textarea\" rows=\"3\">"+val.ShenPiYJ+"</textarea>\n";
+                        }
+                        spFjLists+="                      <div class=\"weui-textarea-counter clearfix\"><label class=\"fl\">处理时长："+val.ChuLiSC+"</label><span class=\"fr\">"+val.ShenPiR+"</span></div>\n" +
+                            "                      <div class=\"weui-textarea-counter\"><time>"+val.ShenPiSJ+"</time></div>\n" +
+                            "               </div>\n" +
+                            "           </div>\n" +
+                            "       </div>\n" +
+                            "       <ul class=\"ysValue\">\n";
+                            $.each(val.ShenPiYS,function (i,o) {
+                                    spFjLists+="<li>\n" +
+                                        "             <div class=\"item-content\">\n" +
+                                        "                <div class=\"item-media\"><i class=\"icon icon-form-email\"></i></div>\n" +
+                                        "                        <div class=\"item-inner\">\n" +
+                                        "                        <div class=\"item-title label\">"+o.YaoSuMC+"</div>\n" +
+                                        "                        <div class=\"item-input\">\n" +
+                                        "                           <span>"+o.YaoSuZ+"</span>\n" +
+                                        "                       </div>\n" +
+                                        "                 </div>\n" +
+                                        "           </div>\n" +
+                                        "   </li>\n" ;
+                                });
+                            if(!val.ShenPiFJ){
+                                spFjLists+=" </ul>\n" +
+                                    "          <ul>\n" +
+                                    "             <li>\n" +
+                                    "                 <div class=\"item-content\">\n" +
+                                    "                      <div class=\"item-media\"><i class=\"icon icon-form-email\"></i></div>\n" +
+                                    "                        <div class=\"item-inner\">\n" +
+                                    "                          <a class=\"colorBlue\" href='"+val.ShenPiFJ.FuJianLJ+"' download=\"\">"+val.ShenPiFJ.FuJianMC+"</a>\n" +
+                                    "                       </div>\n" +
+                                    "                  </div>\n" +
+                                    "               </li>\n" +
+                                    "           </ul>";
+                            }
+
+                        spFjLists+="</div>";
+                    });
+                    $(".spFjLists").html(spFjLists);
+                }
+            }
+        }
+    });
+
+    // 允许上传的图片类型
+    var allowTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+    // 最大上传图片数量
+    var maxCount = 20;
+    //var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
+    var formdata = new FormData();
+       var $gallery = $("#gallery"),
+        $galleryImg = $("#galleryImg"),
+        $uploaderInput = $("#uploaderInput"),
+        $uploaderFiles = $("#uploaderFiles");
+
+    $uploaderInput.on("change", function(e) {
+        var src, url = window.URL || window.webkitURL || window.mozURL,
+            files = e.target.files;
+        var _this = $(this);
+        $uploaderFiles.push(files);
+        for(var i = 0, len = files.length; i < len; ++i) {
+            var file = files[i];
+            // 如果类型不在允许的类型范围内
+            if (allowTypes.indexOf(file.type) === -1) {
+                weui.topTips("该类型不允许上传！", "警告！");
+                continue;
+            }
+            if ($('.weui-uploader__file').length >= maxCount) {
+                weui.topTips( '最多只能上传' + maxCount + '张图片');
+                return;
+            }
+            if(url) {
+                src = url.createObjectURL(file);
+            } else {
+                src = e.target.result;
+            }
+            //创建一个文件读取的工具类
+            var reader = new FileReader();
+            //这里利用了闭包的特性，来保留文件名
+            (function(x){
+                reader.onload = function (e) {
+                    //调用压缩文件的方法，具体实现逻辑见下面
+                    // render(this.result,x);
+                    // 调用函数处理图片 　
+                    //var files= $(this).get(0).files;
+                    if (1025 <= file.size /1024 <5120){
+                        //console.info(file.size);
+                        dealImage(this.result, {quality: 0.1},function (base) {
+                            var bl = convertBase64UrlToBlob(base);
+                            formdata.append("files",bl);
+
+                            console.info(files.length);
+
+                        });
+                    }else if(file.size /1024 >= 5120){
+                        dealImage(this.result, {quality: 0.05},function (base) {
+                            var bl = convertBase64UrlToBlob(base);
+                            formdata.append("files",bl,"file_"+Date.parse(new Date())+".jpg");
+
+                        });
+                    }else if(files /1024 < 1025){
+                        dealImage(this.result, {quality: 0.2},function (base) {
+                            var bl = convertBase64UrlToBlob(base);
+                            formdata.append("files",bl,"file_"+Date.parse(new Date())+".jpg");
+
+                        });
+                    }
+
+                    //将读取到图片流直接拼接起来
+                    var tmpl = '<li class="weui-uploader__file"><img style="width:100%;" src="#url#"/></li>' ;                   //塞到页面节点里
+                    $uploaderFiles.append($(tmpl.replace('#url#', this.result)));
+                }
+
+            })(file.name);
+
+            //告诉文件读取工具类读取那个文件
+            reader.readAsDataURL(file);
+        }
+
+    });
+    //提交上传的功能
+    $("#uploadPic").click(function() {
+        Bt_submit(uploadFiles);
+    });
+    var index; //第几张图片
+    //点击查看大图
+    $uploaderFiles.on("click", "li", function() {
+        index = $(this).index();
+        var pic = $(this).children("img");
+        $galleryImg.attr("src", pic[0].getAttribute("src"));
+        $gallery.show(100);
+        $galleryImg.get(0).onload = function (){
+            var picH=$("#galleryImg").height();
+            var picW=$("#galleryImg").width();
+            $galleryImg.css({"margin-top":-parseFloat(picH)/2+"px","margin-left":-parseFloat(picW)/2+"px"})
+        };
+
+    });
+    //点击关闭，大图浮层关闭
+    $(".weui-closed").on("click", function() {
+        $gallery.hide(100);
+    });
+
+
+
 });
+function dealImage(path, obj, callback){
+    var img = new Image();
+    img.src = path;
+    img.onload = function(){
+        var that = this;
+        // 默认按比例压缩
+        var w = that.width,
+            h = that.height,
+            scale = w / h;
+        w = obj.width || w;
+        h = obj.height || (w / scale);
+        var quality = 0.2;  // 默认图片质量为0.7
+        //生成canvas
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        // 创建属性节点
+        var anw = document.createAttribute("width");
+        anw.nodeValue = w;
+        var anh = document.createAttribute("height");
+        anh.nodeValue = h;
+        canvas.setAttributeNode(anw);
+        canvas.setAttributeNode(anh);
+        ctx.drawImage(that, 0, 0, w, h);
+        // 图像质量
+        if(obj.quality && obj.quality <= 1 && obj.quality > 0){
+            quality = obj.quality;
+        }
+        // quality值越小，所绘制出的图像越模糊
+        var base64 = canvas.toDataURL('image/jpeg', quality );
+        // 回调函数返回base64的值
+        callback(base64);
+        //将转换结果放在要上传的图片数组里
+        //uploadFiles.push({"files":base64});
+
+    }
+}
+function convertBase64UrlToBlob(urlData){
+    var arr = urlData.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type:mime});
+}
+
+function Bt_submit(uploadFiles) {
+
+
+    //var files = uploadFiles[0];
+
+    var loading = weui.loading('正在提交...', {
+        className: 'custom-classname'
+    });
+    $.ajax({
+        type: "post",
+        url:'',
+        data:formdata,
+        //timeout: 5000,
+        //必须false才会避开jQuery对 formdata 的默认处理
+        // XMLHttpRequest会对 formdata 进行正确的处理
+        processData: false,
+        //必须false才会自动加上正确的Content-Type
+        contentType: false,
+        xhrFields: {
+            withCredentials: false
+        },
+        success: function(data) {
+            loading.hide();
+            if(data.code == "00000") {
+                weui.toast('图片上传成功！', {
+                    //var d = data;
+                    duration: 3000,
+                    callback: function() {
+                        window.location.href = "sddown.html";
+                    }
+                });
+            } else {
+                loading.hide();
+                weui.topTips(data.msg);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+        }
+    })
+}
+

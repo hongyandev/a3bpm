@@ -4,6 +4,13 @@ a{color:rgba(25,31,37,0.72);text-decoration:none;}
 .fl{float:left;}
 .fr{float:right;}
 h1,h2,h3,h4{padding:0;margin:0;font-weight: normal}
+.colorBlue{
+    color:#0668b3;
+}
+.item-input select{
+    color:#6d6d72;
+    font-size:14px;
+}
 .list-block{
     font-size:0.7rem;
     margin:0;
@@ -39,7 +46,20 @@ h1,h2,h3,h4{padding:0;margin:0;font-weight: normal}
     font-size:14px;
     margin-bottom:10px;
 }
+.img img{
+    width:100%;
+}
+.spFjLists dt{
+    padding-left:0.75rem;
+    margin:10px 0;
+}
+.item-content{
+    background: #fff;
+}
 /*tab*/
+.tabContent{
+    padding-top:20px;
+}
 .buttons-row,.buttons-tab {
     -webkit-align-self: center;
     align-self: center;
@@ -53,7 +73,9 @@ h1,h2,h3,h4{padding:0;margin:0;font-weight: normal}
 }
 .buttons-tab {
     background: #fff;
-    position: relative
+    position: fixed;
+    width: 100%;
+    z-index: 99;
 }
 
 .buttons-tab:after {
@@ -133,4 +155,21 @@ h1,h2,h3,h4{padding:0;margin:0;font-weight: normal}
     position: fixed;
     z-index: 99;
     width: 100%
+}
+.weui-textarea-counter span,.weui-textarea-counter label{
+    color:#6d6d72;
+    font-size:14px;
+}
+.weui-textarea-counter time{
+    font-size:14px;
+
+}
+.fixBottom{
+    position: fixed;
+    width: 100%;
+    background: #fff;
+    height: 55px;
+    bottom: 0;
+    z-index: 99;
+    border-top: 1px solid #e5e5e5;
 }
