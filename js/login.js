@@ -14,7 +14,10 @@ $(function () {
                 password:password
             },
             success:function (res) {
-
+                document.location.href = "applyLists.html";
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                document.location.href = "applyLists.html";
             }
         })
     })
