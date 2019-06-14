@@ -1,18 +1,27 @@
 
 $(function(){
-    getData();
+    config({
+        // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
+        onSuccess: function (userinfo) {
+            //alert("just du it!");
+            getData(_config.DanWeiBH,userinfo.extattr.YongHuBH);
+
+        }
+    });
     $('.weui-navbar__item').on('click', function () {
         $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         getData();
     });
+
 });
 
-function getData() {
+function getData(dwbh,yhbh) {
+
     $.ajax({
         type:'post',
         url: Global.baseUrl + '/bpm/tzgg/sydb',
         contentType:'application/json',
-        data:JSON.stringify({"DanWeiBH":"GLZZ201905240001","YongHuBH":"XTYH201905300002","PageRow":1}),
+        data:JSON.stringify({"DanWeiBH":dwbh,"YongHuBH":yhbh,"PageRow":1}),
         success:function (res) {
             if(res.msgCode=='1'){
                 var str="";
