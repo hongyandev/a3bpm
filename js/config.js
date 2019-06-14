@@ -1,5 +1,5 @@
 var Global = {
-    baseUrl : "http://wxdev.hongyancloud.com:8082/a3bpm",
+    baseUrl : "http://wxdev.hongyancloud.com:8082/bpm",
     appKey : "dingoe9bkbhog7ygthvb"
 }
 var _config, _userinfo;
