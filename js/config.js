@@ -1,14 +1,36 @@
 var Global = {
     baseUrl : "http://wxdev.hongyancloud.com:8082",
-    appKey : "dingoe9bkbhog7ygthvb"
+    appKey : "dingoe9bkbhog7ygthvb",
+    debug : false
 }
 var _config, _userinfo;
 $(function () {
     var cookie = $.fn.cookie('userinfo');
     if(cookie){
-        _userinfo = JSON.parse(cookie);
+        _userinfo = JSON.parse(decodeURI(cookie));
+        if(Global.debug)
+            alert("cookie_userinfo: " + JSON.stringify(_userinfo));
     }
 });
+var getUser = function (userid, onSuccess) {
+    $.ajax({
+        type:'post',
+        url: Global.baseUrl + '/bpm/user/bind',
+        contentType: 'application/json',
+        data:JSON.stringify({userId: userid, appKey: Global.appKey}),
+        success:function (res) {
+            if(res.code == 200) {
+                _userinfo = res.data;
+                if(onSuccess)
+                    onSuccess(res.data);
+            } else {
+                document.location.href = Global.baseUrl + "/bpmh5/userBind.html?url=" + document.location.href;
+            }
+        },
+        error:function (XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+}
 var config = function (options) {
     var auth = !(options.jsApiList === null || options.jsApiList === undefined || options.jsApiList.length === 0);
     $.get(Global.baseUrl + "/bpm/dingtalk/jsapi/config?appkey="+Global.appKey+"&auth="+auth, function (res) {
@@ -27,10 +49,8 @@ var config = function (options) {
             dd.error(function (err) {
                 alert('dd error: ' + JSON.stringify(err));
             });
-            if(_userinfo && _userinfo.extattr && _userinfo.extattr.YongHuBH) {
-                if(options.onSuccess){
-                    options.onSuccess(_userinfo);
-                }
+            if(_userinfo && _userinfo.userid) {
+                getUser(_userinfo.userid, options.onSuccess);
             } else {
                 dd.ready(function () {
                     dd.runtime.permission.requestAuthCode({
@@ -41,17 +61,11 @@ var config = function (options) {
                                 type: 'GET',
                                 async: false,
                                 success: function (res) {
-                                    if(res.code == 200){
-                                        alert(JSON.stringify(res.data));
-                                        if(res.data.extattr.YongHuBH){
-                                            _userinfo = res.data;
-                                            if(options.onSuccess){
-                                                options.onSuccess(res.data);
-                                            }
-                                        } else {
-                                            // document.location.href = Global.baseUrl + "/bpmh5/userBind.html?url=" + document.location.href;
-                                            document.location.href = "applyLists.html";
-                                        }
+                                    if(Global.debug){
+                                        alert(JSON.stringify(res));
+                                    }
+                                    if(res.code == 200){ // 成功获取userid
+                                        getUser(res.data.userid, options.onSuccess);
                                     }
                                 },
                                 error: function (request, error) {

@@ -8,17 +8,16 @@
     <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
     <script src='js/zepto.min.js' charset='utf-8'></script>
     <script src="js/zepto.cookie.min.js"></script>
-    <script src="js/config.js?v=23"></script>
+    <script src="js/config.js?v=27"></script>
 </head>
 <body>
 
-<input name="file" type="file">
 <script>
     $(document).ready(function () {
         config({
             // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
             onSuccess: function (userinfo) {
-                alert("just du it!");
+                document.location.href = "applyLists.html";
             }
         });
     })
