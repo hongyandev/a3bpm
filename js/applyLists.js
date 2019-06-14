@@ -4,7 +4,7 @@ $(function(){
         // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
         onSuccess: function (userinfo) {
             //alert("just du it!");
-            getData(_config.DanWeiBH,userinfo.extattr.YongHuBH);
+           // getData(_config.DanWeiBH,userinfo.extattr.YongHuBH);
 
         }
     });
@@ -12,6 +12,7 @@ $(function(){
         $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         getData();
     });
+    getData('BXBH201906130002','XTYH201905300002');
 });
 
 function getData(dwbh,yhbh) {
@@ -29,11 +30,12 @@ function getData(dwbh,yhbh) {
                             str+="<a href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
                                     "<i><span style='color:#1e90ff' class=\"iconfont\">&#xe721;</span></i>\n";
                         }else if(val.LeiXing=='2'){
-                            str+="<a onclick='' href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
-                                 "<i><span style='color:#00fa9a' class=\"iconfont\">&#xe623;</span></i>\n";
+                            str+="<a class='messages' href='messageDetail.html?LeiXing="+val.LeiXing+"&BianHao="+val.BianHao+"'>"+
+                                 "<input type='hidden' time='"+val.ShenQingSJ+"' value='"+val.BiaoTi+"'>"+
+                                 "<i><span style='color:#daa520' class=\"iconfont\">&#xe623;</span></i>\n";
                         }else if(val.LeiXing=='0'){
                             str+="<a onclick='' href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
-                                "<i><span style='color:#daa520' class=\"iconfont\">&#xe640;</span></i>\n";
+                                "<i><span style='color:#00fa9a' class=\"iconfont\">&#xe640;</span></i>\n";
                         };
                         str+="     <div class=\"listsInfo\">\n" +
                             "       <h4>"+val.BiaoTi+"</h4>\n" +
@@ -48,6 +50,15 @@ function getData(dwbh,yhbh) {
                             "</li>";
                 });
                 $("#lists").html(str);
+                $(".messages").on("click",function () {
+                    var time = $(this).children("input").attr("time");
+                    var title = $(this).children("input").val();
+                    var data ={
+                        time:time,
+                        title:title
+                    };
+                    $.fn.cookie('message',JSON.stringify(data));
+                })
             }
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
