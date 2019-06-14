@@ -22,6 +22,13 @@ h1,h2,h3,h4{padding:0;margin:0;font-weight: normal}
     height:2px;
 }
 /*lists*/
+.weui-navbar__item.weui-bar__item_on{
+    border-bottom:2px solid #0894ec;
+    background: none;
+}
+.weui-navbar__item:after{
+    border-right:none;
+}
 .weui-navbar{
     position: fixed;
 }
