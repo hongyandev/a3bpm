@@ -2,9 +2,32 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>user bind</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>用户绑定</title>
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/config.js"></script>
+    <script src="js/login.js"></script>
+
 </head>
 <body>
-<h1>用户绑定</h1>
+    <div class="logo">
+        <h1>LOGO</h1>
+    </div>
+    <form>
+        <ul class="loginForm">
+            <li>
+                <span class="iconfont">&#xe648;</span>
+                <input id="userId" type="text" placeholder="请输入用户名"/>
+            </li>
+            <li>
+                <span class="iconfont">&#xe622;</span>
+                <input id="password" type="password" placeholder="请输入密码"/>
+            </li>
+        </ul>
+        <div class="submit">
+            <a id="submitBtn" href="javascript:;" class="weui-btn weui-btn_primary">提交</a>
+        </div>
+    </form>
 </body>
 </html>

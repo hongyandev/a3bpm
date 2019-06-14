@@ -4,6 +4,50 @@ a{color:rgba(25,31,37,0.72);text-decoration:none;}
 .fl{float:left;}
 .fr{float:right;}
 h1,h2,h3,h4{padding:0;margin:0;font-weight: normal}
+ul,li{list-style: none;}
+.logo h1{
+    width: 60%;
+    min-height:120px;
+    margin:10% 20%;
+    text-align: center;
+    font-size:60px;
+    color:#048df5;
+}
+/*loginForm*/
+.loginForm{
+    width:80%;
+    margin:5% 10%;
+}
+.loginForm span{
+    position: absolute;
+    top:0;
+    left:10px;
+    font-size:22px;
+    color:#333
+}
+.loginForm li{
+    position: relative;
+    height:55px;
+    line-height:55px;
+    padding-left:40px;
+    border-bottom:1px solid #e5e5e5;
+}
+.loginForm li input{
+    background: none;
+    border:none;
+    outline: none;
+    padding-left:10px;
+    height:100%;
+    width:90%;
+    font-size:16px;
+}
+.submit{
+    width: 80%;
+    margin:10%;
+}
+.submit .weui-btn_primary{
+    background:#048df5 ;
+}
 .colorBlue{
     color:#0668b3;
 }
@@ -179,4 +223,21 @@ h1,h2,h3,h4{padding:0;margin:0;font-weight: normal}
     bottom: 0;
     z-index: 99;
     border-top: 1px solid #e5e5e5;
+}
+/*font*/
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.eot');
+    src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/iconfont.woff2') format('woff2'),
+    url('../fonts/iconfont.woff') format('woff'),
+    url('../fonts/iconfont.ttf') format('truetype'),
+    url('../fonts/iconfont.svg#iconfont') format('svg');
+}
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

@@ -4,7 +4,7 @@ $(function(){
         // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
         onSuccess: function (userinfo) {
             //alert("just du it!");
-            getData(_config.DanWeiBH,userinfo.extattr.YongHuBH);
+
 
         }
     });
@@ -12,11 +12,10 @@ $(function(){
         $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         getData();
     });
-
+    getData(_config.DanWeiBH,userinfo.extattr.YongHuBH);
 });
 
 function getData(dwbh,yhbh) {
-
     $.ajax({
         type:'post',
         url: Global.baseUrl + '/bpm/tzgg/sydb',
@@ -28,12 +27,16 @@ function getData(dwbh,yhbh) {
                 $.each(res.list,function (index,val){
                     str+="<li>\n";
                         if(val.LeiXing=='1'){
-                            str+="<a href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>";
+                            str+="<a href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
+                                    "<i><span class=\"iconfont\">&#xe721;</span></i>\n";
                         }else if(val.LeiXing=='2'){
-                            str+="<a onclick='' href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>";
+                            str+="<a onclick='' href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
+                                 "<i><span class=\"iconfont\">&#xe623;</span></i>\n";
+                        }else if(val.LeiXing=='0'){
+                            str+="<a onclick='' href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
+                                "<i><span class=\"iconfont\">&#xe640;</span></i>\n";
                         };
-                        str+="     <i>"+val.LeiXing+"</i>\n" +
-                            "     <div class=\"listsInfo\">\n" +
+                        str+="     <div class=\"listsInfo\">\n" +
                             "       <h4>"+val.BiaoTi+"</h4>\n" +
                             "       <div class=\"clearfix\">\n" ;
                         if(val.ShenQingBM){
