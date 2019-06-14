@@ -1,5 +1,5 @@
 var Global = {
-    baseUrl : "http://wxdev.hongyancloud.com:8082/bpm",
+    baseUrl : "http://wxdev.hongyancloud.com:8082",
     appKey : "dingoe9bkbhog7ygthvb"
 }
 var _config, _userinfo;
@@ -11,7 +11,7 @@ $(function () {
 });
 var config = function (options) {
     var auth = !(options.jsApiList === null || options.jsApiList === undefined || options.jsApiList.length === 0);
-    $.get(Global.baseUrl + "/dingtalk/jsapi/config?appkey="+Global.appKey+"&auth="+auth, function (res) {
+    $.get(Global.baseUrl + "/bpm/dingtalk/jsapi/config?appkey="+Global.appKey+"&auth="+auth, function (res) {
         if(res.code == 200) {
             _config = res.data;
             if(auth){
@@ -37,7 +37,7 @@ var config = function (options) {
                         corpId: _config.corpId,
                         onSuccess: function (info) {
                             $.ajax({
-                                url: Global.baseUrl + '/dingtalk/jsapi/userinfo?code=' + info.code + '&appkey=' + Global.appKey,
+                                url: Global.baseUrl + '/bpm/dingtalk/jsapi/userinfo?code=' + info.code + '&appkey=' + Global.appKey,
                                 type: 'GET',
                                 async: false,
                                 success: function (res) {
@@ -49,7 +49,7 @@ var config = function (options) {
                                                 options.onSuccess(res.data);
                                             }
                                         } else {
-                                            // document.location.href = Global.baseUrl + "h5/userBind.html?url=" + document.location.href;
+                                            // document.location.href = Global.baseUrl + "/bpmh5/userBind.html?url=" + document.location.href;
                                             document.location.href = "applyLists.html";
                                         }
                                     }
