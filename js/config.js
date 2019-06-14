@@ -8,8 +8,9 @@ $(function () {
     var cookie = $.fn.cookie('userinfo');
     if(cookie){
         _userinfo = JSON.parse(decodeURI(cookie));
-        if(Global.debug)
+        if(Global.debug){
             alert("cookie_userinfo: " + JSON.stringify(_userinfo));
+        }
     }
 });
 var getUser = function (userid, onSuccess) {
