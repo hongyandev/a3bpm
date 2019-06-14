@@ -10,7 +10,7 @@ $(function () {
     }
 });
 var config = function (options) {
-    var auth = options.jsApiList != undefined && options.jsApiList.length > 0;
+    var auth = !(options.jsApiList === null || options.jsApiList === undefined || options.jsApiList.length === 0);
     $.get(Global.baseUrl + "/dingtalk/jsapi/config?appkey="+Global.appKey+"&auth="+auth, function (res) {
         if(res.code == 200) {
             _config = res.data;
