@@ -12,7 +12,7 @@ $(function(){
         $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         getData();
     });
-    getData(_config.DanWeiBH,userinfo.extattr.YongHuBH);
+    getData('BXBH201906130002','XTYH201905300002');
 });
 
 function getData(dwbh,yhbh) {
@@ -28,13 +28,13 @@ function getData(dwbh,yhbh) {
                     str+="<li>\n";
                         if(val.LeiXing=='1'){
                             str+="<a href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
-                                    "<i><span class=\"iconfont\">&#xe721;</span></i>\n";
+                                    "<i><span style='color:#1e90ff' class=\"iconfont\">&#xe721;</span></i>\n";
                         }else if(val.LeiXing=='2'){
                             str+="<a onclick='' href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
-                                 "<i><span class=\"iconfont\">&#xe623;</span></i>\n";
+                                 "<i><span style='color:#00fa9a' class=\"iconfont\">&#xe623;</span></i>\n";
                         }else if(val.LeiXing=='0'){
                             str+="<a onclick='' href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
-                                "<i><span class=\"iconfont\">&#xe640;</span></i>\n";
+                                "<i><span style='color:#daa520' class=\"iconfont\">&#xe640;</span></i>\n";
                         };
                         str+="     <div class=\"listsInfo\">\n" +
                             "       <h4>"+val.BiaoTi+"</h4>\n" +
