@@ -21,7 +21,7 @@ function getData() {
                         if(val.LeiXing=='1'){
                             str+="<a href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>";
                         }else if(val.LeiXing=='2'){
-                            str+="<a href='aaa.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>";
+                            str+="<a onclick='' href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>";
                         };
                         str+="     <i>"+val.LeiXing+"</i>\n" +
                             "     <div class=\"listsInfo\">\n" +
