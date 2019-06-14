@@ -86,16 +86,20 @@ ul,li{list-style: none;}
 }
 .list-block .lists li i{
     position: absolute;
-    left:18px;
-    top:30px;
+    left: 12px;
+    top: 16px;
+}
+.list-block .lists li i span{
+    font-size:30px;
 }
 .list-block .lists li time{
     color:#999;
 }
 .listsInfo h4{
-    color:#0668b3;
+    /*color:#0668b3;*/
     font-size:14px;
     margin-bottom:10px;
+    font-weight: 600;
 }
 .img img{
     width:100%;
@@ -108,9 +112,9 @@ ul,li{list-style: none;}
     background: #fff;
 }
 /*tab*/
-.tabContent{
+/*.tabContent{
     padding-top:20px;
-}
+}*/
 .buttons-row,.buttons-tab {
     -webkit-align-self: center;
     align-self: center;

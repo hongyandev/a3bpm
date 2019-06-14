@@ -102,7 +102,7 @@ $(function () {
                             "           <div class=\"weui-cell\">\n" +
                             "               <div class=\"weui-cell__bd\">\n";
                         if(val.ShenPiYJ){
-                            spFjLists+="<textarea style=\"height:2rem;\" class=\"weui-textarea\" rows=\"3\">"+val.ShenPiYJ+"</textarea>\n";
+                            spFjLists+="<textarea style='height:2rem;font-size:16px;' class=\"weui-textarea\" rows=\"3\">"+val.ShenPiYJ+"</textarea>\n";
                         }
                         spFjLists+="                      <div class=\"weui-textarea-counter clearfix\"><label class=\"fl\">处理时长："+val.ChuLiSC+"</label><span class=\"fr\">"+val.ShenPiR+"</span></div>\n" +
                             "                      <div class=\"weui-textarea-counter\"><time>"+val.ShenPiSJ+"</time></div>\n" +
@@ -148,7 +148,7 @@ $(function () {
     // 允许上传的图片类型
     var allowTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
     // 最大上传图片数量
-    var maxCount = 20;
+    var maxCount = 1;
     //var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
     var formdata = new FormData();
        var $gallery = $("#gallery"),
