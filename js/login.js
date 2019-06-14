@@ -1,25 +1,20 @@
 $(function () {
-    var appkey = Global.appKey;
-    var userid = _userinfo.userid;
-    var loginid = $("#userId").val();
-    var password = $("#password").val();
-    $("#submitBtn").on("click",function () {
+    $("#submitBtn").on("click", function () {
         $.ajax({
-            url:Global.baseUrl + '/bpm/user/bind',
-            type:'post',
-            data:{
-                appKey:appkey,
-                userId:userid,
-                loginId:loginid,
-                password:password
+            url: Global.baseUrl + '/bpm/user/bind',
+            type: 'post',
+            data: {
+                appKey: Global.appKey,
+                userId: _request.userid,
+                loginId: $("#userId").val(),
+                password: $("#password").val()
             },
-            success:function (res) {
+            success: function (res) {
                 document.location.href = "applyLists.html";
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 document.location.href = "applyLists.html";
             }
         })
     })
-
 })

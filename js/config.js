@@ -1,43 +1,29 @@
-var Global = {
-    baseUrl : "http://wxdev.hongyancloud.com:8082",
-    appKey : "dingoe9bkbhog7ygthvb",
-    debug : false
-}
-var _config, _userinfo;
-$(function () {
-    var cookie = $.fn.cookie('userinfo');
-    if(cookie){
-        _userinfo = JSON.parse(decodeURI(cookie));
-        if(Global.debug){
-            alert("cookie_userinfo: " + JSON.stringify(_userinfo));
-        }
-    }
-});
 var getUser = function (userid, onSuccess) {
     $.ajax({
-        type:'post',
+        type: 'post',
         url: Global.baseUrl + '/bpm/user/bind',
         contentType: 'application/json',
-        data:JSON.stringify({userId: userid, appKey: Global.appKey}),
-        success:function (res) {
-            if(res.code == 200) {
+        data: JSON.stringify({userId: userid, appKey: Global.appKey}),
+        success: function (res) {
+            if (res.code === 200) {
                 _userinfo = res.data;
-                if(onSuccess)
+                if (onSuccess){
                     onSuccess(res.data);
+                }
             } else {
-                document.location.href = Global.baseUrl + "/bpmh5/userBind.html?url=" + document.location.href;
+                document.location.href = Global.baseUrl + "/bpmh5/userBind.html?userid=" + userid + "&url=" + document.location.href;
             }
         },
-        error:function (XMLHttpRequest, textStatus, errorThrown) {
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
         }
     });
 }
 var config = function (options) {
     var auth = !(options.jsApiList === null || options.jsApiList === undefined || options.jsApiList.length === 0);
-    $.get(Global.baseUrl + "/bpm/dingtalk/jsapi/config?appkey="+Global.appKey+"&auth="+auth, function (res) {
-        if(res.code == 200) {
+    $.get(Global.baseUrl + "/bpm/dingtalk/jsapi/config?appkey=" + Global.appKey + "&auth=" + auth, function (res) {
+        if (res.code === 200) {
             _config = res.data;
-            if(auth){
+            if (auth) {
                 dd.config({
                     agentId: _config.agentId,
                     corpId: _config.corpId,
@@ -50,7 +36,7 @@ var config = function (options) {
             dd.error(function (err) {
                 alert('dd error: ' + JSON.stringify(err));
             });
-            if(_userinfo && _userinfo.userid) {
+            if (_userinfo && _userinfo.userid) {
                 getUser(_userinfo.userid, options.onSuccess);
             } else {
                 dd.ready(function () {
@@ -62,10 +48,7 @@ var config = function (options) {
                                 type: 'GET',
                                 async: false,
                                 success: function (res) {
-                                    if(Global.debug){
-                                        alert(JSON.stringify(res));
-                                    }
-                                    if(res.code == 200){ // 成功获取userid
+                                    if (res.code === 200) { // 成功获取userid
                                         getUser(res.data.userid, options.onSuccess);
                                     }
                                 },
@@ -83,15 +66,27 @@ var config = function (options) {
         }
     })
 };
-function GetRequest() {
+var GetRequest = function () {
     var url = location.search; //获取url中"?"符后的字串
     var theRequest = new Object();
-    if(url.indexOf("?") != -1) {
+    if (url.indexOf("?") != -1) {
         var str = url.substr(1);
-        strs = str.split("&");
-        for(var i = 0; i < strs.length; i++) {
+        var strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
             theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
         }
     }
     return theRequest;
 }
+var Global = {
+    baseUrl: "http://wxdev.hongyancloud.com:8082",
+    appKey: "dingoe9bkbhog7ygthvb"
+}
+var _config, _userinfo, _request;
+$(function () {
+    _request = GetRequest();
+    var cookie = $.fn.cookie('userinfo');
+    if (cookie) {
+        _userinfo = JSON.parse(decodeURI(cookie));
+    }
+});
