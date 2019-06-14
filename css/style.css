@@ -163,12 +163,12 @@ h1,h2,h3,h4{padding:0;margin:0;font-weight: normal}
     z-index: 99;
     width: 100%
 }
-.weui-textarea-counter span,.weui-textarea-counter label{
+.weui-textarea-counter span{
     color:#6d6d72;
-    font-size:14px;
+    font-size:12px;
 }
-.weui-textarea-counter time{
-    font-size:14px;
+.weui-textarea-counter time,.weui-textarea-counter label{
+    font-size:12px;
 
 }
 .fixBottom{
