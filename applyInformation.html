@@ -41,10 +41,15 @@
     <script src="js/zepto.min.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/config.js"></script>
+    <style>
+        html, body{
+            height:100%;overflow:auto;margin: 0;
+        }
+    </style>
 </head>
 <body>
 
-<div class="page-group" style="position: relative">
+<div class="page-group">
     <div class="page page-current">
             <div class="content">
                 <div class="buttons-tab">
@@ -52,7 +57,7 @@
                     <a href="#tab2" class="tab-link button">流程</a>
                     <a href="#tab3" class="tab-link button">审批</a>
                 </div>
-                <div style="position: absolute;width: 100%" class="tabContent">
+                <div class="tabContent">
                     <div class="tabs">
                         <div id="tab1" class="tab active">
                             <div class="content-block">
