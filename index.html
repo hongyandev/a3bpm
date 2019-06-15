@@ -9,9 +9,21 @@
     <script src='js/zepto.min.js' charset='utf-8'></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/config.js?v=28"></script>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .launchImage{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: -1;
+        }
+    </style>
 </head>
 <body>
-
+    <img class="launchImage" src="img/launchImage.jpg">
 <script>
     $(document).ready(function () {
         config({
