@@ -3,6 +3,7 @@ $(function () {
         $.ajax({
             url: Global.baseUrl + '/bpm/user/bind',
             type: 'post',
+            contentType: 'application/json',
             data: JSON.stringify({
                 appKey: Global.appKey,
                 userId: _request.userid,
