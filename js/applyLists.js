@@ -33,8 +33,11 @@ function getData(dwbh,yhbh) {
                                  "<input type='hidden' time='"+val.ShenQingSJ+"' value='"+val.BiaoTi+"'>"+
                                  "<i><span style='color:#daa520' class=\"iconfont\">&#xe623;</span></i>\n";
                         }else if(val.LeiXing=='0'){
-                            str+="<a onclick='' href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
+                            str+="<a href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
                                 "<i><span style='color:#00fa9a' class=\"iconfont\">&#xe640;</span></i>\n";
+                        }else{
+                            str+="<a href='javascript:void(0)'>"+
+                                "<i><span style='color:#fa656b' class=\"iconfont\">&#xe6ce;</span></i>\n";
                         };
                         str+="     <div class=\"listsInfo\">\n" +
                             "       <h4>"+val.BiaoTi+"</h4>\n" +
