@@ -4,7 +4,7 @@ $(function(){
         // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
         onSuccess: function (userinfo) {
             //alert("just du it!");
-           getData(_config.DanWeiBH,userinfo.extattr.YongHuBH);
+           getData(userinfo.DanWeiBH,userinfo.YongHuBH);
         }
     });
     $('.weui-navbar__item').on('click', function () {
