@@ -4,15 +4,14 @@ $(function(){
         // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
         onSuccess: function (userinfo) {
             //alert("just du it!");
-           // getData(_config.DanWeiBH,userinfo.extattr.YongHuBH);
-
+           getData(_config.DanWeiBH,userinfo.extattr.YongHuBH);
         }
     });
     $('.weui-navbar__item').on('click', function () {
         $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         getData();
     });
-    getData('BXBH201906130002','XTYH201905300002');
+    //getData('BXBH201906130002','XTYH201905300002');
 });
 
 function getData(dwbh,yhbh) {
