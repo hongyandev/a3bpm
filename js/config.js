@@ -3,6 +3,7 @@ var getUser = function (userid, onSuccess) {
         type: 'post',
         url: Global.baseUrl + '/bpm/user/bind',
         contentType: 'application/json',
+        async: false,
         data: JSON.stringify({userId: userid, appKey: Global.appKey}),
         success: function (res) {
             if (res.code === 200) {

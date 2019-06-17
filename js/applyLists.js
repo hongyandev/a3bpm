@@ -11,7 +11,7 @@ $(function(){
         $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         getData();
     });
-    //getData('BXBH201906130002','XTYH201905300002');
+   // getData('BXBH201906130002','XTYH201905300002');
 });
 
 function getData(dwbh,yhbh) {
@@ -26,7 +26,7 @@ function getData(dwbh,yhbh) {
                 $.each(res.list,function (index,val){
                     str+="<li>\n";
                         if(val.LeiXing=='1'){
-                            str+="<a href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
+                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"'>"+
                                     "<i><span style='color:#1e90ff' class=\"iconfont\">&#xe721;</span></i>\n";
                         }else if(val.LeiXing=='2'){
                             str+="<a class='messages' href='messageDetail.html?LeiXing="+val.LeiXing+"&BianHao="+val.BianHao+"'>"+
@@ -61,6 +61,16 @@ function getData(dwbh,yhbh) {
                     };
                     $.fn.cookie('message',JSON.stringify(data));
                 })
+                $(".listItem").on("click",function () {
+                    var jd = $(this).attr("jd");
+                    var rwid = $(this).attr("rwid");
+                    var dataStr ={
+                        jd:jd,
+                        rwid:rwid
+                    };
+                    $.fn.cookie('messStr',JSON.stringify(dataStr));
+                })
+
             }
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
