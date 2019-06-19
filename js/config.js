@@ -8,11 +8,13 @@ var getUser = function (userid, onSuccess) {
         success: function (res) {
             if (res.code === 200) {
                 _userinfo = res.data;
+                $.fn.cookie('userinfo',JSON.stringify(_userinfo));
+                console.info(JSON.stringify(_userinfo));
                 if (onSuccess){
                     onSuccess(res.data);
                 }
             } else {
-                document.location.href = Global.baseUrl + "/bpmh5/userBind.html?userid=" + userid + "&url=" + document.location.href;
+                document.location.href = Global.h5Url + "/bpmh5/userBind.html?userid=" + userid + "&url=" + document.location.href;
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -81,13 +83,15 @@ var GetRequest = function () {
 }
 var Global = {
     baseUrl: "http://wxdev.hongyancloud.com:8082",
+    h5Url: "http://wxdev.hongyancloud.com:9997",
     appKey: "dingoe9bkbhog7ygthvb"
 }
 var _config, _userinfo, _request;
 $(function () {
     _request = GetRequest();
     var cookie = $.fn.cookie('userinfo');
+    console.info(JSON.stringify(cookie));
     if (cookie) {
-        _userinfo = JSON.parse(decodeURI(cookie));
+        _userinfo = JSON.parse(cookie);
     }
 });

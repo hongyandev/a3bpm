@@ -11,8 +11,65 @@ $(function(){
         $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         getData();
     });
-   // getData('BXBH201906130002','XTYH201905300002');
+    //getData('BXBH201906130002','XTYH201905300002');
 });
+dd.ready(function() {
+
+    var arr = [];
+    console.info(JSON.stringify(_userinfo.YongHuDW));
+    $.each(_userinfo.YongHuDW,function (i,o) {
+       var json = {"id":o.BianHao,"text":o.MingCheng};
+       arr.push(json);
+    });
+   console.info(JSON.stringify(arr));
+    var str="";
+    console.info(_userinfo.DanWeiBH);
+    for(var i = 0;i<arr.length;i++){
+        if(_userinfo.DanWeiBH == arr[i].id){
+            str+="<li dwid='"+arr[i].id+"' class='active'><a href='javascript:void(0)'>"+arr[i].text+"</a></li>";
+        }else{
+            str+="<li dwid='"+arr[i].id+"'><a href='javascript:void(0)'>"+arr[i].text+"</a></li>";
+        }
+    }
+    $(".dw").html(str);
+    dd.biz.navigation.setTitle({
+        title : $(".dw li.active").children().html(),//控制标题文本，空字符串表示显示默认文本
+        onSuccess : function(result) {},
+        onFail : function(err) {}
+    });
+    $(".dw li").on("click",function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        getData($(this).attr('dwid'),_userinfo.YongHuBH);
+        $("#dialogDefined").hide();
+        dd.biz.navigation.setTitle({
+            title : $(".dw li.active").children().html(),//控制标题文本，空字符串表示显示默认文本
+            onSuccess : function(result) {
+            },
+            onFail : function(err) {}
+        });
+    });
+
+    console.info($(".dw li.active").children().html());
+
+    dd.biz.navigation.setRight({
+        show: true,//控制按钮显示， true 显示， false 隐藏， 默认true
+        control: true,//是否控制点击事件，true 控制，false 不控制， 默认false
+        text: '切换单位',//控制显示文本，空字符串表示显示默认文本
+        onSuccess : function(result) {
+            //如果control为true，则onSuccess将在发生按钮点击事件被回调
+            if($('#dialogDefined').css("display") == "none"){
+                $("#dialogDefined").show();
+                var dialogH = $(".dialogInfo").height();
+                $(".dialogInfo").css("margin-top",-dialogH/2);
+
+            }else{
+                $("#dialogDefined").hide();
+            }
+
+        },
+        onFail : function(err) {}
+    });
+})
 
 function getData(dwbh,yhbh) {
     $.ajax({

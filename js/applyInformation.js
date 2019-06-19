@@ -181,13 +181,15 @@ $(function () {
     // 图片最大宽度
     var maxWidth = 10000;
     // 最大上传图片数量
-    var maxCount = 1;
+    var maxCount = 20;
   //  var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>';
 
        var $gallery = $("#gallery"),
         $galleryImg = $("#galleryImg"),
         $uploaderInput = $("#uploaderInput"),
         $uploaderFiles = $("#uploaderFiles");
+    var baseArrs = [];
+
     $uploaderInput.on('change', function (event) {
 
         var files = event.target.files;
@@ -196,9 +198,10 @@ $(function () {
             if (files.length === 0) {
             return;
             }
-            var file = files[0];
+
+        for (var i = 0, len = files.length; i < len; i++) {
+            var file = files[i];
             var reader = new FileReader();
-            var base64;
             // 如果类型不在允许的类型范围内
             if (allowTypes.indexOf(file.type) === -1) {
                 weui.topTips("该类型不允许上传！", "警告！");
@@ -208,10 +211,10 @@ $(function () {
                 weui.topTips("图片太大，不允许上传", "警告！");
                 return;
             }
-           /* if ($('.weui-uploader__file').length >= maxCount) {
-                weui.topTips( '最多只能上传' + maxCount + '张图片');
-                return;
-            }*/
+            /* if ($('.weui-uploader__file').length >= maxCount) {
+                 weui.topTips( '最多只能上传' + maxCount + '张图片');
+                 return;
+             }*/
             reader.readAsDataURL(file);
             reader.onload = function (e) {
                 //console.log(e);
@@ -228,33 +231,39 @@ $(function () {
                     canvas.width = w;
                     canvas.height = h;
                     ctx.drawImage(img, 0, 0, w, h);
-
-                    base64 = canvas.toDataURL('image/jpeg',0.8);
-
+                    var base64 = canvas.toDataURL('image/jpeg', 0.8);
                     // 插入到预览区
-                    var $preview = $('<li class="weui-uploader__file"><img style="width:100%;" src="'+ img.src +'" /></li>');
+                    var $preview = $('<li class="weui-uploader__file"><img style="width:100%;" src="' + img.src + '" /></li>');
                     $uploaderFiles.html($preview);
+                    var json={"value":base64};
 
+                   // console.info(base64)
+                    baseArrs.pop();
+                    baseArrs.push(json);
+                    console.info(baseArrs);
+                    return;
                     var loading = weui.loading('正在提交...', {
                         className: 'custom-classname'
                     });
                     $.ajax({
-                        url: Global.baseUrl +"/bpm/common/upload",
+                        url: Global.baseUrl + "/bpm/common/upload",
                         type: 'POST',
-                        dataType:"json",
-                        contentType:'application/json',
-                        data: JSON.stringify({
-                            value:base64
-                        }),
-                        success: function(res){
+                        dataType: "json",
+                        contentType: 'application/json',
+                        data: JSON.stringify(baseArrs),
+                        success: function (res) {
                             loading.hide();
-                            weui.toast("上传成功", function() {
-                                //console.log('close');
+                            if(res.msgCode=='1'){
+                                weui.toast("上传成功", function () {
+                                    //console.log('close');
 
-                            });
-                            fj = res.get(0)
+                                });
+                                fj = res.list;
+                            }
+
+
                         },
-                        error: function(xhr, type){
+                        error: function (xhr, type) {
                             loading.hide();
                             weui.topTips('Ajax error!')
                         }
@@ -262,6 +271,10 @@ $(function () {
                 };
 
             };
+
+        }
+
+
 
 
     });
@@ -287,7 +300,7 @@ $(function () {
 
 
     var submitdata = {
-        "YongHuBH":_userinfo.YongHuBH,
+        "YongHuBH":yhbh,
         //"YongHuBH":'XTYH201905300002',
         "ShenQingBMBH":$("#sqbmbh").val(),
         "BaoXiaoJE":$(".sqje").html(),
@@ -314,11 +327,12 @@ $(function () {
         submitdata.Next="pass";
         console.info(submitdata);
         if(fj){
-            submitdata.FileList=fj;
+            submitdata.FileList = fj[0];
         }
         if(arr.length>0){
             submitdata.ShenPiYS=arr
         }
+
         var loading = weui.loading('正在提交...', {
             className: 'custom-classname'
         });
@@ -351,6 +365,9 @@ $(function () {
         submitdata.ShenPiYJ=$("#option").val();
         submitdata.Next="back";
         console.info(submitdata);
+
+        return;
+
         var loading = weui.loading('正在提交...', {
             className: 'custom-classname'
         });

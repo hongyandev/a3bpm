@@ -84,6 +84,7 @@ ul,li{list-style: none;}
 }
 .weui-navbar{
     position: fixed;
+    z-index: 20;
 }
 .lists{
 
@@ -236,6 +237,46 @@ ul,li{list-style: none;}
     bottom: 0;
     z-index: 99;
     border-top: 1px solid #e5e5e5;
+}
+/*dialogDefined*/
+#dialogDefined .dialogBg{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background: #000;
+    opacity: 0.6;
+    z-index: 30;
+    top:0;
+    left:0;
+}
+#dialogDefined .dialogInfo{
+    width:80%;
+    height:auto;
+    position: fixed;
+    top:50%;
+    left:10%;
+    background: #fff;
+    border:1px solid #e5e5e5;
+    border-radius:5px;
+    padding-bottom:15px;
+    z-index: 40;
+}
+#dialogDefined .dialogInfo h4{
+    text-align: center;
+    height:45px;
+    line-height:45px;
+    border-bottom:1px solid #e5e5e5;
+}
+#dialogDefined ul{
+    padding-top:15px;
+}
+#dialogDefined ul li{
+    width: 100%;
+    padding:10px 0;
+    text-align: center;
+}
+.dw li.active a{
+    color:#0894ec;
 }
 /*font*/
 @font-face {
