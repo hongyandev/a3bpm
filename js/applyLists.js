@@ -91,7 +91,13 @@ function getData(dwbh,yhbh) {
                                  "<i><span style='color:#daa520' class=\"iconfont\">&#xe623;</span></i>\n";
                         }else if(val.LeiXing=='0'){
                             str+="<a href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
-                                "<i><span style='color:#00fa9a' class=\"iconfont\">&#xe640;</span></i>\n";
+                                "<i><span style='color:#fa693b' class=\"iconfont\">&#xe640;</span></i>\n";
+                        }else if(val.LeiXing=='4'){
+                            str+="<a class='zxApply' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zxApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"'>"+
+                                "<i><span style='color:#34dbe4' class=\"iconfont\">&#xe637;</span></i>\n";
+                        }else if(val.LeiXing=='6'){
+                            str+="<a href=''>"+
+                                "<i><span style='color:#fe75ff' class=\"iconfont\">&#xe653;</span></i>\n";
                         }else{
                             str+="<a href='javascript:void(0)'>"+
                                 "<i><span style='color:#fa656b' class=\"iconfont\">&#xe6ce;</span></i>\n";
@@ -127,7 +133,15 @@ function getData(dwbh,yhbh) {
                     };
                     $.fn.cookie('messStr',JSON.stringify(dataStr));
                 })
-
+                $(".zxApply").on("click",function () {
+                    var jd = $(this).attr("jd");
+                    var rwid = $(this).attr("rwid");
+                    var dataStr ={
+                        jd:jd,
+                        rwid:rwid
+                    };
+                    $.fn.cookie('messStr',JSON.stringify(dataStr));
+                })
             }
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
