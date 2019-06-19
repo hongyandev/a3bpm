@@ -300,7 +300,7 @@ $(function () {
 
 
     var submitdata = {
-        "YongHuBH":yhbh,
+        "YongHuBH":_userinfo.YongHuBH,
         //"YongHuBH":'XTYH201905300002',
         "ShenQingBMBH":$("#sqbmbh").val(),
         "BaoXiaoJE":$(".sqje").html(),
@@ -365,9 +365,12 @@ $(function () {
         submitdata.ShenPiYJ=$("#option").val();
         submitdata.Next="back";
         console.info(submitdata);
-
-        return;
-
+        if(fj){
+            submitdata.FileList = fj[0];
+        }
+        if(arr.length>0){
+            submitdata.ShenPiYS=arr
+        }
         var loading = weui.loading('正在提交...', {
             className: 'custom-classname'
         });
@@ -375,7 +378,7 @@ $(function () {
             type: "post",
             url:Global.baseUrl +'/bpm/dbsp/approve',
             data:JSON.stringify(submitdata),
-            contentType: false,
+            contentType: "application/json",
             xhrFields: {
                 withCredentials: false
             },
