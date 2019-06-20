@@ -14,26 +14,28 @@ $(function () {
                 });
                 vm.formData = testData;
                 loading.hide();
-                // $.ajax({
-                //     type: 'post',
-                //     url: Global.baseUrl + '/bpm/zjsqdbsp/detail',
-                //     contentType: 'application/json',
-                //     data: JSON.stringify({
-                //         "BianHao": BianHao,
-                //         "RenWuID": RenWuID || "",
-                //         "LiuChengId": LiuChengId,
-                //         "DangQianJD": DangQianJD || ""
-                //     }),
-                //     success: function (res) {
-                //         if(res.code==200){
-                //             this.formData = res.data;
-                //         }
-                //     },
-                //     complete: function () {
-                //         loading.hide();
-                //     },
-                //     context: this
-                // });
+                /*
+                $.ajax({
+                    type: 'post',
+                    url: Global.baseUrl + '/bpm/zjsqdbsp/detail',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        "BianHao": BianHao,
+                        "RenWuID": RenWuID || "",
+                        "LiuChengId": LiuChengId,
+                        "DangQianJD": DangQianJD || ""
+                    }),
+                    success: function (res) {
+                        if(res.code==200){
+                            this.formData = res.data;
+                        }
+                    },
+                    complete: function () {
+                        loading.hide();
+                    },
+                    context: this
+                });
+                */
             }
         }
     });

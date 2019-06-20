@@ -26,6 +26,11 @@
             font-size: 14px;
             margin: 8px 0;
         }
+
+        .YaoSu {
+            width: 105px !important;
+            padding: 0 20px !important;
+        }
     </style>
     <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
     <script src="js/zepto.min.js"></script>
@@ -195,47 +200,57 @@
                         </div>
                     </div>
                 </div>
-                <div class="weui-cells" v-if="formData.YaoSuXX">
-                    <div class="weui-panel__hd">审批要素</div>
-                    <div class="weui-panel__bd">
-                        <div class="weui-cell weui-cell_select">
-                            <div class="weui-cell__bd">
-                                <template v-for="item in formData.YaoSuXX">
-                                    <div v-if="item.YaoSuZ && item.YaoSuZ.length > 0"
-                                         class="weui-cell weui-cell_select weui-cell_select-after">
-                                        <div class="weui-cell__hd">
-                                            <label class="weui-label" style="width: 100%">{{item.YaoSuMC}}</label>
-                                        </div>
-                                        <div class="weui-cell__bd">
-                                            <select class="weui-select YaoSu" style="width: 105px;padding: 0 20px"
-                                                    v-bind:yaosubh="item.BianHao">
-                                                <option selected>请选择</option>
-                                                <option v-for="opt in item.YaoSuZ" v-bind:value="opt">{{opt}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div v-else class="weui-cell">
-                                        <div class="weui-cell__hd"><label class="weui-label" style="width: 100%">{{item.YaoSuMC}}</label>
-                                        </div>
-                                        <div class="weui-cell__bd">
-                                            <input class="weui-input YaoSu" style="width: 105px;" type="text"
-                                                   v-bind:yaosubh="item.BianHao" placeholder="请输入">
-                                        </div>
-                                    </div>
-                                </template>
+            </div>
+            <div class="weui-panel weui-panel_access" v-if="formData.YaoSuXX">
+                <div class="weui-panel__hd">审批要素</div>
+                <div class="weui-panel__bd">
+                    <template v-for="item in formData.YaoSuXX">
+                        <div v-if="item.YaoSuZ && item.YaoSuZ.length > 0"
+                             class="weui-cell weui-cell_select weui-cell_select-after">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label" style="width: 100%">{{item.YaoSuMC}}</label>
                             </div>
+                            <div class="weui-cell__bd">
+                                <select class="weui-select YaoSu"
+                                        v-bind:yaosubh="item.BianHao">
+                                    <option selected>请选择</option>
+                                    <option v-for="opt in item.YaoSuZ" v-bind:value="opt">{{opt}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div v-else class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label" style="width: 100%">{{item.YaoSuMC}}</label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input YaoSu" type="text"
+                                       v-bind:yaosubh="item.BianHao" placeholder="请输入">
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__hd">上传图片</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-uploader" style="padding: 15px">
+                        <div class="weui-uploader__bd">
+                            <ul class="weui-uploader__files" id="uploaderCustomFiles"></ul>
+                            <div class="weui-uploader__input-box">
+                                <input id="uploaderCustomInput"
+                                       class="weui-uploader__input"
+                                       type="file" accept="image/*"
+                                       multiple=""></div>
                         </div>
                     </div>
                 </div>
-                <div class="weui-panel__ft">
-                    <div class="weui-flex" style="padding: 7px">
-                        <div class="weui-flex__item" style="padding: 7px">
-                            <a class="weui-btn weui-btn_warn" href="javascript:">驳回</a>
-                        </div>
-                        <div class="weui-flex__item" style="padding: 7px">
-                            <a class="weui-btn weui-btn_ding" href="javascript:">批准</a>
-                        </div>
-                    </div>
+            </div>
+            <div class="weui-flex" style="padding: 7px">
+                <div class="weui-flex__item" style="padding: 7px">
+                    <a class="weui-btn weui-btn_warn" href="javascript:">驳回</a>
+                </div>
+                <div class="weui-flex__item" style="padding: 7px">
+                    <a class="weui-btn weui-btn_ding" href="javascript:">批准</a>
                 </div>
             </div>
         </div>
