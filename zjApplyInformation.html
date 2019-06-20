@@ -9,313 +9,241 @@
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .weui-btn_mini {
-            display: inline-block;
-            padding: 0 2.32em;
-            line-height: 3;
+        [v-cloak] {
+            display: none !important;
+        }
+
+        .weui-panel__hd {
+            font-size: 15px;
+            color: #3296fa;
+        }
+
+        .weui-media-box {
+            padding: 0 15px;
+        }
+
+        .weui-media-box__desc {
             font-size: 14px;
-        }
-        .tab{
-            padding-top:20px;
-        }
-        .weui-flex{
-            text-align: center;
-            margin-top: 6px;
-        }
-        .weui-gallery__img{
-            width:80%;
-            top:50%;
-            left:50%;
-        }
-        .weui-closed{
-            width:95%;
-            margin-top:5%;
-            text-align: right;
-        }
-        .weui-closed span{
-            color:#fff;
-            font-size:14px;
-        }
-        .tabContent{
-            height:100%;
-            overflow: scroll;
+            margin: 8px 0;
         }
     </style>
-    <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
+    <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
     <script src="js/zepto.min.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/config.js"></script>
 </head>
 <body>
-<div class="buttons-tab">
-    <a href="#tab1" class="tab-link active button">申请信息</a>
-    <a href="#tab2" class="tab-link button">流程</a>
-    <a href="#tab3" class="tab-link button">审批</a>
-</div>
-<input type="hidden" id="sqbmbh" value=""/>
-<input type="hidden" id="ShenQingJE" value=""/>
-<input type="hidden" id="bxlx" value=""/>
- <div class="tabContent">
-                    <div class="tabs">
-                        <div id="tab1" class="tab active">
-                            <div class="content-block">
-                                <div class="list-block">
-                                    <ul>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title sqbt"></div>
-                                                <div class="item-after">申请金额<span class="sqje"></span></div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title"><span class="DanWeiMC"></span>><span class="BuMenMC"></span></div>
-                                                <div class="item-after bxr"></div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="content-block-title">基本信息</div>
-                                <div class="list-block">
-                                    <ul>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">指标名称</div>
-                                                    <div class="item-input">
-                                                        <span class="zbmc"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">可用余额</div>
-                                                    <div class="item-input">
-                                                        <span class="kyye"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">报销部门</div>
-                                                    <div class="item-input">
-                                                        <span class="bxbm"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">报销人</div>
-                                                    <div class="item-input">
-                                                        <span class="bxr"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="align-top">
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-comment"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">报销是由</div>
-                                                    <div class="item-input">
-                                                        <textarea class="bxsy" readonly></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="content-block-title">支出信息</div>
-                                <div class="list-block">
-                                    <ul>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">指标名称</div>
-                                                    <div class="item-input">
-                                                        <span class="zbmc"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">支出事项</div>
-                                                    <div class="item-input">
-                                                        <span class="zcsx"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">报销金额</div>
-                                                    <div class="item-input">
-                                                        <span class="bxje"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="content-block-title">支出明细</div>
-                                <div class="list-block">
-                                    <ul id="zcmx">
-
-                                    </ul>
-                                </div>
-                                <div class="content-block-title">结算信息</div>
-                                <div class="list-block">
-                                    <ul>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">报销金额</div>
-                                                    <div class="item-input">
-                                                        <span>16500.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="content-block-title djfj">单据附件</div>
-                                <div class="list-block">
-                                    <ul class="fjLists">
-                                    </ul>
-                                </div>
+<div class="weui-tab" id="tab" v-cloak>
+    <div class="weui-navbar">
+        <div class="weui-navbar__item">申请信息</div>
+        <div class="weui-navbar__item">流程</div>
+        <div class="weui-navbar__item">审批</div>
+    </div>
+    <div class="weui-tab__panel">
+        <div class="weui-tab__content">
+            <!--申请信息页-->
+            <div class="weui-panel weui-panel_access" v-if="formData.DanJuXX">
+                <div class="weui-panel__hd">基本信息</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">单位名称</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.DanWeiMC}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">部门名称</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.BuMenMC}}</h4>
                             </div>
                         </div>
-                        <div id="tab2" class="tab">
-                            <div class="content-block">
-                                <p class="img"><img src=""/></p>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">借款人</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.JieKuanR}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">申请日期</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.ShenQingRQ}}</h4>
                             </div>
                         </div>
-                        <div id="tab3" class="tab" style="padding-bottom:55px;">
-                            <div class="content-block">
-                                <div class="weui-cells weui-cells_form">
-                                    <div class="weui-cell">
-                                        <div class="weui-cell__bd">
-                                            <textarea id="option" class="weui-textarea" placeholder="请输入审批意见" rows="5"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">指标名称</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.ZhiBiaoMC}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">可用余额</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.KeYongYE}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">合同名称</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.HeTongMC}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">经办人</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.JingBanR}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">借款金额</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.JieKuanJE}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">支出事项</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.ZhiChuSX}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">申请附件</p>
                                 <div class="list-block">
-                                    <ul class="ysXX">
-                                        <!--<li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-gender"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">符合单位财务规定</div>
-                                                    <div class="item-input">
-                                                        <select>
-                                                            <option>是</option>
-                                                            <option>否</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>-->
-                                    </ul>
-                                </div>
-                                <div class="content-block-title">上传附件</div>
-                                <div class="weui-gallery" id="gallery">
-                                    <div class="weui-closed">
-                                        <span>关闭</span>
-                                    </div>
-                                    <img style="-webkit-touch-callout:default;" class="weui-gallery__img" id="galleryImg"/>
-                                    <!--<div class="weui-gallery__opr">
-                                        <a href="javascript:" class="weui-gallery__del">
-                                            <i class="weui-icon-delete weui-icon_gallery-delete"></i>
-                                        </a>
-                                    </div>-->
-                                </div>
-                                <div class="weui-cells weui-cells_form">
-                                    <div class="weui-cell">
-                                        <div class="weui-cell__bd">
-                                            <div class="weui-uploader">
-                                                <div class="weui-uploader__bd">
-                                                    <ul class="weui-uploader__files" id="uploaderFiles">
-                                                    </ul>
-                                                    <div class="weui-uploader__input-box">
-                                                        <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content-block-title">审批过程</div>
-                                <div class="spFjLists">
-                                    <div class="list-block">
-                                        <!--<div class="weui-cells weui-cells_form">
-                                            <div class="weui-cell">
-                                                <div class="weui-cell__bd">
-                                                    <textarea style="height:3rem;" class="weui-textarea" rows="3">同意</textarea>
-                                                    <div class="weui-textarea-counter"><span>张三</span></div>
-                                                    <div class="weui-textarea-counter clearfix"><label class="fl">审批时长：即时</label><time class="fr">2019-06-13</time></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <ul class="ysValue">
+                                    <ul>
+                                        <template v-for="item in formData.DanJuXX.DanJuFJ">
                                             <li>
                                                 <div class="item-content">
                                                     <div class="item-media"><i class="icon icon-form-email"></i></div>
                                                     <div class="item-inner">
-                                                        <div class="item-title label">要素1</div>
-                                                        <div class="item-input">
-                                                            <span class="zcsx">123</span>
-                                                        </div>
+                                                        <a href="{{item.FuJianLJ}}" download>{{item.FuJianMC}}</a>
                                                     </div>
                                                 </div>
                                             </li>
-                                        </ul>
-                                        <ul>
-                                            <li>
-                                                <div class="item-content">
-                                                    <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                    <div class="item-inner">
-                                                        <a class="colorBlue" href="http://119.18.195.153:8088/bpm/image//upload/zhijiebx/1560396568264/FJ20190613000013.pdf" download="">流程配置手册.pdf</a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>-->
-                                    </div>
+                                        </template>
+                                    </ul>
                                 </div>
-                                <div class="fixBottom">
-                                    <div class="weui-flex">
-                                        <div class="weui-flex__item"><a id="submit" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">审核通过</a></div>
-                                        <div class="weui-flex__item"><a id="back" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">退回</a></div>
-                                    </div>
-                                </div>
-
-
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
+            </div>
+            <div class="weui-panel weui-panel_access" v-if="formData.ZhiChuMX">
+                <div class="weui-panel__hd">支出明细</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <template v-for="item in formData.ZhiChuMX">
+                            <div class="weui-flex">
+                                <div class="weui-flex__item">
+                                    <p class="weui-media-box__desc">{{item.MingXiMC}}</p>
+                                    <h4 class="weui-media-box__title">{{item.MingXiJE}}</h4>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-panel weui-panel_access" v-if="formData.FuZhuXX">
+                <div class="weui-panel__hd">辅助信息</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <template v-for="item in formData.ZhiChuMX">
+                            <div class="weui-flex">
+                                <div class="weui-flex__item">
+                                    <p class="weui-media-box__desc">{{item.FuZhuXMC}}</p>
+                                    <h4 class="weui-media-box__title">{{item.FuZhuXZ}}</h4>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-panel weui-panel_access" v-if="formData.JieSuanXX">
+                <div class="weui-panel__hd">结算信息</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <template v-for="item in formData.JieSuanXX">
+                            <div class="weui-flex">
+                                <div class="weui-flex__item">
+                                    <p class="weui-media-box__desc">结算方式</p>
+                                    <h4 class="weui-media-box__title">{{item.JieSuanFS}}</h4>
+                                </div>
+                                <div class="weui-flex__item">
+                                    <p class="weui-media-box__desc">结算金额</p>
+                                    <h4 class="weui-media-box__title">{{item.JieSuanJE}}</h4>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 15px">
+                <a href="javascript:;" class="weui-btn weui-btn_block weui-btn_ding" v-on:click="gotoTab(2)">去审批</a>
+            </div>
+        </div>
+        <div class="weui-tab__content">
+            <!--流程页-->
+        </div>
+        <div class="weui-tab__content">
+            <!--审批页-->
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__hd">审批意见</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <textarea class="weui-textarea" placeholder="请输入审批意见" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-cells" v-if="formData.YaoSuXX">
+                    <div class="weui-panel__hd">审批要素</div>
+                    <div class="weui-panel__bd">
+                        <div class="weui-cell weui-cell_select">
+                            <div class="weui-cell__bd">
+                                <template v-for="item in formData.YaoSuXX">
+                                    <div v-if="item.YaoSuZ && item.YaoSuZ.length > 0"
+                                         class="weui-cell weui-cell_select weui-cell_select-after">
+                                        <div class="weui-cell__hd">
+                                            <label class="weui-label" style="width: 100%">{{item.YaoSuMC}}</label>
+                                        </div>
+                                        <div class="weui-cell__bd">
+                                            <select class="weui-select YaoSu" style="width: 105px;padding: 0 20px"
+                                                    v-bind:yaosubh="item.BianHao">
+                                                <option selected>请选择</option>
+                                                <option v-for="opt in item.YaoSuZ" v-bind:value="opt">{{opt}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div v-else class="weui-cell">
+                                        <div class="weui-cell__hd"><label class="weui-label" style="width: 100%">{{item.YaoSuMC}}</label>
+                                        </div>
+                                        <div class="weui-cell__bd">
+                                            <input class="weui-input YaoSu" style="width: 105px;" type="text"
+                                                   v-bind:yaosubh="item.BianHao" placeholder="请输入">
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-panel__ft">
+                    <div class="weui-flex" style="padding: 7px">
+                        <div class="weui-flex__item" style="padding: 7px">
+                            <a class="weui-btn weui-btn_warn" href="javascript:">驳回</a>
+                        </div>
+                        <div class="weui-flex__item" style="padding: 7px">
+                            <a class="weui-btn weui-btn_ding" href="javascript:">批准</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="js/weui.min.js"></script>
-<script src="js/applyInformation.js"></script>
-
-
+<script src="js/vue.js"></script>
+<script src="js/testData.js"></script>
+<script src="js/zjApplyInformation.js"></script>
 </body>
 </html>
