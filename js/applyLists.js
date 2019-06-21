@@ -140,7 +140,7 @@ function getData(dwbh,yhbh) {
                         jd:jd,
                         rwid:rwid
                     };
-                    $.fn.cookie('messStr',JSON.stringify(dataStr));
+                    $.fn.cookie('zxmessStr',JSON.stringify(dataStr));
                 })
             }
         },

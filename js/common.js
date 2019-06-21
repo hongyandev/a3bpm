@@ -1,4 +1,4 @@
-$(function () {
+function upload(options) {
     // 允许上传的图片类型
     var allowTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
     //上传大小
@@ -9,10 +9,10 @@ $(function () {
     var maxCount = 20;
     //  var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>';
 
-    var $gallery = $("#gallery"),
-        $galleryImg = $("#galleryImg"),
-        $uploaderInput = $("#uploaderInput"),
-        $uploaderFiles = $("#uploaderFiles");
+    var $gallery = $(options.el),
+        $galleryImg = $(options.el + "Img"),
+        $uploaderInput = $(options.el + "Input"),
+        $uploaderFiles = $(options.el + "Files");
     var baseArrs = [];
 
     $uploaderInput.on('change', function (event) {
@@ -42,7 +42,6 @@ $(function () {
              }*/
             reader.readAsDataURL(file);
             reader.onload = function (e) {
-                //console.log(e);
                 var img = new Image();
                 img.src = e.target.result;
                 img.onload = function () {
@@ -61,12 +60,10 @@ $(function () {
                     var $preview = $('<li class="weui-uploader__file"><img style="width:100%;" src="' + img.src + '" /></li>');
                     $uploaderFiles.html($preview);
                     var json = {"value": base64};
-
-                    // console.info(base64)
                     baseArrs.pop();
                     baseArrs.push(json);
                     console.info(baseArrs);
-                    return;
+                    //return;
                     var loading = weui.loading('正在提交...', {
                         className: 'custom-classname'
                     });
@@ -80,13 +77,11 @@ $(function () {
                             loading.hide();
                             if (res.msgCode == '1') {
                                 weui.toast("上传成功", function () {
-                                    //console.log('close');
-
                                 });
-                                fj = res.list;
+                                if(options.callback){
+                                    options.callback(res.list);
+                                }
                             }
-
-
                         },
                         error: function (xhr, type) {
                             loading.hide();
@@ -94,12 +89,8 @@ $(function () {
                         }
                     });
                 };
-
             };
-
         }
-
-
     });
 
     var index; //第几张图片
@@ -110,15 +101,14 @@ $(function () {
         $galleryImg.attr("src", pic[0].getAttribute("src"));
         $gallery.show(100);
         $galleryImg.get(0).onload = function () {
-            var picH = $("#galleryImg").height();
-            var picW = $("#galleryImg").width();
+            var picH = $galleryImg.height();
+            var picW = $galleryImg.width();
             $galleryImg.css({"margin-top": -parseFloat(picH) / 2 + "px", "margin-left": -parseFloat(picW) / 2 + "px"})
         };
-
     });
     //点击关闭，大图浮层关闭
     $(".weui-closed").on("click", function () {
         $gallery.hide(100);
     });
 
-});
+};

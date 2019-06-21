@@ -45,6 +45,7 @@
     <script src="js/zepto.min.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
 </head>
 <body>
 <div class="buttons-tab">
@@ -54,7 +55,7 @@
 </div>
 <input type="hidden" id="sqbmbh" value=""/>
 <input type="hidden" id="ShenQingJE" value=""/>
-<input type="hidden" id="bxlx" value=""/>
+<input type="hidden" id="sqje" value=""/>
  <div class="tabContent">
                     <div class="tabs">
                         <div id="tab1" class="tab active">
@@ -63,14 +64,14 @@
                                     <ul>
                                         <li class="item-content">
                                             <div class="item-inner">
-                                                <div class="item-title sqbt"></div>
+                                                <div class="item-title qbbt"></div><!--签报标题-->
                                                 <div class="item-after">申请金额<span class="sqje"></span></div>
                                             </div>
                                         </li>
                                         <li class="item-content">
                                             <div class="item-inner">
-                                                <div class="item-title"><span class="DanWeiMC"></span>><span class="BuMenMC"></span></div>
-                                                <div class="item-after bxr"></div>
+                                                <div class="item-title"><span class="ShenQingBM"></span></div>
+                                                <div class="item-after jbr"></div><!--经办人-->
                                             </div>
                                         </li>
                                     </ul>
@@ -82,9 +83,9 @@
                                             <div class="item-content">
                                                 <div class="item-media"><i class="icon icon-form-email"></i></div>
                                                 <div class="item-inner">
-                                                    <div class="item-title label">指标名称</div>
+                                                    <div class="item-title label">申请单号</div>
                                                     <div class="item-input">
-                                                        <span class="zbmc"></span>
+                                                        <span class="sqdh"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -93,9 +94,9 @@
                                             <div class="item-content">
                                                 <div class="item-media"><i class="icon icon-form-email"></i></div>
                                                 <div class="item-inner">
-                                                    <div class="item-title label">可用余额</div>
+                                                    <div class="item-title label">经办人</div>
                                                     <div class="item-input">
-                                                        <span class="kyye"></span>
+                                                        <span class="jbr"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,9 +105,9 @@
                                             <div class="item-content">
                                                 <div class="item-media"><i class="icon icon-form-email"></i></div>
                                                 <div class="item-inner">
-                                                    <div class="item-title label">报销部门</div>
+                                                    <div class="item-title label">申请日期</div>
                                                     <div class="item-input">
-                                                        <span class="bxbm"></span>
+                                                        <span class="sqDate"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -115,9 +116,53 @@
                                             <div class="item-content">
                                                 <div class="item-media"><i class="icon icon-form-email"></i></div>
                                                 <div class="item-inner">
-                                                    <div class="item-title label">报销人</div>
+                                                    <div class="item-title label">预期截止日期</div>
                                                     <div class="item-input">
-                                                        <span class="bxr"></span>
+                                                        <span class="yqjzDate"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">申请部门</div>
+                                                    <div class="item-input">
+                                                        <span class="ShenQingBM"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">使用部门</div>
+                                                    <div class="item-input">
+                                                        <span class="sybm"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">使用人</div>
+                                                    <div class="item-input">
+                                                        <span class="syr"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
+                                                <div class="item-inner">
+                                                    <div class="item-title label">经办时间</div>
+                                                    <div class="item-input">
+                                                        <span class="jbDate"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -126,69 +171,29 @@
                                             <div class="item-content">
                                                 <div class="item-media"><i class="icon icon-form-comment"></i></div>
                                                 <div class="item-inner">
-                                                    <div class="item-title label">报销是由</div>
+                                                    <div class="item-title label">签报内容</div>
                                                     <div class="item-input">
-                                                        <textarea class="bxsy" readonly></textarea>
+                                                        <textarea class="qbnr" readonly></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="content-block-title">支出信息</div>
-                                <div class="list-block">
-                                    <ul>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">指标名称</div>
-                                                    <div class="item-input">
-                                                        <span class="zbmc"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">支出事项</div>
-                                                    <div class="item-input">
-                                                        <span class="zcsx"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                <div class="item-inner">
-                                                    <div class="item-title label">报销金额</div>
-                                                    <div class="item-input">
-                                                        <span class="bxje"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="content-block-title">支出明细</div>
-                                <div class="list-block">
-                                    <ul id="zcmx">
+                                <div class="content-block-title">费用预算</div>
+                                <div class="list-block cardItem cardItemYs">
 
-                                    </ul>
                                 </div>
-                                <div class="content-block-title">结算信息</div>
-                                <div class="list-block">
+                                <div class="content-block-title">费用信息</div>
+                                <div class="list-block cardItem cardItemFyxx">
                                     <ul>
                                         <li>
                                             <div class="item-content">
                                                 <div class="item-media"><i class="icon icon-form-email"></i></div>
                                                 <div class="item-inner">
-                                                    <div class="item-title label">报销金额</div>
+                                                    <div class="item-title label">名称</div>
                                                     <div class="item-input">
-                                                        <span>16500.00</span>
+                                                        <span></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -251,10 +256,10 @@
                                         <div class="weui-cell__bd">
                                             <div class="weui-uploader">
                                                 <div class="weui-uploader__bd">
-                                                    <ul class="weui-uploader__files" id="uploaderFiles">
+                                                    <ul class="weui-uploader__files" id="galleryFiles">
                                                     </ul>
                                                     <div class="weui-uploader__input-box">
-                                                        <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                                                        <input id="galleryInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -314,7 +319,7 @@
 
 
 <script src="js/weui.min.js"></script>
-<script src="js/applyInformation.js"></script>
+<script src="js/zxApplyInformation.js"></script>
 
 
 </body>
