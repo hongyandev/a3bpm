@@ -81,9 +81,20 @@ var GetRequest = function () {
     }
     return theRequest;
 }
+var readLocalFile = function (file, callback, mimetype) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType(mimetype || "application/json");
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+            callback(rawFile.responseText);
+        }
+    }
+    rawFile.send(null);
+}
 var Global = {
     baseUrl: "http://wxdev.hongyancloud.com:8082",
-    h5Url: "http://wxdev.hongyancloud.com:9997",
+    h5Url: "http://wxdev.hongyancloud.com:9998",
     appKey: "dingoe9bkbhog7ygthvb"
 }
 var _config, _userinfo, _request;
