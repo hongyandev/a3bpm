@@ -301,3 +301,7 @@ ul,li{list-style: none;}
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.weui-btn_ding {
+    background-color: #3296fa;
+}
