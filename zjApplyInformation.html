@@ -127,7 +127,7 @@
                                                 <div class="item-content">
                                                     <div class="item-media"><i class="icon icon-form-email"></i></div>
                                                     <div class="item-inner">
-                                                        <a href="{{item.FuJianLJ}}" download>{{item.FuJianMC}}</a>
+                                                        <a v-bind:href="item.FuJianLJ" download>{{item.FuJianMC}}</a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -202,7 +202,7 @@
                 <div class="weui-panel__bd">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <textarea class="weui-textarea" placeholder="请输入审批意见" rows="5"></textarea>
+                            <textarea v-model.trim="submitData.ShenPiYJ" class="weui-textarea" placeholder="请输入审批意见" rows="5"></textarea>
                         </div>
                     </div>
                 </div>
@@ -210,17 +210,16 @@
             <div class="weui-panel weui-panel_access" v-if="formData.YaoSuXX">
                 <div class="weui-panel__hd">审批要素</div>
                 <div class="weui-panel__bd">
-                    <template v-for="item in formData.YaoSuXX">
+                    <template v-for="(item,index) in formData.YaoSuXX" v-model="submitData.ShenPiYS">
                         <div v-if="item.YaoSuZ && item.YaoSuZ.length > 0"
                              class="weui-cell weui-cell_select weui-cell_select-after">
                             <div class="weui-cell__hd">
                                 <label class="weui-label" style="width: 100%">{{item.YaoSuMC}}</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <select class="weui-select YaoSu"
+                                <select v-model="submitData.ShenPiYS[index]" class="weui-select YaoSu"
                                         v-bind:yaosubh="item.BianHao">
-                                    <option selected>请选择</option>
-                                    <option v-for="opt in item.YaoSuZ" v-bind:value="opt">{{opt}}</option>
+                                    <option v-for="opt in item.YaoSuZ" v-bind:value='{"BianHao":item.BianHao,"YaoSuZ":opt}'>{{opt}}</option>
                                 </select>
                             </div>
                         </div>
@@ -229,13 +228,15 @@
                                 <label class="weui-label" style="width: 100%">{{item.YaoSuMC}}</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <input class="weui-input YaoSu" type="text"
+                                <input v-model="submitData.ShenPiYS[index]" class="weui-input YaoSu" type="text"
                                        v-bind:yaosubh="item.BianHao" placeholder="请输入">
                             </div>
                         </div>
                     </template>
                 </div>
             </div>
+            <weui-uploader id="ShenPiFJ" title="图片上传" :options="uploaderOptions" :files="submitData.FileList"></weui-uploader>
+            <!--
             <div class="weui-panel weui-panel_access">
                 <div class="weui-panel__hd">上传图片</div>
                 <div class="weui-panel__bd">
@@ -251,20 +252,22 @@
                     </div>
                 </div>
             </div>
+            -->
             <div class="weui-flex" style="padding: 7px">
                 <div class="weui-flex__item" style="padding: 7px">
-                    <a class="weui-btn weui-btn_warn" href="javascript:">驳回</a>
+                    <a class="weui-btn weui-btn_warn" v-on:click="submitForm('back')" href="javascript:">驳回</a>
                 </div>
                 <div class="weui-flex__item" style="padding: 7px">
-                    <a class="weui-btn weui-btn_ding" href="javascript:">批准</a>
+                    <a class="weui-btn weui-btn_ding" v-on:click="submitForm('pass')" href="javascript:">批准</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src="js/testData.js"></script>
 <script src="js/weui.min.js"></script>
 <script src="js/vue.js"></script>
-<script src="js/testData.js"></script>
+<script src="js/vue.weui.uploader.js"></script>
 <script src="js/zjApplyInformation.js"></script>
 </body>
 </html>

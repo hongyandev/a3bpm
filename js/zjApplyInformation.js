@@ -2,9 +2,35 @@ $(function () {
     var vm = new Vue({
         el: "#tab",
         data: {
-            formData: {}
+            formData: {},
+            submitData: {
+                ShenPiYJ : "",
+                ShenPiYS : [],
+                FileList : []
+            },
+            uploaderFiles: [],
+            uploaderOptions : {
+                // url : Global.baseUrl + "/bpm/common/upload2",
+                url : "http://localhost:8082/bpm/common/upload2",
+                type : "base64",
+                fileval : "fileBase64",
+                filekey : "FuJianMC",
+                maxsize : 5,
+                maxcount : 9,
+                onSuccess : function (ret) {
+                    if(ret.msgCode == "1") {
+                        return ret.list[0];
+                    }
+                }
+            }
         },
         methods: {
+            getValue: function (t) {
+                console.log(t)
+            },
+            submitForm: function () {
+                console.log(this.submitData);
+            },
             gotoTab: function (index) {
                 $($(".weui-navbar__item").get(index)).click();
             },
