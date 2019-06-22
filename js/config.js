@@ -94,7 +94,7 @@ var readLocalFile = function (file, callback, mimetype) {
 }
 var Global = {
     baseUrl: "http://wxdev.hongyancloud.com:8082",
-    h5Url: "http://wxdev.hongyancloud.com:9998",
+    h5Url: "http://wxdev.hongyancloud.com:8082",
     appKey: "dingoe9bkbhog7ygthvb"
 }
 var _config, _userinfo, _request;
