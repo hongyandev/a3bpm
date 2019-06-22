@@ -28,7 +28,19 @@ $(function () {
             getValue: function (t) {
                 console.log(t)
             },
-            submitForm: function () {
+            submitForm: function (next) {
+                var vm = this;
+                vm.submitData.ShenQingBMBH = vm.formData.DanJuXX.ShenQingBMBH;
+                vm.submitData.BaoXiaoJE = vm.formData.DanJuXX.JieKuanJE.replace(/,/gi, '');
+                vm.submitData.DanJuLX = vm.formData.DanJuXX.JieKuanDLX;
+                vm.submitData.ShenPiYS.splice(0,vm.submitData.ShenPiYS.length);
+                vm.submitData.Next = next;
+                $(".YaoSu").each(function (index) {
+                   vm.submitData.ShenPiYS.push({
+                       "YaoSuBH" : $(this).attr("yaosubh"),
+                       "YaoSuZ" : $(this).val()
+                   });
+                });
                 console.log(this.submitData);
             },
             gotoTab: function (index) {

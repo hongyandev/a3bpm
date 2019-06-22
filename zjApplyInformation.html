@@ -217,9 +217,9 @@
                                 <label class="weui-label" style="width: 100%">{{item.YaoSuMC}}</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <select v-model="submitData.ShenPiYS[index]" class="weui-select YaoSu"
-                                        v-bind:yaosubh="item.BianHao">
-                                    <option v-for="opt in item.YaoSuZ" v-bind:value='{"BianHao":item.BianHao,"YaoSuZ":opt}'>{{opt}}</option>
+                                <select class="weui-select YaoSu" v-bind:yaosubh="item.BianHao">
+                                    <option selected>请选择</option>
+                                    <option v-for="opt in item.YaoSuZ" v-bind:value='opt'>{{opt}}</option>
                                 </select>
                             </div>
                         </div>
@@ -228,31 +228,13 @@
                                 <label class="weui-label" style="width: 100%">{{item.YaoSuMC}}</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <input v-model="submitData.ShenPiYS[index]" class="weui-input YaoSu" type="text"
-                                       v-bind:yaosubh="item.BianHao" placeholder="请输入">
+                                <input class="weui-input YaoSu" type="text" v-bind:yaosubh="item.BianHao" placeholder="请输入">
                             </div>
                         </div>
                     </template>
                 </div>
             </div>
             <weui-uploader id="ShenPiFJ" title="图片上传" :options="uploaderOptions" :files="submitData.FileList"></weui-uploader>
-            <!--
-            <div class="weui-panel weui-panel_access">
-                <div class="weui-panel__hd">上传图片</div>
-                <div class="weui-panel__bd">
-                    <div class="weui-uploader" style="padding: 15px">
-                        <div class="weui-uploader__bd">
-                            <ul class="weui-uploader__files" id="uploaderCustomFiles"></ul>
-                            <div class="weui-uploader__input-box">
-                                <input id="uploaderCustomInput"
-                                       class="weui-uploader__input"
-                                       type="file" accept="image/*"
-                                       multiple=""></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            -->
             <div class="weui-flex" style="padding: 7px">
                 <div class="weui-flex__item" style="padding: 7px">
                     <a class="weui-btn weui-btn_warn" v-on:click="submitForm('back')" href="javascript:">驳回</a>
@@ -267,7 +249,7 @@
 <script src="js/testData.js"></script>
 <script src="js/weui.min.js"></script>
 <script src="js/vue.js"></script>
-<script src="js/vue.weui.uploader.js"></script>
+<script src="js/components/vue.weui.uploader.js"></script>
 <script src="js/zjApplyInformation.js"></script>
 </body>
 </html>
