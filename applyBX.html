@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>报销申请</title>
+    <link rel="stylesheet" href="css/sm.css">
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/zepto.min.js"></script>
+    <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/config.js"></script>
+
+</head>
+<body>
+    <div id="applybx">
+        <div class="list-block">
+            <ul>
+                <!-- Text inputs -->
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-name"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">报销类型</div>
+                            <div class="item-input">
+                                <div class="item-select" onclick="$('#bxlx').show();">
+                                    {{bxlx.disval}}
+                                </div>
+                            </div>
+                            <span class="icon icon-right"></span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">指标名称</div>
+                            <div class="item-input">
+                                <select>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- Date -->
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">报销日期</div>
+                            <div class="item-input">
+                                <input id="bxDate" type="date" placeholder="" value="2019-06-24">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="align-top">
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">文本域</div>
+                            <div class="item-input">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+<div>bxlx key: {{formData.bxlx}}</div>
+        </div>
+        <select-dialog id="bxlx" title="报销类型" v-model="currentVal" :val="formData.bxlx" :config="bxlx"></select-dialog>
+    </div>
+</body>
+<script type="text/x-template" id="select-dialog">
+    <div :id="id" class="selectDialog" style="display: none">
+        <div class="dialogInfo">
+            <h3 class="selectTitle">{{title}}</h3>
+            <div class="selectCon">
+                <ul class="selList">
+                    <li v-bind:class="{active: item[config.key]===config.val}" v-for="item in config.options" :mapkey="item[config.key]" @click="liClick(item[config.key],item[config.dis])">{{item[config.dis]}}</li>
+                </ul>
+            </div>
+            <div class="selectBottom">
+                <ul class="row">
+                    <li class="col-50" @click="cancel()"><a href="javascript:void(0)">取消</a></li>
+                    <li class="col-50" @click="apply()"><a href="javascript:void(0)">确定</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="dialogBg"></div>
+    </div>
+</script>
+<script src="js/vue.js"></script>
+<script src="js/applyBX.js"></script>
+<script>
+    Vue.component("select-dialog", {
+        data: function () {
+            return {
+                currentVal : this.val
+            }
+        },
+        props: ['id', 'title', 'val', 'config'],
+        template: "#select-dialog",
+        methods: {
+            liClick: function (key, dis) {
+                this.currentVal = key;
+                this.config.val = key; // 当前值
+                this.config.disval = dis;
+            },
+            cancel: function () {
+                $('#' + this.id).hide();
+            },
+            apply: function () {
+                $('#' + this.id).hide();
+            }
+        }
+    });
+    var vm = new Vue({
+        el: "#applybx",
+        data: {
+            formData : {
+                bxlx : {}
+            },
+            bxlx: {
+                options: [
+                    {
+                        "key": "1",
+                        "val": "一"
+                    },{
+                        "key": "2",
+                        "val": "两"
+                    }
+                ],
+                key: "key",
+                dis: "val",
+                val: ""
+            }
+        }
+    })
+    // $("#bxDate").calendar({
+    //     //value: ['2015-12-05']
+    // });
+</script>
+</html>
