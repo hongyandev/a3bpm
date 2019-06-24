@@ -29,16 +29,15 @@ $(function () {
                 console.log(t)
             },
             submitForm: function (next) {
-                var vm = this;
-                vm.submitData.YongHuBH = '用户编号';
-                vm.submitData.ShenQingBMBH = vm.formData.DanJuXX.ShenQingBMBH;
-                vm.submitData.BaoXiaoJE = vm.formData.DanJuXX.JieKuanJE.replace(/,/gi, '');
-                vm.submitData.DanJuLX = vm.formData.DanJuXX.JieKuanDLX;
-                vm.submitData.DanJuBH = "单据编号";
-                vm.submitData.LiuChengId = "流程id";
-                vm.submitData.TaskId = "任务id";
-                vm.submitData.DangQianJD = "当前审批环节";
-                vm.submitData.Next = next;
+                this.submitData.YongHuBH = '用户编号';
+                this.submitData.ShenQingBMBH = this.formData.DanJuXX.ShenQingBMBH;
+                this.submitData.BaoXiaoJE = this.formData.DanJuXX.JieKuanJE.replace(/,/gi, '');
+                this.submitData.DanJuLX = this.formData.DanJuXX.JieKuanDLX;
+                this.submitData.DanJuBH = "单据编号";
+                this.submitData.LiuChengId = "流程id";
+                this.submitData.TaskId = "任务id";
+                this.submitData.DangQianJD = "当前审批环节";
+                this.submitData.Next = next;
                 console.log(this.submitData);
                 // $.ajax()
             },
