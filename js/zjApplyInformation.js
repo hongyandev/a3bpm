@@ -29,14 +29,9 @@ $(function () {
                 console.log(t)
             },
             submitForm: function (next) {
-                this.submitData.YongHuBH = '用户编号';
                 this.submitData.ShenQingBMBH = this.formData.DanJuXX.ShenQingBMBH;
                 this.submitData.BaoXiaoJE = this.formData.DanJuXX.JieKuanJE.replace(/,/gi, '');
                 this.submitData.DanJuLX = this.formData.DanJuXX.JieKuanDLX;
-                this.submitData.DanJuBH = "单据编号";
-                this.submitData.LiuChengId = "流程id";
-                this.submitData.TaskId = "任务id";
-                this.submitData.DangQianJD = "当前审批环节";
                 this.submitData.Next = next;
                 console.log(this.submitData);
                 // $.ajax()
@@ -45,6 +40,11 @@ $(function () {
                 $($(".weui-navbar__item").get(index)).click();
             },
             getFormData: function (BianHao, RenWuID, LiuChengId, DangQianJD) {
+                this.submitData.YongHuBH = '用户编号';
+                this.submitData.DanJuBH = BianHao;
+                this.submitData.LiuChengId = LiuChengId;
+                this.submitData.TaskId = RenWuID || "";
+                this.submitData.DangQianJD = DangQianJD || "";
                 var loading = weui.loading('loading', {
                     className: 'custom-classname'
                 });
