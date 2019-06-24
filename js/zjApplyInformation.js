@@ -38,14 +38,7 @@ $(function () {
                 vm.submitData.LiuChengId = "流程id";
                 vm.submitData.TaskId = "任务id";
                 vm.submitData.DangQianJD = "当前审批环节";
-                vm.submitData.ShenPiYS.splice(0,vm.submitData.ShenPiYS.length);
                 vm.submitData.Next = next;
-                $(".YaoSu").each(function (index) {
-                   vm.submitData.ShenPiYS.push({
-                       "YaoSuBH" : $(this).attr("yaosubh"),
-                       "YaoSuZ" : $(this).val()
-                   });
-                });
                 console.log(this.submitData);
                 // $.ajax()
             },
