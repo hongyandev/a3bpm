@@ -324,6 +324,9 @@ ul,li{list-style: none;}
 .selectCon ul li{
     padding:20px 0;
 }
+.selectCon ul li.active{
+    color:#0894ec;
+}
 .selectTitle{
     text-align: center;
     padding:20px 0;
@@ -335,6 +338,9 @@ ul,li{list-style: none;}
 .selectBottom ul li{
     padding:15px 0;
     text-align: center;
+}
+.selectBottom ul li a{
+    color:#0894ec;
 }
 .selectBottom ul li:first-child{
     border-right:1px solid #e5e5e5;
