@@ -30,9 +30,14 @@ $(function () {
             },
             submitForm: function (next) {
                 var vm = this;
+                vm.submitData.YongHuBH = '用户编号';
                 vm.submitData.ShenQingBMBH = vm.formData.DanJuXX.ShenQingBMBH;
                 vm.submitData.BaoXiaoJE = vm.formData.DanJuXX.JieKuanJE.replace(/,/gi, '');
                 vm.submitData.DanJuLX = vm.formData.DanJuXX.JieKuanDLX;
+                vm.submitData.DanJuBH = "单据编号";
+                vm.submitData.LiuChengId = "流程id";
+                vm.submitData.TaskId = "任务id";
+                vm.submitData.DangQianJD = "当前审批环节";
                 vm.submitData.ShenPiYS.splice(0,vm.submitData.ShenPiYS.length);
                 vm.submitData.Next = next;
                 $(".YaoSu").each(function (index) {
@@ -42,6 +47,7 @@ $(function () {
                    });
                 });
                 console.log(this.submitData);
+                // $.ajax()
             },
             gotoTab: function (index) {
                 $($(".weui-navbar__item").get(index)).click();
