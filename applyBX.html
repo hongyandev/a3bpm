@@ -73,7 +73,7 @@
 </body>
 <script type="text/x-template" id="select-dialog">
     <div>
-        <div class="item-select" onclick="$('#bxlx').show();">{{currentDisVal}}</div>
+        <div class="item-select" @click="show()">{{currentDisVal}}</div>
         <div :id="id" class="selectDialog" style="display: none">
             <div class="dialogInfo">
                 <h3 class="selectTitle">{{title}}</h3>
@@ -107,11 +107,17 @@
         props: ['id', 'title', 'config'],
         template: "#select-dialog",
         methods: {
+            show: function () {
+                $('#'+this.id).show();
+            },
             click: function (record) {
-                this.currentVal = record[this.config.key];
-                this.currentDisVal = record[this.config.dis];
-                this.currentRecord = record;
-                this.$emit('input', this.currentVal);
+                var val = record[this.config.key];
+                if (this.currentVal !== val) {
+                    this.currentVal = record[this.config.key];
+                    this.currentDisVal = record[this.config.dis];
+                    this.currentRecord = record;
+                    this.$emit('input', this.currentVal);
+                }
             },
             close: function () {
                 $('#' + this.id).hide();
