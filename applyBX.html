@@ -23,9 +23,7 @@
                         <div class="item-inner">
                             <div class="item-title label">报销类型</div>
                             <div class="item-input">
-                                <div class="item-select" onclick="$('#bxlx').show();">
-                                    {{bxlx.disval}}
-                                </div>
+                                <select-dialog id="bxlx" title="报销类型" :config="bxlxConfig" v-model="formData.bxlx"></select-dialog>
                             </div>
                             <span class="icon icon-right"></span>
                         </div>
@@ -71,26 +69,28 @@
             </ul>
 <div>bxlx key: {{formData.bxlx}}</div>
         </div>
-        <select-dialog id="bxlx" title="报销类型" v-model="currentVal" :val="formData.bxlx" :config="bxlx"></select-dialog>
     </div>
 </body>
 <script type="text/x-template" id="select-dialog">
-    <div :id="id" class="selectDialog" style="display: none">
-        <div class="dialogInfo">
-            <h3 class="selectTitle">{{title}}</h3>
-            <div class="selectCon">
-                <ul class="selList">
-                    <li v-bind:class="{active: item[config.key]===config.val}" v-for="item in config.options" :mapkey="item[config.key]" @click="liClick(item[config.key],item[config.dis])">{{item[config.dis]}}</li>
-                </ul>
+    <div>
+        <div class="item-select" onclick="$('#bxlx').show();">{{currentDisVal}}</div>
+        <div :id="id" class="selectDialog" style="display: none">
+            <div class="dialogInfo">
+                <h3 class="selectTitle">{{title}}</h3>
+                <div class="selectCon">
+                    <ul class="selList">
+                        <li v-bind:class="{active: item[config.key]===currentVal}" v-for="item in config.options" @click="click(item[config.key],item[config.dis])">{{item[config.dis]}}</li>
+                    </ul>
+                </div>
+                <div class="selectBottom">
+                    <ul class="row">
+                        <li class="col-50" @click="close()"><a href="javascript:void(0)">取消</a></li>
+                        <li class="col-50" @click="apply()"><a href="javascript:void(0)">确定</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="selectBottom">
-                <ul class="row">
-                    <li class="col-50" @click="cancel()"><a href="javascript:void(0)">取消</a></li>
-                    <li class="col-50" @click="apply()"><a href="javascript:void(0)">确定</a></li>
-                </ul>
-            </div>
+            <div class="dialogBg"></div>
         </div>
-        <div class="dialogBg"></div>
     </div>
 </script>
 <script src="js/vue.js"></script>
@@ -99,22 +99,23 @@
     Vue.component("select-dialog", {
         data: function () {
             return {
-                currentVal : this.val
+                currentVal : "",
+                currentDisVal : ""
             }
         },
-        props: ['id', 'title', 'val', 'config'],
+        props: ['id', 'title', 'config'],
         template: "#select-dialog",
         methods: {
-            liClick: function (key, dis) {
-                this.currentVal = key;
-                this.config.val = key; // 当前值
-                this.config.disval = dis;
+            click: function (val, dis) {
+                this.currentVal = val;
+                this.currentDisVal = dis;
+                this.$emit('input', val);
             },
-            cancel: function () {
+            close: function () {
                 $('#' + this.id).hide();
             },
             apply: function () {
-                $('#' + this.id).hide();
+                this.close();
             }
         }
     });
@@ -122,9 +123,9 @@
         el: "#applybx",
         data: {
             formData : {
-                bxlx : {}
+                bxlx : ""
             },
-            bxlx: {
+            bxlxConfig: {
                 options: [
                     {
                         "key": "1",
@@ -135,8 +136,7 @@
                     }
                 ],
                 key: "key",
-                dis: "val",
-                val: ""
+                dis: "val"
             }
         }
     })
