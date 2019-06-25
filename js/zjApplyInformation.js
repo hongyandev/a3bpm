@@ -25,9 +25,6 @@ $(function () {
             }
         },
         methods: {
-            getValue: function (t) {
-                console.log(t)
-            },
             submitForm: function (next) {
                 this.submitData.ShenQingBMBH = this.formData.DanJuXX.ShenQingBMBH;
                 this.submitData.BaoXiaoJE = this.formData.DanJuXX.JieKuanJE.replace(/,/gi, '');
@@ -39,18 +36,17 @@ $(function () {
             gotoTab: function (index) {
                 $($(".weui-navbar__item").get(index)).click();
             },
-            getFormData: function (BianHao, RenWuID, LiuChengId, DangQianJD) {
-                this.submitData.YongHuBH = '用户编号';
+            getFormData: function (YongHuBH, BianHao, RenWuID, LiuChengId, DangQianJD) {
+                this.submitData.YongHuBH = YongHuBH;
                 this.submitData.DanJuBH = BianHao;
                 this.submitData.LiuChengId = LiuChengId;
-                this.submitData.TaskId = RenWuID || "";
-                this.submitData.DangQianJD = DangQianJD || "";
+                this.submitData.TaskId = RenWuID;
+                this.submitData.DangQianJD = DangQianJD;
                 var loading = weui.loading('loading', {
                     className: 'custom-classname'
                 });
-                vm.formData = testData;
-                loading.hide();
-                /*
+                /*vm.formData = testData;
+                loading.hide();*/
                 $.ajax({
                     type: 'post',
                     url: Global.baseUrl + '/bpm/zjsqdbsp/detail',
@@ -62,8 +58,8 @@ $(function () {
                         "DangQianJD": DangQianJD || ""
                     }),
                     success: function (res) {
-                        if(res.code==200){
-                            this.formData = res.data;
+                        if(res.msgCode==="1"){
+                            this.formData = res;
                         }
                     },
                     complete: function () {
@@ -71,21 +67,20 @@ $(function () {
                     },
                     context: this
                 });
-                */
             }
         }
     });
     weui.tab('#tab',{
         defaultIndex: 0,
         onChange: function(index){
-            console.log(index);
+            // console.log(index);
         }
     });
-    vm.getFormData(_request.BianHao, _request.RenWuID, _request.LiuChengId, _request.DangQianJD);
+    vm.getFormData("XTYH201905300002", "JKDH201906190001", "510225", "2019318155749.510217", "单位财务负责人");
     /*
     config({
         onSuccess: function (userinfo) {
-            vm.getFormData(_request.BianHao, _request.RenWuID, _request.LiuChengId, _request.DangQianJD);
+            vm.getFormData(userinfo.YongHuBH, _request.BianHao, _request.RenWuID, _request.LiuChengId, _request.DangQianJD);
         }
     });
     */

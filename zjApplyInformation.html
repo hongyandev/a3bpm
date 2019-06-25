@@ -122,22 +122,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="weui-media-box weui-media-box_text">
+                    <div class="weui-media-box weui-media-box_text" v-if="formData.DanJuXX.DanJuFJ && formData.DanJuXX.DanJuFJ.length > 0">
                         <div class="weui-flex">
                             <div class="weui-flex__item">
                                 <p class="weui-media-box__desc">申请附件</p>
                                 <div class="list-block">
                                     <ul>
-                                        <template v-for="item in formData.DanJuXX.DanJuFJ">
-                                            <li>
-                                                <div class="item-content">
-                                                    <div class="item-media"><i class="icon icon-form-email"></i></div>
-                                                    <div class="item-inner">
-                                                        <a :href="item.FuJianLJ" download>{{item.FuJianMC}}</a>
-                                                    </div>
+                                        <li v-for="item in formData.DanJuXX.DanJuFJ">
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
+                                                <div class="item-inner">
+                                                    <a :href="item.FuJianLJ" download>{{item.FuJianMC}}</a>
                                                 </div>
-                                            </li>
-                                        </template>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -145,7 +143,7 @@
                     </div>
                 </div>
             </div>
-            <div class="weui-panel weui-panel_access" v-if="formData.ZhiChuMX">
+            <div class="weui-panel weui-panel_access" v-if="formData.ZhiChuMX && formData.ZhiChuMX.length > 0">
                 <div class="weui-panel__hd">支出明细</div>
                 <div class="weui-panel__bd">
                     <div class="weui-media-box weui-media-box_text">
@@ -160,7 +158,7 @@
                     </div>
                 </div>
             </div>
-            <div class="weui-panel weui-panel_access" v-if="formData.FuZhuXX">
+            <div class="weui-panel weui-panel_access" v-if="formData.FuZhuXX && formData.FuZhuXX.length > 0">
                 <div class="weui-panel__hd">辅助信息</div>
                 <div class="weui-panel__bd">
                     <div class="weui-media-box weui-media-box_text">
@@ -175,7 +173,7 @@
                     </div>
                 </div>
             </div>
-            <div class="weui-panel weui-panel_access" v-if="formData.JieSuanXX">
+            <div class="weui-panel weui-panel_access" v-if="formData.JieSuanXX && formData.JieSuanXX.length > 0">
                 <div class="weui-panel__hd">结算信息</div>
                 <div class="weui-panel__bd">
                     <div class="weui-media-box weui-media-box_text">
@@ -194,7 +192,7 @@
                     </div>
                 </div>
             </div>
-            <div class="weui-panel weui-panel_access" v-if="formData.ShenPiXX">
+            <div class="weui-panel weui-panel_access" v-if="formData.ShenPiXX && formData.ShenPiXX.length > 0">
                 <div class="weui-panel__hd">审批信息</div>
                 <div class="weui-panel__bd">
                     <div class="weui-media-box weui-media-box_text" v-for="item in formData.ShenPiXX">
@@ -235,7 +233,10 @@
             </div>
         </div>
         <div class="weui-tab__content">
-            <!--流程页-->
+            <!--流程图-->
+            <div class="content-block" v-if="formData.DanJuXX">
+                <p class="img"><img :src="formData.DanJuXX.LiuChengTuLJ"/></p>
+            </div>
         </div>
         <div class="weui-tab__content">
             <!--审批页-->
@@ -249,7 +250,7 @@
                     </div>
                 </div>
             </div>
-            <shenpi-yaosu id="ShenPiYS" title="审批要素" v-if="formData.YaoSuXX" :yaosuxx="formData.YaoSuXX" v-model="submitData.ShenPiYS"></shenpi-yaosu>
+            <shenpi-yaosu id="ShenPiYS" title="审批要素" v-if="formData.YaoSuXX && formData.YaoSuXX.length > 0" :yaosuxx="formData.YaoSuXX" v-model="submitData.ShenPiYS"></shenpi-yaosu>
             <weui-uploader id="ShenPiFJ" title="上传附件" :options="uploaderOptions" :files="submitData.FileList"></weui-uploader>
             <div class="weui-flex" style="padding: 7px">
                 <div class="weui-flex__item" style="padding: 7px">
