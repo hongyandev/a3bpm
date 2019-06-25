@@ -43,7 +43,7 @@ $(function () {
                 this.submitData.TaskId = RenWuID;
                 this.submitData.DangQianJD = DangQianJD;
                 var loading = weui.loading('loading', {
-                    className: 'custom-classname'
+                    className: 'weui-tab'
                 });
                 /*vm.formData = testData;
                 loading.hide();*/
