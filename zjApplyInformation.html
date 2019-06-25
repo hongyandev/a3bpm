@@ -29,9 +29,15 @@
         .weui-media-box__title {
             font-size: 16px;
         }
-        .YaoSu {
-            width: 105px !important;
-            padding: 0 20px !important;
+        .weui-media-box__info {
+            margin-top: 10px !important;
+            padding-bottom: 10px !important;
+        }
+        .list-block li {
+            line-height: 2em;
+            padding-left: 15px;
+            box-sizing: border-box;
+            position: relative;
         }
     </style>
     <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
@@ -185,6 +191,42 @@
                                 </div>
                             </div>
                         </template>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-panel weui-panel_access" v-if="formData.ShenPiXX">
+                <div class="weui-panel__hd">审批信息</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text" v-for="item in formData.ShenPiXX">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">审批环节：{{item.ShenPiHJ}}</p>
+                                <h4 class="weui-media-box__title">{{item.ShenPiYJ}}</h4>
+                            </div>
+                        </div>
+                        <div class="weui-flex" v-if="item.ShenPiYS && item.ShenPiYS.length > 0">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">审批要素</p>
+                                <h4 v-for="obj in item.ShenPiYS" class="weui-media-box__title">{{obj.YaoSuMC}}： {{obj.YaoSuZ}}</h4>
+                            </div>
+                        </div>
+                        <div class="weui-flex" v-if="item.ShenPiFJ && item.ShenPiFJ.length > 0">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">附件</p>
+                                <div class="list-block">
+                                    <ul>
+                                        <li v-for="file in item.ShenPiFJ">
+                                            <a :href="file.FuJianLJ" download>{{file.FuJianMC}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="weui-media-box__info">
+                            <li class="weui-media-box__info__meta">{{item.ShenPiR}}</li>
+                            <li class="weui-media-box__info__meta">{{item.ShenPiSJ}}</li>
+                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{item.ChuLiSC}}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
