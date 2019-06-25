@@ -64,7 +64,7 @@ $(function () {
                 this.submitData.LiuChengId = LiuChengId;
                 this.submitData.TaskId = RenWuID;
                 this.submitData.DangQianJD = DangQianJD;
-                var loading = weui.loading('loading', {
+                var loading = weui.loading('正在加载', {
                     className: 'weui-tab'
                 });
                 /*vm.formData = testData;
