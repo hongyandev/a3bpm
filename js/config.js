@@ -81,17 +81,6 @@ var GetRequest = function () {
     }
     return theRequest;
 }
-var readLocalFile = function (file, callback, mimetype) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType(mimetype || "application/json");
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function() {
-        if (rawFile.readyState === 4 && rawFile.status == "200") {
-            callback(rawFile.responseText);
-        }
-    }
-    rawFile.send(null);
-}
 var Global = {
     baseUrl: "http://wxdev.hongyancloud.com:8082",
     h5Url: "http://wxdev.hongyancloud.com:8082",
@@ -101,7 +90,7 @@ var _config, _userinfo, _request;
 $(function () {
     _request = GetRequest();
     var cookie = $.fn.cookie('userinfo');
-    console.info(JSON.stringify(cookie));
+    // console.info(JSON.stringify(cookie));
     if (cookie) {
         _userinfo = JSON.parse(cookie);
     }

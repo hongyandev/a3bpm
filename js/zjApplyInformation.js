@@ -29,8 +29,31 @@ $(function () {
                 this.submitData.BaoXiaoJE = this.formData.DanJuXX.JieKuanJE.replace(/,/gi, '');
                 this.submitData.DanJuLX = this.formData.DanJuXX.JieKuanDLX;
                 this.submitData.Next = next;
-                console.log(this.submitData);
-                // $.ajax()
+                // console.log(this.submitData);
+                var loading = weui.loading('正在提交', {
+                    className: 'weui-tab'
+                });
+                $.ajax({
+                    type: "post",
+                    url: Global.baseUrl +'/bpm/zjsqdbsp/approve',
+                    data: JSON.stringify(this.submitData),
+                    contentType: 'application/json',
+                    xhrFields: {
+                        withCredentials: false
+                    },
+                    success: function(data) {
+                        if(data.msgCode === "1") {
+                            location.href = "applyLists.html";
+                        } else {
+                            weui.topTips(data.msg);
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    },
+                    complete: function () {
+                        loading.hide();
+                    }
+                })
             },
             gotoTab: function (index) {
                 $($(".weui-navbar__item").get(index)).click();
@@ -75,12 +98,12 @@ $(function () {
             // console.log(index);
         }
     });
-    vm.getFormData("XTYH201905300002", "JKDH201906190001", "510225", "2019318155749.510217", "单位财务负责人");
-    /*
+    // vm.getFormData("XTYH201905300002", "JKDH201906190001", "510225", "2019318155749.510217", "单位财务负责人");
     config({
         onSuccess: function (userinfo) {
-            vm.getFormData(userinfo.YongHuBH, _request.BianHao, _request.RenWuID, _request.LiuChengId, _request.DangQianJD);
+            const messObj = $.fn.cookie('messStr');
+            const messStr = messObj ? JSON.parse(messObj) : "";
+            vm.getFormData(userinfo.YongHuBH, _request.BianHao, _request.RenWuID, _request.LiuChengId, messStr.jd);
         }
     });
-    */
 })
