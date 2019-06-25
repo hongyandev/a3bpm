@@ -10,8 +10,7 @@ $(function () {
             },
             uploaderFiles: [],
             uploaderOptions : {
-                // url : Global.baseUrl + "/bpm/common/upload2",
-                url : "http://localhost:8082/bpm/common/upload2",
+                url : Global.baseUrl + "/bpm/common/upload2",
                 type : "base64",
                 fileval : "fileBase64",
                 filekey : "FuJianMC",
