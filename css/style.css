@@ -64,6 +64,9 @@ ul,li{list-style: none;}
     color:#6d6d72;
     font-size:14px;
 }
+.item-input input{
+    font-size:14px;
+}
 .list-block{
     font-size:0.7rem;
     margin:0;
@@ -310,6 +313,16 @@ ul,li{list-style: none;}
 .item-select{
     width:100%;
     height:35px;
+    line-height:35px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.item-input{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    font-size:14px;
 }
 .selectDialog .dialogInfo{
     padding-bottom:0;
@@ -344,4 +357,70 @@ ul,li{list-style: none;}
 }
 .selectBottom ul li:first-child{
     border-right:1px solid #e5e5e5;
+}
+.seaDialogInfo{
+    background: #fff;
+    border-radius:5px;
+    position: fixed;
+    bottom:0;
+    width:100%;
+    left:0;
+    height:80%;
+    z-index: 50;
+}
+.seaDialogInfo h3{
+    padding:20px 0;
+    text-align: center;
+}
+.seaDialogInfo .searchInput{
+    width:90%;
+    margin:0 5%;
+    border:1px solid #e5e5e5;
+    height:45px;
+    line-height:45px;
+    border-radius: 3px;
+}
+.seaDialogInfo .searchInput input{
+    border:none;
+    background: none;
+    padding-left:15px;
+    line-height:45px;
+    height:45px;
+}
+.seaDialogInfo ul.seaLists:before{
+    height:0;
+    background: none;
+}
+.seaDialogInfo ul.seaLists{
+    padding:5px 5%;
+    height:80%;
+    overflow: auto;
+}
+.seaLists li.row{
+    margin-left:0;
+    border:1px solid #e5e5e5;
+    margin-bottom:10px;
+    border-radius: 3px;
+}
+.seaLists li.row .col-80 p{
+    overflow: auto;
+}
+.seaLists li.row .selectBtn{
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 50%;
+    margin-top:-15px;
+}
+.seaLists li.row .selectBtn a{
+    display: inline-block;
+    width:30px;
+    height:30px;
+    border:1px solid #e5e5e5;
+    line-height:25px;
+    border-radius:50%;
+}
+.seaLists li.row .selectBtn a.selected{
+    color:#0894ec;
+    border:1px solid #0894ec;
 }

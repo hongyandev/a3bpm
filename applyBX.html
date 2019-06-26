@@ -7,13 +7,25 @@
     <link rel="stylesheet" href="css/sm.css">
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
     <script src="js/zepto.min.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/weui.min.js"></script>
     <script src="js/config.js"></script>
+
+    <style>
+        /*.list-block ul ul{padding-left:0;}*/
+        .item .selectDialog ul.row{padding-left:0}
+        .item .selectDialog ul.selList{padding-left:20px;}
+        .dialogInfo{
+            top:20%;
+        }
+        .pageFirst{height:100%;overflow: auto}
+    </style>
 
 </head>
 <body>
-    <div id="applybx">
+    <div class="pageFirst" id="applybx">
         <div class="list-block">
             <ul>
                 <!-- Text inputs -->
@@ -23,7 +35,55 @@
                         <div class="item-inner">
                             <div class="item-title label">报销类型</div>
                             <div class="item-input">
-                                <select-dialog id="bxlx" title="报销类型" :config="bxlxConfig" v-model="formData.bxlx"></select-dialog>
+                                <select-dialog ref="bxlx" id="bxlx" title="报销类型" :config="bxlxConfig" v-model="formData.bxlx"></select-dialog>
+                            </div>
+                            <span class="icon icon-right"></span>
+                        </div>
+                    </div>
+                </li>
+                <li v-show="zj">
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-name"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">资金申请单</div>
+                            <div class="item-input">
+                                <sea-dialog id="zjApply" title="资金申请单" :config="zjApplyConfig" v-model="formData.zjApply"></sea-dialog>
+                            </div>
+                            <span class="icon icon-right"></span>
+                        </div>
+                    </div>
+                </li>
+                <li v-show="zx">
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-name"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">执行申请单</div>
+                            <div class="item-input">
+                                <select-dialog id="zxApply" title="执行申请单" :config="zxApplyConfig" v-model="formData.zxApply"></select-dialog>
+                            </div>
+                            <span class="icon icon-right"></span>
+                        </div>
+                    </div>
+                </li>
+                <li v-show="ht">
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-name"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">合同名称</div>
+                            <div class="item-input">
+                                <select-dialog id="htmc" title="合同名称" :config="htmcConfig" v-model="formData.htmc"></select-dialog>
+                            </div>
+                            <span class="icon icon-right"></span>
+                        </div>
+                    </div>
+                </li>
+                <li v-show="ht">
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-name"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">合同阶段</div>
+                            <div class="item-input">
+                                <select-dialog id="htjd" title="合同阶段" :config="htjdConfig" v-model="formData.htjd"></select-dialog>
                             </div>
                             <span class="icon icon-right"></span>
                         </div>
@@ -35,10 +95,45 @@
                         <div class="item-inner">
                             <div class="item-title label">指标名称</div>
                             <div class="item-input">
-                                <select>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
+                                <sea-dialog ref="zbmc" id="zbmc" title="指标名称" :config="zbmcConfig" v-model="formData.zbmc"></sea-dialog>
+                            </div>
+                            <span class="icon icon-right"></span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">可用余额</div>
+                            <div class="item-input">{{kyye}}</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="card"></div>
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">报销部门</div>
+                            <div class="item-input">
+                                <select-dialog ref="bxbm" id="bxbm" title="报销部门" :config="bxbmConfig" v-model="formData.bxbm"></select-dialog>
+                            </div>
+                            <span class="icon icon-right"></span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">报销人</div>
+                            <div class="item-input">
+                                <input id="bxr" type="text" placeholder="报销人" value="">
                             </div>
                         </div>
                     </div>
@@ -50,7 +145,7 @@
                         <div class="item-inner">
                             <div class="item-title label">报销日期</div>
                             <div class="item-input">
-                                <input id="bxDate" type="date" placeholder="" value="2019-06-24">
+                                <input id="bxDate" type="date"  data-toggle='date' value="['now.getFullYear() + '-' +((now.getMonth()+1)<10?'0':'')+(now.getMonth()+1)+'-'+(now.getDate()<10?'0':'')+now.getDate()']">
                             </div>
                         </div>
                     </div>
@@ -59,7 +154,30 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-comment"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">文本域</div>
+                            <div class="item-title label">报销是由</div>
+                            <div class="item-input">
+                                <textarea ref="bxsy"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">支出事项</div>
+                            <div class="item-input">
+                                <sea-dialog ref="zcsx" id="zcsx" title="支出事项" :config="zcsxConfig" v-model="formData.zcsx"></sea-dialog>
+                            </div>
+                            <span class="icon icon-right"></span>
+                        </div>
+                    </div>
+                </li>
+                <li class="align-top">
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">备注</div>
                             <div class="item-input">
                                 <textarea></textarea>
                             </div>
@@ -67,14 +185,15 @@
                     </div>
                 </li>
             </ul>
-<div>bxlx key: {{formData.bxlx}}</div>
+            <weui-uploader id="ShenPiFJ" title="上传附件" :options="uploaderOptions" :files="formData.FileList"></weui-uploader>
         </div>
     </div>
 </body>
 <script type="text/x-template" id="select-dialog">
-    <div>
-        <div class="item-select" @click="show()">{{currentDisVal}}</div>
-        <div :id="id" class="selectDialog" style="display: none">
+    <div class="item">
+        <div class="item-select" @click="show();">{{currentDisVal}}</div>
+        <div :id="id" class="selectDialog" style="display: none;">
+
             <div class="dialogInfo">
                 <h3 class="selectTitle">{{title}}</h3>
                 <div class="selectCon">
@@ -93,63 +212,33 @@
         </div>
     </div>
 </script>
-<script src="js/vue.js"></script>
-<script src="js/applyBX.js"></script>
-<script>
-    Vue.component("select-dialog", {
-        data: function () {
-            return {
-                currentVal : "",
-                currentDisVal : "",
-                currentRecord : {}
-            }
-        },
-        props: ['id', 'title', 'config'],
-        template: "#select-dialog",
-        methods: {
-            show: function () {
-                $('#'+this.id).show();
-            },
-            click: function (record) {
-                var val = record[this.config.key];
-                if (this.currentVal !== val) {
-                    this.currentVal = record[this.config.key];
-                    this.currentDisVal = record[this.config.dis];
-                    this.currentRecord = record;
-                    this.$emit('input', this.currentVal);
-                }
-            },
-            close: function () {
-                $('#' + this.id).hide();
-            },
-            apply: function () {
-                this.close();
-            }
-        }
-    });
-    var vm = new Vue({
-        el: "#applybx",
-        data: {
-            formData : {
-                bxlx : ""
-            },
-            bxlxConfig: {
-                options: [
-                    {
-                        "key": "1",
-                        "val": "一"
-                    },{
-                        "key": "2",
-                        "val": "两"
-                    }
-                ],
-                key: "key",
-                dis: "val"
-            }
-        }
-    })
-    // $("#bxDate").calendar({
-    //     //value: ['2015-12-05']
-    // });
+<script type="text/x-template" id="sea-dialog">
+  <div class="item">
+      <div class="item-select" @click="show();">{{currentDisVal}}</div>
+      <div :id="id" class="seaDialog" style="display: none">
+          <span class="icon icon-closed"></span>
+          <div class="seaDialogInfo">
+              <h3>{{title}}</h3>
+              <div class="searchInput">
+                  <input :placeholder="'请输入' + title + '名称'"/>
+              </div>
+              <ul class="seaLists">
+                  <li v-for="item in config.options" class="row" @click="click(item)">
+                      <div class="col-80">
+                          <p v-for="field in config.fields">{{field.name}}：{{item[field.key]}}</p>
+                      </div>
+                      <div class="col-20 selectBtn">
+                          <a class="" href="javascript:void(0)"><span class="icon icon-check"></span></a>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+          <div class="dialogBg"></div>
+      </div>
+  </div>
 </script>
+<script src="js/vue.js"></script>
+<script src="js/components/vue.weui.uploader.js"></script>
+<script src="js/applyBX.js"></script>
+
 </html>
