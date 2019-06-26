@@ -100,12 +100,6 @@ $(function () {
                     vm.zj = res.BianHao === "2";
                     vm.zx = res.BianHao === "3";
                     vm.ht = res.BianHao === "4";
-
-                    vm.zbmcConfig.disField="";
-                    vm.zbmcConfig.keyField="";
-
-                    //console.log("callback",res)
-
                 }
             },
             zbmcConfig: {
