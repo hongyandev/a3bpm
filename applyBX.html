@@ -12,7 +12,7 @@
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/weui.min.js"></script>
     <script src="js/config.js"></script>
-
+    <script src="js/lodash.min.js"></script>
     <style>
         /*.list-block ul ul{padding-left:0;}*/
         .item .selectDialog ul.row{padding-left:0}
@@ -20,12 +20,19 @@
         .dialogInfo{
             top:20%;
         }
-        .pageFirst{height:100%;overflow: auto}
+        #applybx{height:100%;overflow: auto;width:100%}
+        .pageFirst{
+
+        }
+        .pageSecond{
+
+        }
     </style>
 
 </head>
 <body>
-    <div class="pageFirst" id="applybx">
+<div id="applybx">
+    <div class="pageFirst">
         <div class="list-block">
             <ul>
                 <!-- Text inputs -->
@@ -133,7 +140,7 @@
                         <div class="item-inner">
                             <div class="item-title label">报销人</div>
                             <div class="item-input">
-                                <input id="bxr" type="text" placeholder="报销人" value="">
+                                <input id="bxr" type="text" placeholder="" value="">
                             </div>
                         </div>
                     </div>
@@ -187,7 +194,23 @@
             </ul>
             <weui-uploader id="ShenPiFJ" title="上传附件" :options="uploaderOptions" :files="formData.FileList"></weui-uploader>
         </div>
+        <div class="content-block">
+            <a href="javascript:void(0);" class="weui-btn weui-btn_primary">下一步</a>
+        </div>
     </div>
+    <div class="pageSecond">
+        <zhichu-mingxi v-for="item in ZhiChuMX" :item="item"></zhichu-mingxi>
+        <div class="weui-flex" style="padding: 7px">
+            <div class="weui-flex__item" style="padding: 7px">
+                <a class="weui-btn weui-btn_ding" @click="action('back')" href="javascript:">上一步</a>
+            </div>
+            <div class="weui-flex__item" style="padding: 7px">
+                <a class="weui-btn weui-btn_ding" @click="action('next')" href="javascript:">下一步</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 <script type="text/x-template" id="select-dialog">
     <div class="item">
@@ -236,6 +259,39 @@
           <div class="dialogBg"></div>
       </div>
   </div>
+</script>
+<script type="text/x-template" id="zhichu-mingxi">
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell" :class="{'weui-cell_vcode': item.FeiYongMX.length > 0}">
+            <div class="weui-cell__hd">
+                <label class="weui-label">{{item.MingCheng}}</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" placeholder="请输入金额" v-model="item.JinE">
+            </div>
+            <div class="weui-cell__ft" v-if="item.FeiYongMX.length > 0">
+                <button class="weui-vcode-btn" @click="add(item.FeiYongMX)">添加</button>
+            </div>
+        </div>
+        <div v-if="item.FeiYongMX.length > 0">
+            <template v-for="(row,index) in item.FeiYongMX" :del="del">
+                <div v-for="field in row" class="weui-cell feiyong-mx" :class="{'weui-cell_select weui-cell_select-after': field.Type==='4'}">
+                    <div class="weui-cell__hd"><label class="weui-label">{{field.FeiYongMXMC}}</label></div>
+                    <div class="weui-cell__bd">
+                        <input v-if="field.Type==1" class="weui-input" type="number" v-model="field.FeiYongMXZ"/>
+                        <input v-else-if="field.Type==2" class="weui-input" type="text" v-model="field.FeiYongMXZ"/>
+                        <input v-else-if="field.Type==3" class="weui-input" type="date" v-model="field.FeiYongMXZ"/>
+                        <select v-else-if="field.Type==4 || field.Type==5" class="weui-select" v-model="field.FeiYongMXZ">
+                            <option v-for="opt in field.Options" :value="opt.Value">{{opt.Text}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_access" @click="del(item.FeiYongMX, index)" v-if="item.FeiYongMX.length > 1">
+                    <div class="weui-cell__bd">删除</div>
+                </div>
+            </template>
+        </div>
+    </div>
 </script>
 <script src="js/vue.js"></script>
 <script src="js/components/vue.weui.uploader.js"></script>

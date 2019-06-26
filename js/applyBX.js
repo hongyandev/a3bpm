@@ -69,6 +69,23 @@ $(function () {
             }
         }
     });
+    Vue.component("zhichu-mingxi", {
+        template: "#zhichu-mingxi",
+        props: ["item"],
+        methods: {
+            add: function(FeiYongMX){
+                var newFeiYongMX = _.cloneDeep(FeiYongMX[0]);
+                $.each(newFeiYongMX, function (index, item) {
+                    item.FeiYongMXZ = "";
+                })
+                FeiYongMX.push(newFeiYongMX);
+            },
+            del: function (FeiYongMX, index) {
+                console.log(index)
+                FeiYongMX.splice(index, 1);
+            }
+        }
+    });
     var zbmcdata = {
         BuMenBH: 'GLZZ201905250002',//_userinfo.BuMenBH,
         NianDu: '2019',//_userinfo.NianDu,
@@ -84,14 +101,17 @@ $(function () {
             zx: false,
             ht: false,
             kyye:"",
+            ZhiChuMX: [],
             formData: {
                 bxlx: "",
                 zjApply: "",
                 zxApply: "",
+                kyye:"",
                 htmc: "",
                 htjd: "",
                 zbmc: "",
-                bxsy:""
+                bxsy:"",
+                zcsxbh:""
             },
             uploaderFiles: [],
             uploaderOptions : {
@@ -246,7 +266,7 @@ $(function () {
                     key: 'BianHao'
                 },{
                     name: '指标名称',
-                    key: 'zhiBiaoMC'
+                    key: 'ZhiBiaoMC'
                 }],
                 showAfterCallback:function () {
                     var zjsqdata={
@@ -268,10 +288,8 @@ $(function () {
                 },
                 onclickCallback: function (res) {
                     vm.kyye = res.ZiJinSQJE;
-                    vm.zbmc = res.ZhiBiaoBH;
-                    vm.zcsx = res.ZCSXBianHao;
-                    vm.zcsxConfig.disField = res.ZCSXMingCheng;
-                    vm.zcsxConfig.keyField = res.ZCSXBianHao;
+                    vm.formData.zbmc = res.ZhiBiaoBH;
+                    vm.formData.zcsx = res.ZCSXBianHao;
                     //console.log("callback",res)
                     vm.$refs.zbmc.currentDisVal = res.ZhiBiaoMC;
                     vm.$refs.zcsx.currentDisVal = res.ZCSXMingCheng;
@@ -343,6 +361,22 @@ $(function () {
                     .then(json =>{
                             vm.zcsxConfig.options = json.list;
                     });
+                },
+                onclickCallback:function (res) {
+                    console.info(res);
+                    vm.formData.zcsxbh = res.BianHao;
+                    vm.ZhiChuMX
+                    fetch(Global.baseUrl + "/bpm/common/getDetail",{
+                        method: 'post',
+                        body: JSON.stringify({'ZhiChuSXBH':res.BianHao,"DanJuBH":""}),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(res =>res.json())
+                    .then(json =>{
+                            vm.ZhiChuMX = json.list;
+                     });
                 }
             },
             zxApplyConfig:{

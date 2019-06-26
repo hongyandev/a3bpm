@@ -424,3 +424,7 @@ ul,li{list-style: none;}
     color:#0894ec;
     border:1px solid #0894ec;
 }
+.content-block .weui-btn{
+    width:90%;
+    margin:0 5%;
+}
