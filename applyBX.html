@@ -12,6 +12,7 @@
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/weui.min.js"></script>
     <script src="js/config.js"></script>
+
     <style>
         /*.list-block ul ul{padding-left:0;}*/
         .item .selectDialog ul.row{padding-left:0}
@@ -19,11 +20,12 @@
         .dialogInfo{
             top:20%;
         }
+        .pageFirst{height:100%;overflow: auto}
     </style>
 
 </head>
 <body>
-    <div id="applybx">
+    <div class="pageFirst" id="applybx">
         <div class="list-block">
             <ul>
                 <!-- Text inputs -->
@@ -69,7 +71,7 @@
                         <div class="item-inner">
                             <div class="item-title label">合同名称</div>
                             <div class="item-input">
-                                <select-dialog id="htmc" title="合同名称" :config="bxlxConfig" v-model="formData.htmc"></select-dialog>
+                                <select-dialog id="htmc" title="合同名称" :config="htmcConfig" v-model="formData.htmc"></select-dialog>
                             </div>
                             <span class="icon icon-right"></span>
                         </div>
@@ -81,7 +83,7 @@
                         <div class="item-inner">
                             <div class="item-title label">合同阶段</div>
                             <div class="item-input">
-                                <select-dialog id="htjd" title="合同阶段" :config="bxlxConfig" v-model="formData.htjd"></select-dialog>
+                                <select-dialog id="htjd" title="合同阶段" :config="htjdConfig" v-model="formData.htjd"></select-dialog>
                             </div>
                             <span class="icon icon-right"></span>
                         </div>
@@ -93,7 +95,7 @@
                         <div class="item-inner">
                             <div class="item-title label">指标名称</div>
                             <div class="item-input">
-                                <sea-dialog id="zbmc" title="指标名称" :config="zbmcConfig" v-model="formData.zbmc"></sea-dialog>
+                                <sea-dialog ref="zbmc" id="zbmc" title="指标名称" :config="zbmcConfig" v-model="formData.zbmc"></sea-dialog>
                             </div>
                             <span class="icon icon-right"></span>
                         </div>
@@ -154,7 +156,7 @@
                         <div class="item-inner">
                             <div class="item-title label">报销是由</div>
                             <div class="item-input">
-                                <textarea></textarea>
+                                <textarea ref="bxsy"></textarea>
                             </div>
                         </div>
                     </div>
@@ -165,13 +167,25 @@
                         <div class="item-inner">
                             <div class="item-title label">支出事项</div>
                             <div class="item-input">
-                                <sea-dialog id="zcsx" title="支出事项" :config="zcsxConfig" v-model="formData.zcsx"></sea-dialog>
+                                <sea-dialog ref="zcsx" id="zcsx" title="支出事项" :config="zcsxConfig" v-model="formData.zcsx"></sea-dialog>
                             </div>
                             <span class="icon icon-right"></span>
                         </div>
                     </div>
                 </li>
+                <li class="align-top">
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">备注</div>
+                            <div class="item-input">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
+            <weui-uploader id="ShenPiFJ" title="上传附件" :options="uploaderOptions" :files="formData.FileList"></weui-uploader>
         </div>
     </div>
 </body>
@@ -224,5 +238,7 @@
   </div>
 </script>
 <script src="js/vue.js"></script>
+<script src="js/components/vue.weui.uploader.js"></script>
 <script src="js/applyBX.js"></script>
+
 </html>
