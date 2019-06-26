@@ -90,7 +90,22 @@ $(function () {
                 zxApply: "",
                 htmc: "",
                 htjd: "",
-                zbmc: ""
+                zbmc: "",
+                bxsy:""
+            },
+            uploaderFiles: [],
+            uploaderOptions : {
+                url : Global.baseUrl + "/bpm/common/upload2",
+                type : "base64",
+                fileval : "fileBase64",
+                filekey : "FuJianMC",
+                maxsize : 5,
+                maxcount : 1,
+                onSuccess : function (ret) {
+                    if(ret.msgCode == "1") {
+                        return ret.list[0];
+                    }
+                }
             },
             bxlxConfig: {
                 options: [],
@@ -100,6 +115,54 @@ $(function () {
                     vm.zj = res.BianHao === "2";
                     vm.zx = res.BianHao === "3";
                     vm.ht = res.BianHao === "4";
+                }
+            },
+            htmcConfig:{
+                options: [],
+                key: "BianHao",
+                dis: "HeTongMC",
+                init:function () {
+                    var data = {
+                        "BuMenBH": "GLZZ201905250002",//_userinfo.BuMenBH,
+                        "YongHuBH": "XTYH201905300002",//_userinfo.YongHuBH,
+                    };
+                    fetch(Global.baseUrl + '/bpm/common/getHeTongXX',{
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body:JSON.stringify(data)
+                    })
+                        .then(res => res.json())
+                        .then(json => {
+                            this.options = json.list;
+                        });
+                },
+                onclickCallback:function (res) {
+                    console.info(res);
+                    zbmcdata.DanJuBH = res.BianHao;
+                    zbmcdata.ZhiBiaoMC = res.ZhiBiaoMC;
+                    zbmcdata.BaoXiaoLX = '4';
+                }
+            },
+            htjdConfig: {
+                options: [],
+                key: "JieDuanBH",
+                dis: "HeTongJD",
+                init:function () {
+                    if(vm.formData.htmc==""){
+                        weui.topTips("请选择合同名称", 'error');
+                        return false;
+                    }else{
+                        console.info(vm.htmcConfig.options);
+                        $.each(vm.htmcConfig.options,function (i,o) {
+                            vm.htjdConfig.options = o.HeTongJD;
+                        })
+                    }
+                },
+                onclickCallback:function (res) {
+                    console.info(res);
+
                 }
             },
             zbmcConfig: {
@@ -152,7 +215,16 @@ $(function () {
                             break;
                         }
                         case "4" : {
+                            if(vm.formData.htmc.length == ""){
+                                weui.topTips("请选择合同名称", 'error');
+                                flag = false;
 
+                            } else {
+
+                                zbmcList(vm,zbmcdata);
+                                flag = true;
+                            }
+                            break;
                         }
                     }
                     return flag;
@@ -167,28 +239,66 @@ $(function () {
             },
             zjApplyConfig:{
                 options:[],
-                disField: "zhiBiaoMC",
-                keyField: "bianHao",
+                disField: "BianHao",
+                keyField: "BianHao",
                 fields: [{
+                    name: '单据编号',
+                    key: 'BianHao'
+                },{
                     name: '指标名称',
                     key: 'zhiBiaoMC'
-                },{
-                    name: '预算事项',
-                    key: 'yuSuanSX'
-                }, {
-                    name: '可用余额',
-                    key: 'keYongYE'
                 }],
+                showAfterCallback:function () {
+                    var zjsqdata={
+                       "BuMenBH": "GLZZ201905250002",//_userinfo.BuMenBH," +
+                       "YongHuBH": "XTYH201905300002",//_userinfo.YongHuBH,
+                       "YuSuanND": "2019"//_userinfo.NianDu
+                    };
+                    fetch(Global.baseUrl + '/bpm/common/getZiJinSQDXX',{
+                        method: 'post',
+                        body: JSON.stringify(zjsqdata),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(res =>res.json())
+                        .then(json =>{
+                            vm.zjApplyConfig.options = json.list;
+                        });
+                },
                 onclickCallback: function (res) {
-                    vm.kyye = res.KeYongYE;
-
+                    vm.kyye = res.ZiJinSQJE;
+                    vm.zbmc = res.ZhiBiaoBH;
+                    vm.zcsx = res.ZCSXBianHao;
+                    vm.zcsxConfig.disField = res.ZCSXMingCheng;
+                    vm.zcsxConfig.keyField = res.ZCSXBianHao;
                     //console.log("callback",res)
+                    vm.$refs.zbmc.currentDisVal = res.ZhiBiaoMC;
+                    vm.$refs.zcsx.currentDisVal = res.ZCSXMingCheng;
+                    vm.$refs.bxsy.currentDisVal = res.BaoXiaoSY
+
                 }
             },
             bxbmConfig:{
                 options:[{BuMenBH:"GLZZ201905250002",BuMenMC:"办公室"}],
-                key:"BuMenBH",
-                dis:"BuMenMC",
+                key:"BianHao",
+                dis:"MingCheng",
+                init:function () {
+                    var bxbmdata={
+                        "BuMenBH": "GLZZ201905250002",//_userinfo.BuMenBH," +
+                    };
+                    fetch(Global.baseUrl + '/bpm/common/getDept',{
+                        method: 'post',
+                        body: JSON.stringify(bxbmdata),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(res =>res.json())
+                        .then(json =>{
+                            vm.bxbmConfig.options = json.list;
+                        });
+                },
                 callback: function (res) {
                     vm.bmmc = res;
                     //console.log("callback",res)
@@ -278,17 +388,17 @@ $(function () {
             .then(res => res.json())
             .then(json => {
                 this.bxlxConfig.options = json.list;
-                this.formData.bxlx = "1";
+                /*this.formData.bxlx = "1";
                 var bxlx = this.$refs.bxlx;
                 $.each(json.list, function (i, o) {
                     if (o.ISDefault == "1") {
                         bxlx.click(o);
                         bxlx.apply();
                     }
-                })
+                })*/
             });
 
-            $("#bxr").val(_userinfo.XingMing);
+           // $("#bxr").val(_userinfo.XingMing);
         }
 
     })
