@@ -73,13 +73,13 @@
 </body>
 <script type="text/x-template" id="select-dialog">
     <div>
-        <div class="item-select" onclick="$('#bxlx').show();">{{currentDisVal}}</div>
+        <div class="item-select" @click="show()">{{currentDisVal}}</div>
         <div :id="id" class="selectDialog" style="display: none">
             <div class="dialogInfo">
                 <h3 class="selectTitle">{{title}}</h3>
                 <div class="selectCon">
                     <ul class="selList">
-                        <li v-bind:class="{active: item[config.key]===currentVal}" v-for="item in config.options" @click="click(item[config.key],item[config.dis])">{{item[config.dis]}}</li>
+                        <li v-bind:class="{active: item[config.key]===currentVal}" v-for="item in config.options" @click="click(item)">{{item[config.dis]}}</li>
                     </ul>
                 </div>
                 <div class="selectBottom">
@@ -100,16 +100,24 @@
         data: function () {
             return {
                 currentVal : "",
-                currentDisVal : ""
+                currentDisVal : "",
+                currentRecord : {}
             }
         },
         props: ['id', 'title', 'config'],
         template: "#select-dialog",
         methods: {
-            click: function (val, dis) {
-                this.currentVal = val;
-                this.currentDisVal = dis;
-                this.$emit('input', val);
+            show: function () {
+                $('#'+this.id).show();
+            },
+            click: function (record) {
+                var val = record[this.config.key];
+                if (this.currentVal !== val) {
+                    this.currentVal = record[this.config.key];
+                    this.currentDisVal = record[this.config.dis];
+                    this.currentRecord = record;
+                    this.$emit('input', this.currentVal);
+                }
             },
             close: function () {
                 $('#' + this.id).hide();

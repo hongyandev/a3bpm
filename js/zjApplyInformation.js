@@ -10,8 +10,7 @@ $(function () {
             },
             uploaderFiles: [],
             uploaderOptions : {
-                // url : Global.baseUrl + "/bpm/common/upload2",
-                url : "http://localhost:8082/bpm/common/upload2",
+                url : Global.baseUrl + "/bpm/common/upload2",
                 type : "base64",
                 fileval : "fileBase64",
                 filekey : "FuJianMC",
@@ -25,40 +24,51 @@ $(function () {
             }
         },
         methods: {
-            getValue: function (t) {
-                console.log(t)
-            },
             submitForm: function (next) {
-                var vm = this;
-                vm.submitData.YongHuBH = '用户编号';
-                vm.submitData.ShenQingBMBH = vm.formData.DanJuXX.ShenQingBMBH;
-                vm.submitData.BaoXiaoJE = vm.formData.DanJuXX.JieKuanJE.replace(/,/gi, '');
-                vm.submitData.DanJuLX = vm.formData.DanJuXX.JieKuanDLX;
-                vm.submitData.DanJuBH = "单据编号";
-                vm.submitData.LiuChengId = "流程id";
-                vm.submitData.TaskId = "任务id";
-                vm.submitData.DangQianJD = "当前审批环节";
-                vm.submitData.ShenPiYS.splice(0,vm.submitData.ShenPiYS.length);
-                vm.submitData.Next = next;
-                $(".YaoSu").each(function (index) {
-                   vm.submitData.ShenPiYS.push({
-                       "YaoSuBH" : $(this).attr("yaosubh"),
-                       "YaoSuZ" : $(this).val()
-                   });
+                this.submitData.ShenQingBMBH = this.formData.DanJuXX.ShenQingBMBH;
+                this.submitData.BaoXiaoJE = this.formData.DanJuXX.JieKuanJE.replace(/,/gi, '');
+                this.submitData.DanJuLX = this.formData.DanJuXX.JieKuanDLX;
+                this.submitData.Next = next;
+                // console.log(this.submitData);
+                var loading = weui.loading('正在提交', {
+                    className: 'weui-tab'
                 });
-                console.log(this.submitData);
-                // $.ajax()
+                $.ajax({
+                    type: "post",
+                    url: Global.baseUrl +'/bpm/zjsqdbsp/approve',
+                    data: JSON.stringify(this.submitData),
+                    contentType: 'application/json',
+                    xhrFields: {
+                        withCredentials: false
+                    },
+                    success: function(data) {
+                        if(data.msgCode === "1") {
+                            location.href = "applyLists.html";
+                        } else {
+                            weui.topTips(data.msg);
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    },
+                    complete: function () {
+                        loading.hide();
+                    }
+                })
             },
             gotoTab: function (index) {
                 $($(".weui-navbar__item").get(index)).click();
             },
-            getFormData: function (BianHao, RenWuID, LiuChengId, DangQianJD) {
-                var loading = weui.loading('loading', {
-                    className: 'custom-classname'
+            getFormData: function (YongHuBH, BianHao, RenWuID, LiuChengId, DangQianJD) {
+                this.submitData.YongHuBH = YongHuBH;
+                this.submitData.DanJuBH = BianHao;
+                this.submitData.LiuChengId = LiuChengId;
+                this.submitData.TaskId = RenWuID;
+                this.submitData.DangQianJD = DangQianJD;
+                var loading = weui.loading('正在加载', {
+                    className: 'weui-tab'
                 });
-                vm.formData = testData;
-                loading.hide();
-                /*
+                /*vm.formData = testData;
+                loading.hide();*/
                 $.ajax({
                     type: 'post',
                     url: Global.baseUrl + '/bpm/zjsqdbsp/detail',
@@ -70,8 +80,8 @@ $(function () {
                         "DangQianJD": DangQianJD || ""
                     }),
                     success: function (res) {
-                        if(res.code==200){
-                            this.formData = res.data;
+                        if(res.msgCode==="1"){
+                            this.formData = res;
                         }
                     },
                     complete: function () {
@@ -79,22 +89,21 @@ $(function () {
                     },
                     context: this
                 });
-                */
             }
         }
     });
     weui.tab('#tab',{
         defaultIndex: 0,
         onChange: function(index){
-            console.log(index);
+            // console.log(index);
         }
     });
-    vm.getFormData(_request.BianHao, _request.RenWuID, _request.LiuChengId, _request.DangQianJD);
-    /*
+    // vm.getFormData("XTYH201905300002", "JKDH201906190001", "510225", "2019318155749.510217", "单位财务负责人");
     config({
         onSuccess: function (userinfo) {
-            vm.getFormData(_request.BianHao, _request.RenWuID, _request.LiuChengId, _request.DangQianJD);
+            const messObj = $.fn.cookie('messStr');
+            const messStr = messObj ? JSON.parse(messObj) : "";
+            vm.getFormData(userinfo.YongHuBH, _request.BianHao, _request.RenWuID, _request.LiuChengId, messStr.jd);
         }
     });
-    */
 })
