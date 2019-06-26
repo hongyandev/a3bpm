@@ -8,7 +8,7 @@ Vue.component('shenpi-yaosu', {
     methods: {
         change: function (obj, target) {
             let changeIndex = -1;
-            $.each(this.ShenPiYS, function (item, index) {
+            $.each(this.ShenPiYS, function (index, item) {
                 if (item.YaoSuBH === obj.BianHao) {
                     changeIndex = index;
                 }

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/weui.min.css">
+    <script src="../js/weui.min.js"></script>
+    <script src="../js/zepto.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/lodash.min.js"></script>
+    <script src="../js/testData.js"></script>
+    <style>
+        .weui-vcode-btn,.weui-cell_access {
+            text-align: center;
+            color: #3296fa;
+        }
+        .weui-cells {
+            margin-top: 0.5em;
+        }
+        .weui-input {
+            padding-left: 15px;
+        }
+        .feiyong-mx .weui-select {
+            height: 1.47058824em;
+            line-height: 1.47058824em;
+        }
+        .feiyong-mx .weui-label {
+            color: rgba(25,31,37,0.56);
+        }
+        .weui-btn_ding {
+            background-color: #3296fa;
+        }
+    </style>
+</head>
+<body>
+    <div id="demo" style="background-color: rgba(23,31,37,0.04)">
+        <zhichu-mingxi v-for="item in ZhiChuMX" :item="item"></zhichu-mingxi>
+        <div class="weui-flex" style="padding: 7px">
+            <div class="weui-flex__item" style="padding: 7px">
+                <a class="weui-btn weui-btn_ding" @click="action('back')" href="javascript:">上一步</a>
+            </div>
+            <div class="weui-flex__item" style="padding: 7px">
+                <a class="weui-btn weui-btn_ding" @click="action('next')" href="javascript:">下一步</a>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/x-template" id="zhichu-mingxi">
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell" :class="{'weui-cell_vcode': item.FeiYongMX.length > 0}">
+            <div class="weui-cell__hd">
+                <label class="weui-label">{{item.MingCheng}}</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" placeholder="请输入金额" v-model="item.JinE">
+            </div>
+            <div class="weui-cell__ft" v-if="item.FeiYongMX.length > 0">
+                <button class="weui-vcode-btn" @click="add(item.FeiYongMX)">添加</button>
+            </div>
+        </div>
+        <div v-if="item.FeiYongMX.length > 0">
+            <template v-for="(row,index) in item.FeiYongMX" :del="del">
+                <div v-for="field in row" class="weui-cell feiyong-mx" :class="{'weui-cell_select weui-cell_select-after': field.Type==='4'}">
+                    <div class="weui-cell__hd"><label class="weui-label">{{field.FeiYongMXMC}}</label></div>
+                    <div class="weui-cell__bd">
+                        <input v-if="field.Type==1" class="weui-input" type="number" v-model="field.FeiYongMXZ"/>
+                        <input v-else-if="field.Type==2" class="weui-input" type="text" v-model="field.FeiYongMXZ"/>
+                        <input v-else-if="field.Type==3" class="weui-input" type="date" v-model="field.FeiYongMXZ"/>
+                        <select v-else-if="field.Type==4 || field.Type==5" class="weui-select" v-model="field.FeiYongMXZ">
+                            <option v-for="opt in field.Options" :value="opt.Value">{{opt.Text}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_access" @click="del(item.FeiYongMX, index)" v-if="item.FeiYongMX.length > 1">
+                    <div class="weui-cell__bd">删除</div>
+                </div>
+            </template>
+        </div>
+    </div>
+</script>
+<script>
+    Vue.component("zhichu-mingxi", {
+        template: "#zhichu-mingxi",
+        props: ["item"],
+        methods: {
+            add: function(FeiYongMX){
+                var newFeiYongMX = _.cloneDeep(FeiYongMX[0]);
+                $.each(newFeiYongMX, function (index, item) {
+                    item.FeiYongMXZ = "";
+                })
+                FeiYongMX.push(newFeiYongMX);
+            },
+            del: function (FeiYongMX, index) {
+                console.log(index)
+                FeiYongMX.splice(index, 1);
+            }
+        }
+    });
+    const vm = new Vue({
+        el: "#demo",
+        data: {
+            ZhiChuMX: zhichuData.list
+        },
+        methods: {
+            action: function (go) {
+                console.log(go, this.ZhiChuMX);
+            }
+        }
+    })
+</script>
+</html>
