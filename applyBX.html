@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/sm.css">
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
+    <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
     <script src="js/zepto.min.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/weui.min.js"></script>
@@ -21,12 +21,11 @@
             top:20%;
         }
         #applybx{height:100%;overflow: auto;width:100%}
-        .pageFirst{
-
-        }
-        .pageSecond{
-
-        }
+        .feiyong-mx .weui-label{color:#787878}
+        .weui-cell_vcode{border-bottom:1px solid #e5e5e5}
+        .weui-vcode-btn, .weui-cell_access{text-align: center;color: #3cc51f;}
+        .weui-btn_ding{background:#3cc51f }
+        .btIcon{font-size:10px;color:#f00b0d}
     </style>
 
 </head>
@@ -40,7 +39,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-name"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">报销类型</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>报销类型</div>
                             <div class="item-input">
                                 <select-dialog ref="bxlx" id="bxlx" title="报销类型" :config="bxlxConfig" v-model="formData.bxlx"></select-dialog>
                             </div>
@@ -52,7 +51,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-name"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">资金申请单</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>资金申请单</div>
                             <div class="item-input">
                                 <sea-dialog id="zjApply" title="资金申请单" :config="zjApplyConfig" v-model="formData.zjApply"></sea-dialog>
                             </div>
@@ -64,7 +63,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-name"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">执行申请单</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>执行申请单</div>
                             <div class="item-input">
                                 <select-dialog id="zxApply" title="执行申请单" :config="zxApplyConfig" v-model="formData.zxApply"></select-dialog>
                             </div>
@@ -76,7 +75,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-name"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">合同名称</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>合同名称</div>
                             <div class="item-input">
                                 <select-dialog id="htmc" title="合同名称" :config="htmcConfig" v-model="formData.htmc"></select-dialog>
                             </div>
@@ -88,7 +87,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-name"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">合同阶段</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>合同阶段</div>
                             <div class="item-input">
                                 <select-dialog id="htjd" title="合同阶段" :config="htjdConfig" v-model="formData.htjd"></select-dialog>
                             </div>
@@ -100,7 +99,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-gender"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">指标名称</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>指标名称</div>
                             <div class="item-input">
                                 <sea-dialog ref="zbmc" id="zbmc" title="指标名称" :config="zbmcConfig" v-model="formData.zbmc"></sea-dialog>
                             </div>
@@ -112,7 +111,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-gender"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">可用余额</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>可用余额</div>
                             <div class="item-input">{{kyye}}</div>
                         </div>
                     </div>
@@ -126,7 +125,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-gender"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">报销部门</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>报销部门</div>
                             <div class="item-input">
                                 <select-dialog ref="bxbm" id="bxbm" title="报销部门" :config="bxbmConfig" v-model="formData.bxbm"></select-dialog>
                             </div>
@@ -138,7 +137,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-gender"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">报销人</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>报销人</div>
                             <div class="item-input">
                                 <input id="bxr" type="text" placeholder="" value="">
                             </div>
@@ -150,7 +149,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-calendar"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">报销日期</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>报销日期</div>
                             <div class="item-input">
                                 <input id="bxDate" type="date"  data-toggle='date' value="['now.getFullYear() + '-' +((now.getMonth()+1)<10?'0':'')+(now.getMonth()+1)+'-'+(now.getDate()<10?'0':'')+now.getDate()']">
                             </div>
@@ -161,9 +160,9 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-comment"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">报销是由</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>报销是由</div>
                             <div class="item-input">
-                                <textarea ref="bxsy"></textarea>
+                                <textarea v-model="formData.bxsy"></textarea>
                             </div>
                         </div>
                     </div>
@@ -172,7 +171,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-gender"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">支出事项</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>支出事项</div>
                             <div class="item-input">
                                 <sea-dialog ref="zcsx" id="zcsx" title="支出事项" :config="zcsxConfig" v-model="formData.zcsx"></sea-dialog>
                             </div>
@@ -186,7 +185,7 @@
                         <div class="item-inner">
                             <div class="item-title label">备注</div>
                             <div class="item-input">
-                                <textarea></textarea>
+                                <textarea v-model="formData.bzxx"></textarea>
                             </div>
                         </div>
                     </div>
@@ -195,11 +194,25 @@
             <weui-uploader id="ShenPiFJ" title="上传附件" :options="uploaderOptions" :files="formData.FileList"></weui-uploader>
         </div>
         <div class="content-block">
-            <a href="javascript:void(0);" class="weui-btn weui-btn_primary">下一步</a>
+            <a @click="next()" href="javascript:void(0);" class="weui-btn weui-btn_primary">下一步</a>
         </div>
     </div>
-    <div class="pageSecond">
-        <zhichu-mingxi v-for="item in ZhiChuMX" :item="item"></zhichu-mingxi>
+    <div class="pageSecond" style="display: none">
+
+        <div v-if="zj">
+            <zjzc-mx v-for="item in ZhiChuMX" :items="item"></zjzc-mx>
+        </div>
+        <div v-else>
+            <zhichu-mingxi v-for="item in ZhiChuMX" :item="item"></zhichu-mingxi>
+        </div>
+        <div class="weui-cells weui-cells_form">
+        <div  class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">报销金额</label></div>
+            <div class="weui-cell__bd">
+                {{total}}
+            </div>
+        </div>
+        </div>
         <div class="weui-flex" style="padding: 7px">
             <div class="weui-flex__item" style="padding: 7px">
                 <a class="weui-btn weui-btn_ding" @click="action('back')" href="javascript:">上一步</a>
@@ -209,7 +222,132 @@
             </div>
         </div>
     </div>
+    <div class="pageThird" style="display: none">
+        <div v-if="fzsx.length > 0">
+            <template v-for="item in fzsx">
+                <div class="list-block">
+                    <ul>
+                        <li v-if="item.Type=='1'" class="item-content">
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">{{item.MingCheng}}</div>
+                                    <div class="item-input">
+                                        <input type="number" placeholder="" value="" v-model="item.FuZhuZ">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li v-else-if="item.Type=='2'">
+                            <div class="item-content">
+                                <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                                <div class="item-inner">
+                                    <div class="item-title label">{{item.MingCheng}}</div>
+                                    <div class="item-input">
+                                        <input type="text" placeholder="" value="" v-model="item.FuZhuZ">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li v-else-if="item.Type=='3'">
+                            <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">{{item.MingCheng}}</div>
+                                <div class="item-input">
+                                    <input type="date" placeholder="" value="" v-model="item.FuZhuZ">
+                                </div>
+                            </div>
+                            </div>
+                        </li>
+                        <li v-else-if="item.Type=='4'">
+                            <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">{{item.MingCheng}}</div>
+                                <div class="item-input">
+                                    <option v-for="opt in item.Options" :selected="opt.ShiFouXZ" :value="opt.Value">{{opt.Text}}</option>                                </div>
+                            </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </template>
+        </div>
+        <div class="list-block" v-else>
+            <ul>
+                <li class="item-content">
+                    <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">辅助事项</div>
+                        <div class="item-input">
+                            <input type="text" placeholder="" value="" readonly>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="weui-flex" style="padding: 7px">
+            <div class="weui-flex__item" style="padding: 7px">
+                <a class="weui-btn weui-btn_ding" @click="thirdAction('back')" href="javascript:">上一步</a>
+            </div>
+            <div class="weui-flex__item" style="padding: 7px">
+                <a class="weui-btn weui-btn_ding" @click="thirdAction('next')" href="javascript:">下一步</a>
+            </div>
+        </div>
+    </div>
+    <div class="pageFour"  style="display: none">
+        <div class="list-block">
+            <template v-for="(item,index) in formData.jsfs" :jsfsadd="jsfsadd" :jsfsdel="jsfsdel">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">结算方式</div>
+                                <div class="item-input">
+                                    <select-dialog ref="'jsfs_'+index" id="jsfs" title="结算方式" :config="item" :currentrecord.sync="item.record" v-model="item.currentVal"></select-dialog>
+                                </div>
+                                <span class="icon icon-right"></span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">结算金额</div>
+                                <div class="item-input">
+                                    <input type="number" placeholder="" v-model="item.JinE"/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <div v-if="item.record.Content.length > 0">
+                        <jsfs-input v-for="opt in item.record.Content" :item="opt"></jsfs-input>
+                    </div>
+                    <li class="row" style="text-align: right;line-height:45px;">
+                        <div class="col-80">
+                            <a v-show="index==formData.jsfs.length-1" href="#" @click="jsfsadd(index)">
+                                <i><span style='color:#3cc51f' class="iconfont">&#xe61e;</span></i>增加
+                            </a>
+                        </div>
+                        <div class="col-20" style="text-align: center;float: right">
+
+                            <a href="#" @click="jsfsdel(index)"><i><span style='color:#3cc51f' class="iconfont">&#xe695;</span></i>删除</a>
+                        </div>
+
+                    </li>
+                </ul>
+            </template>
+        </div>
+        <div class="content-block">
+            <a @click="save()" href="javascript:void(0);" class="weui-btn weui-btn_primary">完成</a>
+        </div>
+    </div>
 </div>
+
+
 
 </body>
 <script type="text/x-template" id="select-dialog">
@@ -221,7 +359,7 @@
                 <h3 class="selectTitle">{{title}}</h3>
                 <div class="selectCon">
                     <ul class="selList">
-                        <li v-bind:class="{active: item[config.key]===currentVal}" v-for="item in config.options" @click="click(item)">{{item[config.dis]}}</li>
+                        <li v-bind:class="{active: item[config.key]===record[config.key]}" v-for="item in config.options" @click="click(item)">{{item[config.dis]}}</li>
                     </ul>
                 </div>
                 <div class="selectBottom">
@@ -239,8 +377,8 @@
   <div class="item">
       <div class="item-select" @click="show();">{{currentDisVal}}</div>
       <div :id="id" class="seaDialog" style="display: none">
-          <span class="icon icon-closed"></span>
           <div class="seaDialogInfo">
+              <span @click="hide()" class="icon icon-closed">×</span>
               <h3>{{title}}</h3>
               <div class="searchInput">
                   <input :placeholder="'请输入' + title + '名称'"/>
@@ -292,6 +430,29 @@
             </template>
         </div>
     </div>
+</script>
+<script type="text/x-template" id="zjzc-mx">
+    <div class="weui-cells weui-cells_form">
+        <div  class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">{{items.ZCMXMingCheng}}</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" v-model="items.ZCMXJinE">
+        </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-template" id="jsfs-input">
+    <li>
+        <div class="item-content">
+            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+            <div class="item-inner">
+                <div class="item-title label">{{item.Text}}</div>
+                <div class="item-input">
+                    <input type="number" placeholder="" value=""/>
+                </div>
+            </div>
+        </div>
+    </li>
 </script>
 <script src="js/vue.js"></script>
 <script src="js/components/vue.weui.uploader.js"></script>
