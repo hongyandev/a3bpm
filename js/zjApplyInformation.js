@@ -103,7 +103,7 @@ $(function () {
         onSuccess: function (userinfo) {
             const messObj = $.fn.cookie('messStr');
             const messStr = messObj ? JSON.parse(messObj) : "";
-            vm.getFormData(userinfo.YongHuBH, _request.BianHao, _request.RenWuID, _request.LiuChengId, messStr.jd);
+            vm.getFormData(userinfo.YongHuBH, _request.BianHao, _request.RenWuID, _request.LiuChengId, decodeURI(_request.DangQianJD));
         }
     });
 })

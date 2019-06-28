@@ -308,7 +308,7 @@ $(function () {
         "DanJuBH":theRequest.BianHao,
         "LiuChengId":theRequest.LiuChengId,
         "TaskId":messStr.rwid,
-        "DangQianJD":messStr.jd,
+        "DangQianJD":decodeURI(theRequest.DangQianJD),
         "Next":"pass",//有效值  pass:通过,退回:back
         "ShenPiYJ":$("#option").val(),
        /* "FileList"://附件信息
