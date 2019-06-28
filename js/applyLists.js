@@ -83,7 +83,7 @@ function getData(dwbh,yhbh) {
                 $.each(res.list,function (index,val){
                     str+="<li>\n";
                         if(val.LeiXing=='1'){
-                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(val.DangQianJD)+"'>"+
+                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
                                     "<i><span style='color:#1e90ff' class=\"iconfont\">&#xe721;</span></i>\n";
                         }else if(val.LeiXing=='2'){
                             str+="<a class='messages' href='messageDetail.html?LeiXing="+val.LeiXing+"&BianHao="+val.BianHao+"'>"+
@@ -93,10 +93,10 @@ function getData(dwbh,yhbh) {
                             str+="<a href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
                                 "<i><span style='color:#fa693b' class=\"iconfont\">&#xe640;</span></i>\n";
                         }else if(val.LeiXing=='4'){
-                            str+="<a class='zxApply' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zxApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(val.DangQianJD)+"'>"+
+                            str+="<a class='zxApply' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zxApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
                                 "<i><span style='color:#34dbe4' class=\"iconfont\">&#xe637;</span></i>\n";
                         }else if(val.LeiXing=='6'){
-                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zjApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(val.DangQianJD)+"'>"+
+                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zjApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
                                 "<i><span style='color:#fe75ff' class=\"iconfont\">&#xe653;</span></i>\n";
                         }else{
                             str+="<a href='javascript:void(0)'>"+

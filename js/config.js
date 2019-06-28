@@ -81,6 +81,16 @@ var GetRequest = function () {
     }
     return theRequest;
 }
+//根据参数部分和参数名来获取参数值
+var getParamString = function (paraPart,name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = paraPart.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+var getParamFromUrl = function (name){
+    var r = getParamString(window.location.search,name)
+    return r
+}
 var Global = {
     baseUrl: "http://wxdev.hongyancloud.com:8082",
     h5Url: "http://wxdev.hongyancloud.com:8082",
