@@ -15,7 +15,7 @@ $(function () {
                 fileval : "fileBase64",
                 filekey : "FuJianMC",
                 maxsize : 5,
-                maxcount : 9,
+                maxcount : 1,
                 onSuccess : function (ret) {
                     if(ret.msgCode == "1") {
                         return ret.list[0];
@@ -101,8 +101,8 @@ $(function () {
     // vm.getFormData("XTYH201905300002", "JKDH201906190001", "510225", "2019318155749.510217", "单位财务负责人");
     config({
         onSuccess: function (userinfo) {
-            const messObj = $.fn.cookie('messStr');
-            const messStr = messObj ? JSON.parse(messObj) : "";
+            //const messObj = $.fn.cookie('messStr');
+            //const messStr = messObj ? JSON.parse(messObj) : "";
             vm.getFormData(userinfo.YongHuBH, _request.BianHao, _request.RenWuID, _request.LiuChengId, decodeURI(_request.DangQianJD));
         }
     });
