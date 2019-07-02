@@ -26,7 +26,7 @@ Vue.component("weui-ocr", {
             return list;
         }
     },
-    props: ["config","title"],
+    props: ["id","config","title"],
     mounted: function () {
         var self = this;
         var options = $.extend({
@@ -73,7 +73,7 @@ Vue.component("weui-ocr", {
             };
         }
         this.options = options;
-        $(this.$el).find('input[type="file"]').on("change", function (evt) {
+        $(".weui-uploader__input").on("change", function (evt) {
             const files = evt.target.files;
             if (files.length === 0) {
                 return;

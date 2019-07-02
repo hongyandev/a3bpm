@@ -15,30 +15,34 @@
 </head>
 <body>
 <div id="demo">
-    <weui-ocr title="扫一扫" :config="demoConfig"></weui-ocr>
+    <weui-ocr id="ocrdemo" title="扫一扫" :config="demoConfig"></weui-ocr>
+    <div>{{log}}</div>
 </div>
 </body>
 <script>
     const vm = new Vue({
         el: "#demo",
         data: {
+            log: "",
             demoConfig: {
                 class: "weui-btn_mini weui-btn_default",
                 useapi: ["vat_invoice", "train_ticket"],
                 // useapi: ["train_ticket"],
                 options : {
-                    url : "http://wxdev.hongyancloud.com:8082/bpm/common/upload2",
-                    type : "base64", // or 'file'
-                    fileVal : "fileBase64",
+                    url : "http://172.30.8.90:8082/bpm/common/ocrbase64",
+                    type : "base64", // 'base64' or 'file'
+                    fileVal : "file",
                     auto: true,
                     onBeforeSend: function (data, headers) {
                         console.log('BeforeSend', data);
                     },
                     onSuccess: function (ret) {
                         console.log('Success', ret);
+                        vm.log = ret;
                     },
                     onError: function (err) {
                         console.log('Error', err);
+                        vm.log = err;
                     }
                 }
             }
