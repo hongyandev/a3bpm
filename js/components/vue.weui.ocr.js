@@ -138,42 +138,56 @@ Vue.component("weui-ocr", {
             const headers = {};
             if(onBeforeSend(file, data, headers) === false) return;
             file.status = 'progress';
-            const formData = new FormData();
-            const xhr = new XMLHttpRequest();
-            file.xhr = xhr;
-            // 设置参数
-            Object.keys(data).forEach((key) => {
-                formData.append(key, data[key]);
-            });
             if(options.type == 'file'){
+                const formData = new FormData();
+                const xhr = new XMLHttpRequest();
+                file.xhr = xhr;
+                // 设置参数
+                Object.keys(data).forEach((key) => {
+                    formData.append(key, data[key]);
+                });
                 formData.append(fileVal, file, name);
-            }else{
-                formData.append(fileVal, file.base64);
-            }
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        try {
-                            // 只支持json
-                            const ret = JSON.parse(xhr.responseText);
-                            onSuccess(file, ret);
-                        } catch (err) {
-                            onError(file, err);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            try {
+                                // 只支持json
+                                const ret = JSON.parse(xhr.responseText);
+                                onSuccess(file, ret);
+                            } catch (err) {
+                                onError(file, err);
+                            }
+                        } else {
+                            onError(file, new Error('XMLHttpRequest response status is ' + xhr.status));
                         }
-                    } else {
+                    }
+                };
+                xhr.open('POST', url);
+                Object.keys(xhrFields).forEach((key) => {
+                    xhr[key] = xhrFields[key];
+                });
+                // 设置头部信息
+                Object.keys(headers).forEach((key) => {
+                    xhr.setRequestHeader(key, headers[key]);
+                });
+                xhr.send(formData);
+            }else{
+                data[fileVal] = file.base64;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    dataType: "json",
+                    headers: headers || {},
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (ret) {
+                        onSuccess(file, ret);
+                    },
+                    error: function (xhr, type) {
                         onError(file, new Error('XMLHttpRequest response status is ' + xhr.status));
                     }
-                }
-            };
-            xhr.open('POST', url);
-            Object.keys(xhrFields).forEach((key) => {
-                xhr[key] = xhrFields[key];
-            });
-            // 设置头部信息
-            Object.keys(headers).forEach((key) => {
-                xhr.setRequestHeader(key, headers[key]);
-            });
-            xhr.send(formData);
+                });
+            }
         }
     },
     template:

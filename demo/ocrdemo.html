@@ -26,21 +26,32 @@
             log: "",
             demoConfig: {
                 class: "weui-btn_mini weui-btn_default",
-                useapi: ["vat_invoice", "train_ticket"],
+                useapi: ["vat_invoice", "train_ticket"], // 允许此组件扫描的类型，vat_invoice=增值税发票，train_ticket=火车票，bankcard=银行卡
                 // useapi: ["train_ticket"],
                 options : {
-                    url : "http://172.30.8.90:8082/bpm/common/ocrbase64",
-                    type : "base64", // 'base64' or 'file'
+                    url : "http://172.30.8.90:8082/bpm/common/ocrbase64", // type=file,url=/bpm/common/ocrfile
+                    type : "base64", // 'base64' or 'file' type=file 需要服务端压缩图片<4M
                     fileVal : "file",
                     auto: true,
+                    compress: { // base64 模式图片压缩配置
+                        width: 1600,
+                        height: 1600,
+                        quality: .8
+                    },
                     onBeforeSend: function (data, headers) {
+                        // 图片上传前调用
+                        // $.extend(data, { test: 1 }); // 可以扩展此对象来控制上传参数
+                        // $.extend(headers, { Origin: 'http://127.0.0.1' }); // 可以扩展此对象来控制上传头部
+                        // return false; // 阻止文件上传
                         console.log('BeforeSend', data);
                     },
                     onSuccess: function (ret) {
+                        // 成功的回调
                         console.log('Success', ret);
                         vm.log = ret;
                     },
                     onError: function (err) {
+                        // 失败的回调
                         console.log('Error', err);
                         vm.log = err;
                     }
