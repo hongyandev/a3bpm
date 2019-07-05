@@ -26,10 +26,11 @@ Vue.component("weui-ocr", {
             return list;
         }
     },
-    props: ["id","config","title"],
+    props: ["id","config","title","target"],
     mounted: function () {
         var self = this;
         var options = $.extend({
+            target: this.target,
             url: '',
             auto: true,
             type: 'file',
@@ -58,9 +59,11 @@ Vue.component("weui-ocr", {
         }
         if(options.onSuccess){
             const onSuccess = options.onSuccess;
-            options.onSuccess = function(file, ret){
+            options.onSuccess = function(file, ret, target){
                 file.status = 'success';
-                if(!onSuccess.call(file, ret)){
+                if(!onSuccess.call(file, ret, target)){
+                    if(self.$parent.callback)
+                        self.$parent.callback(target);
                 }
             };
         }
@@ -127,7 +130,7 @@ Vue.component("weui-ocr", {
             if(self.options.auto) file.upload();
         },
         upload: function(options) {
-            const {url, file, fileVal, onBeforeSend, onError, onSuccess, xhrFields} = options;
+            const {url, file, fileVal, onBeforeSend, onError, onSuccess, xhrFields, target} = options;
             const {name, type, lastModifiedDate} = file;
             const data = {
                 name: name,
@@ -153,7 +156,7 @@ Vue.component("weui-ocr", {
                             try {
                                 // 只支持json
                                 const ret = JSON.parse(xhr.responseText);
-                                onSuccess(file, ret);
+                                onSuccess(file, ret, target);
                             } catch (err) {
                                 onError(file, err);
                             }
@@ -181,7 +184,7 @@ Vue.component("weui-ocr", {
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     success: function (ret) {
-                        onSuccess(file, ret);
+                        onSuccess(file, ret, target);
                     },
                     error: function (xhr, type) {
                         onError(file, new Error('XMLHttpRequest response status is ' + xhr.status));
@@ -191,8 +194,8 @@ Vue.component("weui-ocr", {
         }
     },
     template:
-    '    <span>\n' +
-    '        <a href="javascript:;" class="weui-btn" :class="config.class" @click="click()">{{title}}</a>\n' +
+    '    <div>\n' +
+    '        <button class="weui-btn" :class="config.class" @click="click()">{{title}}</button>\n' +
     '        <div v-if="apilist.length > 1" class="selectDialog" style="display: none;">\n' +
     '            <div class="dialogInfo">\n' +
     '                <h3 class="selectTitle">请选择</h3>\n' +
@@ -203,12 +206,12 @@ Vue.component("weui-ocr", {
     '                </div>\n' +
     '                <div class="selectBottom">\n' +
     '                    <ul class="row">\n' +
-    '                        <li class="col-50" @click="close()"><a href="javascript:void(0)">取消</a></li>\n' +
+    '                        <li class="" @click="close()"><a href="javascript:void(0)">取消</a></li>\n' +
     '                    </ul>\n' +
     '                </div>\n' +
     '            </div>\n' +
     '            <div class="dialogBg"></div>\n' +
     '        </div>\n' +
     '        <input class="weui-uploader__input" style="z-index: -999; width: 1px; height: 1px" type="file" accept="image/*" capture="camera" />\n' +
-    '    </span>'
+    '    </div>'
 });

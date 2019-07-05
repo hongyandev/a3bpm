@@ -3,6 +3,7 @@ $(function () {
         el: "#tab",
         data: {
             formData: {},
+            yb: 0,
             submitData: {
                 ShenPiYJ : "",
                 ShenPiYS : [],
@@ -103,6 +104,7 @@ $(function () {
         onSuccess: function (userinfo) {
             //const messObj = $.fn.cookie('messStr');
             //const messStr = messObj ? JSON.parse(messObj) : "";
+            vm.yb = _request.yb || 0;
             vm.getFormData(userinfo.YongHuBH, _request.BianHao, _request.RenWuID, _request.LiuChengId, decodeURI(_request.DangQianJD));
         }
     });

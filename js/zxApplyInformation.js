@@ -215,7 +215,7 @@ $(function () {
                             "            <div class=\"item-inner\">\n" +
                             "              <div class=\"item-title ys label\">" + val.YaoSuMC + "</div>\n" +
                             "              <div class=\"item-input\">\n" +
-                            "              <select class='selYs_" + index + "'>";
+                            "              <select id='selYs_" + index + "'>";
                                             $.each(val.YaoSuZ, function (i, o) {
                                                 ysxx += "<option value='"+o+"'>" + o + "</option>";
                                             })
@@ -227,23 +227,6 @@ $(function () {
                     })
                 }
                 $(".ysXX").html(ysxx);
-
-                var liList = $(".ysXX li");
-                if (liList.length > 0) {
-                    for (var i = 0; i < liList.length; i++) {
-                        var li = liList.get(i);
-                        var obj = {};
-                        obj.YaoSuBH = $(li).attr('ysbh');
-                        //obj.YaoSuZ = $(".selYs_"+ i).find("option:checked").text();
-                        obj.YaoSuZ = $('.selYs_'+i+ ' option').not(function(){ return !this.selected }).text();
-                        console.info(obj.YaoSuZ);
-                       /* $(".selYs_"+i).on("change",function () {
-                            console.info($('.selYs_'+i+ ' option').not(function(){ return !this.selected }).text());
-                        });*/
-                        //obj.YaoSuZ = $(".selYs_"+ i).val();
-                        arr.push(obj);
-                    }
-                }
 
                 var spFjLists = "";
                 if (res.ShenPiXX.length > 0) {
@@ -324,15 +307,25 @@ $(function () {
     };
 
     $("#submit").on("click", function () {
+        submitdata.ShenPiYS = [];
         submitdata.BaoXiaoJE = $(".sqje").html();
         submitdata.ShenQingBMBH = $("#sqbmbh").val();
         submitdata.ShenPiYJ = $("#option").val();
         submitdata.Next = "pass";
+        var liList = $(".ysXX li");
+        for (var i = 0; i < liList.length; i++) {
+            var li = liList.get(i);
+            var obj = {};
+            obj.YaoSuBH = $(li).attr('ysbh');
+            var sel = document.getElementById('selYs_'+i);
+            var index = sel.selectedIndex; // 选中索引
+            obj.YaoSuZ = sel.options[index].value; // 选中值
+            console.info(obj.YaoSuZ);
+            submitdata.ShenPiYS[i] = obj;
+        }
+
         if (fj) {
             submitdata.FileList = fj[0];
-        }
-        if (arr.length > 0) {
-            submitdata.ShenPiYS = arr
         }
         console.info(submitdata);
         //return;

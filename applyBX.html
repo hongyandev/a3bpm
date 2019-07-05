@@ -13,6 +13,7 @@
     <script src="js/weui.min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/lodash.min.js"></script>
+    <script src="js/image.compress.js"></script>
     <style>
         /*.list-block ul ul{padding-left:0;}*/
         .item .selectDialog ul.row{padding-left:0}
@@ -27,6 +28,7 @@
         .weui-btn_ding{background:#3cc51f }
         .btIcon{font-size:10px;color:#f00b0d}
     </style>
+
 
 </head>
 <body>
@@ -160,7 +162,7 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-comment"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>报销是由</div>
+                            <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>报销事由</div>
                             <div class="item-input">
                                 <textarea v-model="formData.bxsy"></textarea>
                             </div>
@@ -203,7 +205,7 @@
             <zjzc-mx v-for="item in ZhiChuMX" :items="item"></zjzc-mx>
         </div>
         <div v-else>
-            <zhichu-mingxi v-for="item in ZhiChuMX" :item="item"></zhichu-mingxi>
+            <zhichu-mingxi v-for="item in ZhiChuMX" :item="item" :ocrconfig="ocrConfig"></zhichu-mingxi>
         </div>
         <div class="weui-cells weui-cells_form">
         <div  class="weui-cell">
@@ -407,8 +409,8 @@
             <div class="weui-cell__bd">
                 <input class="weui-input" type="number" placeholder="请输入金额" v-model="item.JinE">
             </div>
-            <div class="weui-cell__ft" v-if="item.BianHao=='ZCMX201903240229'">
-                <button class="weui-vcode-btn" @click="">扫一扫</button>
+            <div class="" v-if="item.BianHao=='ZCMX201903240229'">
+                <weui-ocr id="ZCMX201903240229" title="扫车票" :config="ocrconfig" v-model="item.FeiYongMX" :target="item.FeiYongMX"></weui-ocr>
             </div>
             <div class="weui-cell__ft" v-if="item.FeiYongMX.length > 0">
                 <button class="weui-vcode-btn" @click="add(item.FeiYongMX)">添加</button>
@@ -460,6 +462,7 @@
 </script>
 <script src="js/vue.js"></script>
 <script src="js/components/vue.weui.uploader.js"></script>
+<script src="js/components/vue.weui.ocr.js"></script>
 <script src="js/applyBX.js"></script>
 
 </html>

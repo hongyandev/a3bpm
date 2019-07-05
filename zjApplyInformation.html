@@ -50,7 +50,7 @@
     <div class="weui-navbar">
         <div class="weui-navbar__item">申请信息</div>
         <div class="weui-navbar__item">流程</div>
-        <div class="weui-navbar__item">审批</div>
+        <div class="weui-navbar__item" v-if="yb==0">审批</div>
     </div>
     <div class="weui-tab__panel">
         <div class="weui-tab__content">
@@ -238,7 +238,7 @@
                 <p class="img"><img :src="formData.DanJuXX.LiuChengTuLJ"/></p>
             </div>
         </div>
-        <div class="weui-tab__content">
+        <div class="weui-tab__content" v-if="yb==0">
             <!--审批页-->
             <div class="weui-panel weui-panel_access">
                 <div class="weui-panel__hd">审批意见</div>

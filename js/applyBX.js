@@ -1,5 +1,5 @@
 $(function () {
-
+    var bmbh;
     Vue.component("sea-dialog", {
         data: function () {
             return {
@@ -88,8 +88,11 @@ $(function () {
     });
     Vue.component("zhichu-mingxi", {
         template: "#zhichu-mingxi",
-        props: ["item"],
+        props: ["item", "ocrconfig"],
         methods: {
+            callback: function (target) {
+                this.$set(this.item, target);
+            },
             add: function(FeiYongMX){
                 var newFeiYongMX = _.cloneDeep(FeiYongMX[0]);
                 $.each(newFeiYongMX, function (index, item) {
@@ -476,9 +479,68 @@ $(function () {
                     console.info(res);
                     vm.jsfsType = res.Content;
                 }
+            },
+            ocrConfig:{
+                class: "weui-btn_mini weui-btn_default",
+                useapi: ["vat_invoice", "train_ticket"], // 允许此组件扫描的类型，vat_invoice=增值税发票，train_ticket=火车票，bankcard=银行卡
+                // useapi: ["train_ticket"],
+                options : {
+                    url : Global.baseUrl + "/bpm/common/ocrbase64", // type=file,url=/bpm/common/ocrfile
+                    type : "base64", // 'base64' or 'file' type=file 需要服务端压缩图片<4M
+                    fileVal : "file",
+                    auto: true,
+                    compress: { // base64方式图片压缩配置
+                        width: 1600,
+                        height: 1600,
+                        quality: .8
+                    },
+                    onBeforeSend: function (data, headers) {
+                        // 图片上传前调用
+                        // $.extend(data, { test: 1 }); // 可以扩展此对象来控制上传参数
+                        // $.extend(headers, { Origin: 'http://127.0.0.1' }); // 可以扩展此对象来控制上传头部
+                        // return false; // 阻止上传
+                        console.log('BeforeSend', data);
+                    },
+                    onSuccess: function (ret, target) {
+                        // 成功的回调
+                        console.log('Success', ret);
+                        console.log('Target', target);
+                        var setValues = function (fymx) {
+                            _.forEach(fymx, function (value, key) {
+                                switch (value.BianHao) {
+                                    case 'FYMX201903240030': // 起点
+                                        value.FeiYongMXZ = ret.origin;
+                                        break;
+                                    case 'FYMX201903240031':
+                                        value.FeiYongMXZ = ret.destination;
+                                        break;
+                                    case 'FYMX201903240033':
+                                        value.FeiYongMXZ = ret.price;
+                                        break;
+                                    case 'FYMX201903240034' :
+                                        value.FeiYongMXZ = "1";
+                                        break;
+                                }
+                            })
+                        }
+                        if (target.length == 1 && target[0][0].FeiYongMXZ == undefined){
+                            setValues(target[0]);
+                            console.log(target);
+                        } else {
+                            var newmx = _.cloneDeep(target[0]);
+                            setValues(newmx)
+                            target.push(newmx);
+                        }
+                    },
+                    onError: function (err) {
+                        // 失败的回调
+                        console.log('Error', err);
+                    }
+                }
             }
         },
         mounted: function () {
+
             //报销类型
             fetch(Global.baseUrl + '/bpm/common/getBaoXiaoLX', {
                 method: 'post',
@@ -499,23 +561,28 @@ $(function () {
                 })
             });
             //报销部门
-            var bxbmdata={
-                "BuMenBH": _userinfo.BuMenBH,//"GLZZ201905250002",
-            };
-            fetch(Global.baseUrl + '/bpm/common/getDept',{
-                method: 'post',
-                body: JSON.stringify(bxbmdata),
-                headers: {
-                    'Content-Type': 'application/json'
+            var self = this;
+            config({
+                onSuccess: function (userinfo) {
+                    var bxbmdata={
+                        "BuMenBH": userinfo.BuMenBH,//"GLZZ201905250002",
+                    };
+                    fetch(Global.baseUrl + '/bpm/common/getDept',{
+                        method: 'post',
+                        body: JSON.stringify(bxbmdata),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(res =>res.json())
+                        .then(json =>{
+                            self.bxbmConfig.options = json.list;
+                            self.$refs.bxbm.currentDisVal = json.list[0].MingCheng;
+                            self.formData.bxbm = json.list[0].BianHao;
+                        });
+                    $("#bxr").val(userinfo.XingMing);
                 }
-            })
-                .then(res =>res.json())
-                .then(json =>{
-                    vm.bxbmConfig.options = json.list;
-                    this.$refs.bxbm.currentDisVal = json.list[0].MingCheng;
-                    this.formData.bxbm = json.list[0].BianHao;
-                });
-            $("#bxr").val(_userinfo.XingMing);
+            });
         },
         methods:{
             jsfsadd: function () {
@@ -668,6 +735,7 @@ $(function () {
                     "BiaoXiaoBH":"",//新增单据:无报销编号;编辑单据:有报销编号
                     "BaoXiaoLX":this.formData.bxlx,
                     "ZhiBiaoBH":this.formData.zbmcbh,
+                    "GangWeiBH":_userinfo.GangWeiBH,
                     "ShenQingR":_userinfo.YongHuBH,//"申请人-（经办人）编号",
                     "NianDu":_userinfo.NianDu,
                     "ShenQingDW":$.fn.cookie('ShenQingDW'),//"申请单位编号-（管理组织）",
@@ -801,6 +869,7 @@ $(function () {
         },
 
     })
+
 });
 function zbmcList(vm,zbmcdata) {
     fetch(Global.baseUrl + '/bpm/common/getProjects', {
