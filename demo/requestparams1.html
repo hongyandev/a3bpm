@@ -3,12 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
+    <script src="../js/lodash.min.js"></script>
+    <script src="../js/zepto.min.js"></script>
+    <script src="../js/testData.js"></script>
 </head>
 <body>
 <p id="demo"></p>
 </body>
 <script>
-document.getElementById("demo").innerHTML = '<a href="requestparams2.html?uri='+encodeURI(encodeURI('这是一次中文传参'))+'">Go!</a>'
+    document.getElementById("demo").innerHTML = '<a href="requestparams2.html?uri=' + encodeURI(encodeURI('这是一次中文传参')) + '">Go!</a>'
+</script>
+<script>
+    var a = {"BianHao": 1, "FeiYongMXZ": 2};
+    var b = _.mapKeys(a, function (v, k) {
+        var key;
+        switch (k) {
+            case 'BianHao':
+                key = 'MingXiBH';
+                break;
+            case 'FeiYongMXZ':
+                key = 'MingXiZ';
+                break;
+            default:
+                key = k;
+        }
+        return key;
+    });
+    // console.log(b)
+    var _ZhiCuXX = [];
+    _.forEach(zcxxData, function (value, key) {
+        var c = _.flatMapDepth(value.FeiYongMX, function (value, key, collection) {
+            return value;
+        }, 1)
+        var _FeiYongMX = [];
+        _.forEach(_.groupBy(c,'BianHao'), function(value, key) {
+            _FeiYongMX.push({
+                'MingXiBH': key,
+                'MingXiZ': _.map(value,'FeiYongMXZ')
+            })
+        });
+        _ZhiCuXX.push({
+            'ZhiChuMXBH': value.BianHao,
+            'FeiYongMX': _FeiYongMX
+        });
+    })
+    console.log(_ZhiCuXX)
 </script>
 </html>

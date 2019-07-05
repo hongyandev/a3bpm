@@ -86,6 +86,13 @@ $(function () {
                 });
                 $("#zcmx").html(str);
                 $(".img img").attr("src",res.DanJuXX.LiuChengTuLJ);
+                if(theRequest.yb=='1'){
+                    $(".spyj").html("");
+                    $(".ysXX").html("");
+                    $(".spFjLists").html("");
+                    $(".scfj").html("");
+                    $(".fixBottom").hide()
+                }
                 //审批
                 var ysxx="";
                 if(res.YaoSuXX.length>0){
@@ -115,6 +122,9 @@ $(function () {
                        var li=liList.get(i);
                        var obj = {};
                        obj.YaoSuBH = $(li).attr('ysbh');
+                       $(".selYs_"+i).on("change",function () {
+                           console.info(this.val());
+                       });
                        obj.YaoSuZ = $(".selYs_"+i).val();
                        arr.push(obj);
                    }

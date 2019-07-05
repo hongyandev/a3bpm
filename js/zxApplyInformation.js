@@ -235,8 +235,12 @@ $(function () {
                         var obj = {};
                         obj.YaoSuBH = $(li).attr('ysbh');
                         //obj.YaoSuZ = $(".selYs_"+ i).find("option:checked").text();
-                        //obj.YaoSuZ = $(".selYs_"+ i).find("option").not(function(){ return !this.selected }).text();
-                        obj.YaoSuZ = $(".selYs_"+ i).val();
+                        obj.YaoSuZ = $('.selYs_'+i+ ' option').not(function(){ return !this.selected }).text();
+                        console.info(obj.YaoSuZ);
+                       /* $(".selYs_"+i).on("change",function () {
+                            console.info($('.selYs_'+i+ ' option').not(function(){ return !this.selected }).text());
+                        });*/
+                        //obj.YaoSuZ = $(".selYs_"+ i).val();
                         arr.push(obj);
                     }
                 }

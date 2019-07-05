@@ -151,7 +151,7 @@
                         <div class="item-inner">
                             <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>报销日期</div>
                             <div class="item-input">
-                                <input id="bxDate" type="date"  data-toggle='date' value="['now.getFullYear() + '-' +((now.getMonth()+1)<10?'0':'')+(now.getMonth()+1)+'-'+(now.getDate()<10?'0':'')+now.getDate()']">
+                                <input id="bxDate" type="date"  data-toggle='date' v-model="formData.bxDate">
                             </div>
                         </div>
                     </div>
@@ -306,7 +306,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">结算方式</div>
                                 <div class="item-input">
-                                    <select-dialog ref="'jsfs_'+index" id="jsfs" title="结算方式" :config="item" :currentrecord.sync="item.record" v-model="item.currentVal"></select-dialog>
+                                    <select-dialog ref="'jsfs_'+index" :id="'jsfs_'+index" title="结算方式" :config="item" :currentrecord.sync="item.record" v-model="item.currentVal"></select-dialog>
                                 </div>
                                 <span class="icon icon-right"></span>
                             </div>
@@ -407,6 +407,9 @@
             <div class="weui-cell__bd">
                 <input class="weui-input" type="number" placeholder="请输入金额" v-model="item.JinE">
             </div>
+            <div class="weui-cell__ft" v-if="item.BianHao=='ZCMX201903240229'">
+                <button class="weui-vcode-btn" @click="">扫一扫</button>
+            </div>
             <div class="weui-cell__ft" v-if="item.FeiYongMX.length > 0">
                 <button class="weui-vcode-btn" @click="add(item.FeiYongMX)">添加</button>
             </div>
@@ -419,9 +422,10 @@
                         <input v-if="field.Type==1" class="weui-input" type="number" v-model="field.FeiYongMXZ"/>
                         <input v-else-if="field.Type==2" class="weui-input" type="text" v-model="field.FeiYongMXZ"/>
                         <input v-else-if="field.Type==3" class="weui-input" type="date" v-model="field.FeiYongMXZ"/>
-                        <select v-else-if="field.Type==4 || field.Type==5" class="weui-select" v-model="field.FeiYongMXZ">
+                        <select v-else-if="field.Type==4 || field.Type==5" class="weui-input" v-model="field.FeiYongMXZ">
                             <option v-for="opt in field.Options" :value="opt.Value">{{opt.Text}}</option>
                         </select>
+                        <span v-else-if="field.Type==0" class="weui-input">{{field.FeiYongMXZ}}</span>
                     </div>
                 </div>
                 <div class="weui-cell weui-cell_access" @click="del(item.FeiYongMX, index)" v-if="item.FeiYongMX.length > 1">
@@ -448,7 +452,7 @@
             <div class="item-inner">
                 <div class="item-title label">{{item.Text}}</div>
                 <div class="item-input">
-                    <input type="number" placeholder="" value=""/>
+                    <input type="text" placeholder="" value="" v-model="item.Value"/>
                 </div>
             </div>
         </div>

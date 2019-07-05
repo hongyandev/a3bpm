@@ -119,6 +119,7 @@ $(function () {
         ZhiBiaoMC: '',
         DanJuBH:''
     };
+    var result = [];
     var vm = new Vue({
         el: "#applybx",
         data: {
@@ -134,9 +135,11 @@ $(function () {
                 zjApply: "",
                 zxApply: "",
                 kyye:"",
+                bxDate:"",
                 htmc: "",
                 htjd: "",
                 zbmc: "",
+                zbmcbh:"",
                 bxsy:"",
                 bxbm:"",
                 bzxx:"",
@@ -278,7 +281,7 @@ $(function () {
                 },
                 onclickCallback: function (res) {
                     vm.kyye = res.keYongYE;
-
+                    vm.formData.zbmcbh = res.bianHao
                     //console.log("callback",res)
                 }
             },
@@ -466,6 +469,9 @@ $(function () {
                 options:[],
                 key: "BianMa",
                 dis: "MingCheng",
+                init:function () {
+                    vm.$refs['jsfs_'+i];
+                },
                 callback:function (res) {
                     console.info(res);
                     vm.jsfsType = res.Content;
@@ -507,6 +513,7 @@ $(function () {
                 .then(json =>{
                     vm.bxbmConfig.options = json.list;
                     this.$refs.bxbm.currentDisVal = json.list[0].MingCheng;
+                    this.formData.bxbm = json.list[0].BianHao;
                 });
             $("#bxr").val(_userinfo.XingMing);
         },
@@ -541,13 +548,73 @@ $(function () {
                             vm.ZhiChuMX = json.list;
                         });
                 }
-                console.info("1:"+this.formData);
+                //console.info("1:"+this.formData);
             },
             action: function (go) {
                 if(go=='back'){
                     $(".pageSecond").hide().siblings('.pageFirst').show();
                 }else{
                     $(".pageThird").show().siblings('.pageFirst,.pageSecond').hide();
+                    console.info(this.ZhiChuMX);
+
+                    if(this.ZhiChuMX.length>0){
+                        var _ZhiCuXX = [];
+                        _.forEach(this.ZhiChuMX, function (value, key) {
+                            var c = _.flatMapDepth(value.FeiYongMX, function (value, key, collection) {
+                                return value;
+                            }, 1);
+                            var _FeiYongMX = [];
+                            _.forEach(_.groupBy(c,'BianHao'), function(value, key) {
+                                _FeiYongMX.push({
+                                    'MingXiBH': key,
+                                    'MingXiZ': _.map(value,'FeiYongMXZ')
+                                })
+                            });
+                            _ZhiCuXX.push({
+                                'ZhiChuMXBH': value.BianHao,
+                                'FeiYongMX': _FeiYongMX
+                            });
+                        });
+                        console.log(_ZhiCuXX)
+                    }
+
+
+                    fetch(Global.baseUrl + "/bpm/common/getDetailSumMoney",{
+                        method: 'post',
+                        body: JSON.stringify({'ZhiChuXX':_ZhiCuXX}),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(res =>res.json())
+                        .then(json =>{
+                           $.each(this.ZhiChuMX,function (i,o) {
+                               var ZhiChuMXBH = o.BianHao;
+                               $.each(json.ZhiChuMX, function (j, p) {
+                                   if(p.ZhiChuMXBH == ZhiChuMXBH) {
+                                       $.each(o.FeiYongMX, function (k, q) {
+                                           var index = -1;
+                                           $.each(q, function (l, r) {
+                                               if(r.type==0){
+                                                   index = l;
+                                               }
+                                           })
+                                           if(index != -1) {
+                                               q.splice(index, 1);
+                                           }
+                                           q.push({
+                                               'Type': 0,
+                                               'FeiYongMXMC': '标准费用',
+                                               'FeiYongMXZ': p.list[k]
+                                           })
+                                           o.JinE = p.ZhiChuMXZJE;
+                                           console.log(q)
+                                       })
+                                   }
+                               })
+                           })
+                           
+                        });
 
                     fetch(Global.baseUrl + "/bpm/common/auxiliary",{
                         method: 'post',
@@ -562,24 +629,21 @@ $(function () {
                             vm.fzsx = json.list;
                     });
                 }
-                console.log(this.ZhiChuMX);
             },
             thirdAction:function (go) {
                 if(go=='back'){
                     $(".pageThird").hide().siblings('.pageSecond').show();
                 }else{
                     $(".pageFour").show().siblings('.pageFirst,.pageSecond,.pageThird').hide();
-                    if(this.zj){
 
-                    }
                     fetch(Global.baseUrl + '/bpm/common/accounts',{
                         method: 'post',
                         headers: {
                             'Content-Type': 'application/json'
                         }
                     })
-                        .then(res => res.json())
-                        .then(json => {
+                    .then(res => res.json())
+                    .then(json => {
                            // if (vm.formData.jsfs.length == 0 ) {
                                 vm.formData.jsfs.push({
                                     options:json.list,
@@ -587,37 +651,39 @@ $(function () {
                                     key: "BianMa",
                                     dis: "MingCheng",
                                     record: {"Content":[]}
-                                })
+                                });
                             //}
-                            if(!json.list.Content && json.list.Content.length>0){
-                            vm.jsfsType = json.list.Content;
+                            for(var i=0;i<json.list.length;i++){
+                                if(json.list[i].Content != "" && json.list[i].Content.length>0){
+                                    vm.jsfsType = json.list[i].Content;
+                            }
                         }
                 });
 
-                console.log(this.formData.jsfs)
                 }
             },
             save:function () {
+                console.log(this.formData.jsfs);
                 var formdata = {
                     "BiaoXiaoBH":"",//新增单据:无报销编号;编辑单据:有报销编号
                     "BaoXiaoLX":this.formData.bxlx,
-                    "ZhiBiaoBH":this.formData.zbmc,
-                    "ShenQingR":"申请人-（经办人）编号",
+                    "ZhiBiaoBH":this.formData.zbmcbh,
+                    "ShenQingR":_userinfo.YongHuBH,//"申请人-（经办人）编号",
                     "NianDu":_userinfo.NianDu,
-                    "ShenQingDW":"申请单位编号-（管理组织）",
+                    "ShenQingDW":$.fn.cookie('ShenQingDW'),//"申请单位编号-（管理组织）",
                     "ShenQingBM":_userinfo.BuMenBH,
                     "ShenQingJE":this.total,//"申请金额-（报销金额）",
                     "BaoXiaoR":$("#bxr").val(),
                     "BaoXiaoBM":this.formData.bxbm,//"报销部门编号",
-                    "BaoXiaoRQ":"报销日期",
+                    "BaoXiaoRQ":this.formData.bxDate,
                     "BaoXiaoSY":this.formData.bxsy,
                     "ZhiChuSX":this.formData.zcsx,//"支出事项编号",
                     "BeiZhu":this.formData.bzxx,
                     "DuiYingDJ":this.formData.htmc || this.formData.zxApply || this.formData.zjApply,//"对应单据编号(合同/执行申请单/资金申请单)",
-                    "KeYongYE":this.formData.kyye,
+                    "KeYongYE":this.kyye.replace(/,/gi, ''),
                     "HeTongJD":this.formData.htjd,//"合同阶段编号",
                     "FuJianXX":this.formData.FileList,
-                    "ZhiChuXX":[//支出明细
+                    /*"ZhiChuXX":[//支出明细
                         {
                             "ZhiChuMXBH":"支出明细编号",
                             "JinE":"申请金额",
@@ -631,14 +697,15 @@ $(function () {
                                 }
                             ]
                         }
-                    ],
-                    "FuZhuSX":[
+                    ],*/
+                    "FuZhuSX":[],
+                    /*"FuZhuSX":[
                         {
                             "FuZhuSXBH":"辅助事项编号",
                             "FuZhuSXZ":"辅助事项值"
                         }
-                    ],
-                    "JieSuanXX":[{
+                    ],*/
+                    /*"JieSuanXX":[{
                         "JieSuanFS":"结算方式",
                         "JieSuanJE":"结算金额",
                         "Content":[
@@ -647,20 +714,78 @@ $(function () {
                                 "Value":"填写的值"
                             }
                         ]
-                    }]
+                    }]*/
                 };
-                return false;
+                if(this.ZhiChuMX.length>0){
+                    var _ZhiCuXX = [];
+                    _.forEach(this.ZhiChuMX, function (value, key) {
+                        var c = _.flatMapDepth(value.FeiYongMX, function (value, key, collection) {
+                            return value;
+                        }, 1);
+                        var _FeiYongMX = [];
+                        var total = 0;
+                        _.forEach(_.groupBy(c,'BianHao'), function(value, key) {
+                            _FeiYongMX.push({
+                                'MingXiBH': key,
+                                'MingXiZ': _.map(value,'FeiYongMXZ')
+                            });
+                            if(key == 'undefined'){
+
+                                _.forEach(_.map(value,'FeiYongMXZ'),function (value,key) {
+                                    total += _.toNumber(value);
+                                });
+
+                                console.info(total);
+                            }
+                        });
+                        _ZhiCuXX.push({
+                            'ZhiChuMXBH': value.BianHao,
+                            'FeiYongMX': _FeiYongMX,
+                            'JinE': value.JinE,
+                            'BiaoZhuFY':total
+                        });
+                    });
+                    console.log(_ZhiCuXX);
+                    formdata.ZhiChuXX = _ZhiCuXX;
+                }
+                if(this.formData.jsfs.length>0){
+                    var JieSuanXX = [];
+                    $.each(this.formData.jsfs,function (i,o) {
+                        var jsxx = {};
+                        jsxx.Content = [];
+                        $.each(o.record.Content,function (j,k) {
+                            jsxx.Content.push({
+                                'Key': k.key,
+                                'Value': k.Value
+                            })
+                        });
+                        $.extend(jsxx, {
+                            'JieSuanJE': o.JinE,
+                            'JieSuanFS': o.currentVal
+                        });
+                        JieSuanXX.push(jsxx)
+                    });
+                    console.info(JieSuanXX);
+                    formdata.JieSuanXX = JieSuanXX;
+                }
+
+                console.info(formdata);
+
                 fetch(Global.baseUrl + "/bpm/bxsq/save",{
                     method: 'post',
-                    body: JSON.stringify({'ZhiChuSXBH':this.formData.zcsx,"DanJuBH":""}),
+                    body: JSON.stringify(formdata),
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 })
                     .then(res =>res.json())
                     .then(json =>{
-                        $(".pageFirst,.pageSecond").hide().siblings('.pageThird').show();
-                        vm.fzsx = json.list;
+                        console.info(json);
+                        if(json.msgCode=='0'){
+                            weui.topTips(json.msg);
+                        }else{
+
+                        }
                     });
             }
 
@@ -671,7 +796,7 @@ $(function () {
                 $.each(this.ZhiChuMX, function (index, item) {
                     total += parseFloat((item.ZCMXJinE || item.JinE || 0));
                 });
-                return total;
+                return _.toString(total);
             }
         },
 
@@ -688,5 +813,6 @@ function zbmcList(vm,zbmcdata) {
         .then(res => res.json())
         .then(json => {
             vm.zbmcConfig.options = json.list;
+
         });
 }
