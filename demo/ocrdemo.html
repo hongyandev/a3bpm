@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ocr Demo</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../css/weui.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/weui.min.js"></script>
+    <script src="../js/zepto.min.js"></script>
+    <script src="../js/lodash.min.js"></script>
+    <script src="../js/image.compress.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/components/vue.weui.ocr.js"></script>
+</head>
+<body>
+<div id="demo">
+    <weui-ocr id="ocrdemo" title="扫一扫" :config="demoConfig"></weui-ocr>
+    <div>{{log}}</div>
+</div>
+</body>
+<script>
+    const vm = new Vue({
+        el: "#demo",
+        data: {
+            log: "",
+            demoConfig: {
+                class: "weui-btn_mini weui-btn_default",
+                useapi: ["vat_invoice", "train_ticket"], // 允许此组件扫描的类型，vat_invoice=增值税发票，train_ticket=火车票，bankcard=银行卡
+                // useapi: ["train_ticket"],
+                options : {
+                    url : "http://wxdev.hongyancloud.com:8082/bpm/common/ocrbase64", // type=file,url=/bpm/common/ocrfile
+                    type : "base64", // 'base64' or 'file' type=file 需要服务端压缩图片<4M
+                    fileVal : "file",
+                    auto: true,
+                    compress: { // base64方式图片压缩配置
+                        width: 1600,
+                        height: 1600,
+                        quality: .8
+                    },
+                    onBeforeSend: function (data, headers) {
+                        // 图片上传前调用
+                        // $.extend(data, { test: 1 }); // 可以扩展此对象来控制上传参数
+                        // $.extend(headers, { Origin: 'http://127.0.0.1' }); // 可以扩展此对象来控制上传头部
+                        // return false; // 阻止上传
+                        console.log('BeforeSend', data);
+                    },
+                    onSuccess: function (ret) {
+                        // 成功的回调
+                        console.log('Success', ret);
+                        vm.log = ret;
+                    },
+                    onError: function (err) {
+                        // 失败的回调
+                        console.log('Error', err);
+                        vm.log = err;
+                    }
+                }
+            }
+        },
+        methods: {
+            action: function (go) {
+                console.log(go);
+            }
+        }
+    })
+</script>
+</html>
