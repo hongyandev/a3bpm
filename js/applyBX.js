@@ -1,5 +1,11 @@
 $(function () {
-    var bmbh;
+    config({
+        // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
+        onSuccess: function (userinfo) {
+            //alert("just du it!");
+            $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
+        }
+    });
     Vue.component("sea-dialog", {
         data: function () {
             return {
@@ -123,12 +129,14 @@ $(function () {
         DanJuBH:''
     };
     var result = [];
+    var formdata;
     var vm = new Vue({
         el: "#applybx",
         data: {
             zj: false,
             zx: false,
             ht: false,
+            lc:false,
             kyye:"",
             ZhiChuMX: [],
             fzsx:[],
@@ -157,7 +165,7 @@ $(function () {
                 fileval : "fileBase64",
                 filekey : "FuJianMC",
                 maxsize : 5,
-                maxcount : 1,
+                maxcount : 10,
                 onSuccess : function (ret) {
                     if(ret.msgCode == "1") {
                         return ret.list[0];
@@ -537,6 +545,15 @@ $(function () {
                         console.log('Error', err);
                     }
                 }
+            },
+            lcConfig:{
+                options:[],
+                key: "BianHao",
+                dis: "MingCheng",
+                callback:function (res) {
+                    formdata.FlowId = res.BianHao;
+                    saveData(formdata)
+                }
             }
         },
         mounted: function () {
@@ -730,8 +747,9 @@ $(function () {
                 }
             },
             save:function () {
-                console.log(this.formData.jsfs);
-                var formdata = {
+
+                     formdata = {
+                    "FlowId":"",
                     "BiaoXiaoBH":"",//新增单据:无报销编号;编辑单据:有报销编号
                     "BaoXiaoLX":this.formData.bxlx,
                     "ZhiBiaoBH":this.formData.zbmcbh,
@@ -839,9 +857,16 @@ $(function () {
 
                 console.info(formdata);
 
-                fetch(Global.baseUrl + "/bpm/bxsq/save",{
+                var lcData = {
+                    YuSuanND:_userinfo.NianDu,
+                    DanWeiBH:$.fn.cookie('ShenQingDW'),
+                    ZhiChuSX:this.formData.zcsx,
+                    ZhiBiao:this.formData.zbmcbh,
+                    DanJuBH:this.formData.bxlx
+                };
+                fetch(Global.baseUrl + "/bpm/common/getLiuChenXX",{
                     method: 'post',
-                    body: JSON.stringify(formdata),
+                    body: JSON.stringify(lcData),
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -849,12 +874,18 @@ $(function () {
                     .then(res =>res.json())
                     .then(json =>{
                         console.info(json);
-                        if(json.msgCode=='0'){
-                            weui.topTips(json.msg);
-                        }else{
-
+                        if(json.msgCode=='1'){
+                            if(json.list.length == 1){
+                                formdata.FlowId = json.list[0].BianHao;
+                                saveData(formdata);
+                            }else if(json.list.length > 1){
+                                vm.lc = true;
+                                vm.lcConfig.options = json.list;
+                            }
                         }
                     });
+
+
             }
 
         },
@@ -883,5 +914,23 @@ function zbmcList(vm,zbmcdata) {
         .then(json => {
             vm.zbmcConfig.options = json.list;
 
+        });
+}
+function saveData(data) {
+    fetch(Global.baseUrl + "/bpm/bxsq/save",{
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(res =>res.json())
+        .then(json =>{
+            console.info(json);
+            if(json.msgCode=='0'){
+                weui.topTips(json.msg);
+            }else if(json.msgCode=='1'){
+                location.href="applyLists.html"
+            }
         });
 }

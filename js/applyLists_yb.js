@@ -79,7 +79,7 @@ function getData(dwbh,yhbh) {
         type:'post',
         url: Global.baseUrl + '/bpm/dbsp/dblist',
         contentType:'application/json',
-        data:JSON.stringify({"YongHuBH":yhbh,"PageNum":1,"LeiXing": "2","RowNum": 10,}),
+        data:JSON.stringify({"YongHuBH":yhbh,"PageNum":1,"LeiXing": "2","RowNum": Number.MAX_VALUE,}),
         success:function (res) {
             if(res.msgCode=='1'){
                 var str="";

@@ -342,6 +342,7 @@
                     </li>
                 </ul>
             </template>
+            <select-dialog id="lcxx" v-show="lc" title="流程信息" :config="lcConfig"></select-dialog>
         </div>
         <div class="content-block">
             <a @click="save()" href="javascript:void(0);" class="weui-btn weui-btn_primary">完成</a>
