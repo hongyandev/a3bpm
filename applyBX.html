@@ -342,8 +342,8 @@
                     </li>
                 </ul>
             </template>
-            <select-dialog id="lcxx" v-show="lc" title="流程信息" :config="lcConfig"></select-dialog>
         </div>
+        <select-dialog ref="lcxx" id="lcxx" v-show="lc" title="流程信息" :config="lcConfig"></select-dialog>
         <div class="content-block">
             <a @click="save()" href="javascript:void(0);" class="weui-btn weui-btn_primary">完成</a>
         </div>
@@ -355,7 +355,7 @@
 </body>
 <script type="text/x-template" id="select-dialog">
     <div class="item">
-        <div class="item-select" @click="show();">{{currentDisVal}}</div>
+        <div class="item-select" v-show="config.showselect ? config.showselect : true" @click="show();">{{currentDisVal}}</div>
         <div :id="id" class="selectDialog" style="display: none;">
 
             <div class="dialogInfo">

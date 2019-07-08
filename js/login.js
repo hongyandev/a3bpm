@@ -11,10 +11,15 @@ $(function () {
                 password: $("#password").val()
             }),
             success: function (res) {
-                window.location.href = "applyLists.html";
+                if(res.code == '200'){
+                    window.location.href = "index.html";
+                }else{
+                    weui.topTips(res.msg);
+                }
+
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                window.location.href = "applyLists.html";
+
             }
         })
     })

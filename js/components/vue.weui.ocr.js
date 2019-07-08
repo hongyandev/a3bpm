@@ -130,6 +130,9 @@ Vue.component("weui-ocr", {
             if(self.options.auto) file.upload();
         },
         upload: function(options) {
+            var loading = weui.loading('loading', {
+                className: 'custom-classname'
+            });
             const {url, file, fileVal, onBeforeSend, onError, onSuccess, xhrFields, target} = options;
             const {name, type, lastModifiedDate} = file;
             const data = {
@@ -184,9 +187,15 @@ Vue.component("weui-ocr", {
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     success: function (ret) {
+                        loading.hide(function() {
+                            console.log('`loading` has been hidden');
+                        });
                         onSuccess(file, ret, target);
                     },
                     error: function (xhr, type) {
+                        loading.hide(function() {
+                            console.log('`loading` has been hidden');
+                        });
                         onError(file, new Error('XMLHttpRequest response status is ' + xhr.status));
                     }
                 });

@@ -349,7 +349,7 @@ $(function () {
                         });*/
 
                     vm.kyye = res.ZiJinSQJE;
-                    vm.formData.zbmc = res.ZhiBiaoBH;
+                    vm.formData.zbmcbh = res.ZhiBiaoBH;
                     vm.formData.zcsx = res.ZCSXBianHao;
                     vm.ZhiChuMX = res.ZCMXlist;
                     //console.log("callback",res)
@@ -490,7 +490,7 @@ $(function () {
             },
             ocrConfig:{
                 class: "weui-btn_mini weui-btn_default",
-                useapi: ["vat_invoice", "train_ticket"], // 允许此组件扫描的类型，vat_invoice=增值税发票，train_ticket=火车票，bankcard=银行卡
+                useapi: ["train_ticket"], // 允许此组件扫描的类型，vat_invoice=增值税发票，train_ticket=火车票，bankcard=银行卡
                 // useapi: ["train_ticket"],
                 options : {
                     url : Global.baseUrl + "/bpm/common/ocrbase64", // type=file,url=/bpm/common/ocrfile
@@ -541,6 +541,7 @@ $(function () {
                         }
                     },
                     onError: function (err) {
+                        weui.topTips(err);
                         // 失败的回调
                         console.log('Error', err);
                     }
@@ -550,6 +551,7 @@ $(function () {
                 options:[],
                 key: "BianHao",
                 dis: "MingCheng",
+                showselect: false,
                 callback:function (res) {
                     formdata.FlowId = res.BianHao;
                     saveData(formdata)
@@ -611,7 +613,7 @@ $(function () {
                 this.formData.jsfs.splice(index,1);
             },
             next:function () {
-                if(this.formData.zcsx=="" || this.formData.bxsy==""){
+                if(this.formData.zcsx=="" || this.formData.bxsy=="" || this.formData.bxDate==""){
                     weui.topTips("填写信息不完整");
                     return false;
                 }
@@ -825,9 +827,9 @@ $(function () {
                             }
                         });
                         _ZhiCuXX.push({
-                            'ZhiChuMXBH': value.BianHao,
+                            'ZhiChuMXBH': value.BianHao || value.ZCMXBianHao,
                             'FeiYongMX': _FeiYongMX,
-                            'JinE': value.JinE,
+                            'JinE': value.JinE || value.ZCMXJinE,
                             'BiaoZhuFY':total
                         });
                     });
@@ -881,6 +883,9 @@ $(function () {
                             }else if(json.list.length > 1){
                                 vm.lc = true;
                                 vm.lcConfig.options = json.list;
+                                var lcxx = this.$refs.lcxx;
+                                lcxx.show();
+
                             }
                         }
                     });
