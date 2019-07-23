@@ -121,9 +121,9 @@ $(function () {
         props:["item"],
     });
     var zbmcdata = {
-        BuMenBH: 'GLZZ201905250002',//_userinfo.BuMenBH,
-        NianDu: '2019',//_userinfo.NianDu,
-        YongHuBH: 'XTYH201905300002',//_userinfo.YongHuBH,
+        BuMenBH: _userinfo.BuMenBH,//'GLZZ201905250002',
+        NianDu: _userinfo.NianDu,//'2019',
+        YongHuBH: _userinfo.YongHuBH,//'XTYH201905300002',
         BaoXiaoLX:'',
         ZhiBiaoMC: '',
         DanJuBH:''
