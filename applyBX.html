@@ -355,7 +355,7 @@
 </body>
 <script type="text/x-template" id="select-dialog">
     <div class="item">
-        <div class="item-select" v-show="config.showselect ? true : false" @click="show();">{{currentDisVal}}</div>
+        <div class="item-select" v-show="config.showselect===false ? false : true" @click="show();">{{currentDisVal}}</div>
         <div :id="id" class="selectDialog" style="display: none;">
 
             <div class="dialogInfo">
