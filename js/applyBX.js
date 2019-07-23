@@ -644,6 +644,7 @@ $(function () {
                     console.info(this.ZhiChuMX);
 
                     if(this.ZhiChuMX.length>0){
+
                         var _ZhiCuXX = [];
                         _.forEach(this.ZhiChuMX, function (value, key) {
                             var c = _.flatMapDepth(value.FeiYongMX, function (value, key, collection) {
@@ -681,7 +682,7 @@ $(function () {
                                        $.each(o.FeiYongMX, function (k, q) {
                                            var index = -1;
                                            $.each(q, function (l, r) {
-                                               if(r.type==0){
+                                               if(r.Type==0){
                                                    index = l;
                                                }
                                            })
@@ -813,24 +814,23 @@ $(function () {
                         var _FeiYongMX = [];
                         var total = 0;
                         _.forEach(_.groupBy(c,'BianHao'), function(value, key) {
-                            _FeiYongMX.push({
-                                'MingXiBH': key,
-                                'MingXiZ': _.map(value,'FeiYongMXZ')
-                            });
                             if(key == 'undefined'){
-
                                 _.forEach(_.map(value,'FeiYongMXZ'),function (value,key) {
                                     total += _.toNumber(value);
                                 });
-
                                 console.info(total);
+                            } else {
+                                _FeiYongMX.push({
+                                    'MingXiBH': key,
+                                    'MingXiZ': _.map(value,'FeiYongMXZ')||[]
+                                });
                             }
                         });
                         _ZhiCuXX.push({
                             'ZhiChuMXBH': value.BianHao || value.ZCMXBianHao,
                             'FeiYongMX': _FeiYongMX,
                             'JinE': value.JinE || value.ZCMXJinE,
-                            'BiaoZhuFY':total
+                            'BiaoZhuFY':isNaN(total)? 0 : total
                         });
                     });
                     console.log(_ZhiCuXX);
