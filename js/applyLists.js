@@ -1,11 +1,15 @@
-
+var pageNum = 1;
+var yhbh;
+var flag = false;
+var index = 0;
 $(function(){
     config({
         // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
         onSuccess: function (userinfo) {
             //alert("just du it!");
-            $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
-           getData(userinfo.DanWeiBH,userinfo.YongHuBH);
+           $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
+           yhbh = userinfo.YongHuBH;
+           getData(userinfo.YongHuBH,pageNum);
         }
     });
     $('.weui-navbar__item').on('click', function () {
@@ -72,38 +76,80 @@ dd.ready(function() {
         },
         onFail : function(err) {}
     });
+
+
+    var mybody = document.getElementsByTagName('body')[0];
+
+    //滑动处理
+
+    var startX, startY, moveEndX, moveEndY, X, Y;
+
+    mybody.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        startX = e.touches[0].pageX;
+        startY = e.touches[0].pageY;
+    }, false);
+    mybody.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        moveEndX = e.changedTouches[0].pageX;
+        moveEndY = e.changedTouches[0].pageY;
+        X = moveEndX - startX;
+        Y = moveEndY - startY;
+
+        if ( Math.abs(Y) > Math.abs(X) && Y < 0 ) {
+            // 获取页面的可视高度
+            var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+            //mybody.style.height = h + 'px';
+            // 获取页面页面的滚动高度
+            var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+            // 获取页面滚动距离顶部的高度,  window.pageYOffse 兼容苹果
+            var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+            //alert("向上");
+            console.info(scrollTop);
+            if (scrollTop + clientHeight >= scrollHeight - 40) {
+                // 距离底部还有40的时候执行数据加载
+                if(flag){
+                        weui.toast('已经到底了', {
+                            duration: 3000,
+                            className: '',
+                            // callback: function(){ console.log('close') }
+                        });
+
+                    return;
+                }
+                getData(yhbh,pageNum++);
+            }
+        }
+
+    });
+
+
+
+
+
+
 })
 
-function getData(dwbh,yhbh) {
+function getData(yhbh,pageNum) {
     $.ajax({
         type:'post',
-        url: Global.baseUrl + '/bpm/tzgg/sydb',
+        url: Global.baseUrl + '/bpm/dbsp/dblist',
         contentType:'application/json',
-        data:JSON.stringify({"DanWeiBH":dwbh,"YongHuBH":yhbh,"PageRow":1}),
+        data:JSON.stringify({"YongHuBH":yhbh,"PageNum":pageNum,"LeiXing": "1","RowNum": 10/*Number.MAX_VALUE*/,}),
         success:function (res) {
             if(res.msgCode=='1'){
                 var str="";
                 $.each(res.list,function (index,val){
                     str+="<li>\n";
-                        if(val.LeiXing=='1'){
-                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
+                        if(val.DanJuLeiXing=='1'){
+                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
                                     "<i><span style='color:#1e90ff' class=\"iconfont\">&#xe721;</span></i>\n";
-                        }else if(val.LeiXing=='2'){
-                            str+="<a class='messages' href='messageDetail.html?LeiXing="+val.LeiXing+"&BianHao="+val.BianHao+"'>"+
-                                 "<input type='hidden' time='"+val.ShenQingSJ+"' value='"+val.BiaoTi+"'>"+
-                                 "<i><span style='color:#daa520' class=\"iconfont\">&#xe623;</span></i>\n";
-                        }else if(val.LeiXing=='0'){
-                            str+="<a href='messageDetail.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"'>"+
-                                "<i><span style='color:#fa693b' class=\"iconfont\">&#xe640;</span></i>\n";
-                        }else if(val.LeiXing=='4'){
-                            str+="<a class='zxApply' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zxApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
+                        }else if(val.DanJuLeiXing=='2'){
+                            str+="<a class='zxApply' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zxApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
                                 "<i><span style='color:#34dbe4' class=\"iconfont\">&#xe637;</span></i>\n";
-                        }else if(val.LeiXing=='6'){
-                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zjApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.BianHao+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
+                        }else if(val.DanJuLeiXing=='3'){
+                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zjApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
                                 "<i><span style='color:#fe75ff' class=\"iconfont\">&#xe653;</span></i>\n";
-                        }else{
-                            str+="<a href='javascript:void(0)'>"+
-                                "<i><span style='color:#fa656b' class=\"iconfont\">&#xe6ce;</span></i>\n";
                         };
                         str+="     <div class=\"listsInfo\">\n" +
                             "       <h4>"+val.BiaoTi+"</h4>\n" +
@@ -117,7 +163,11 @@ function getData(dwbh,yhbh) {
                             "</a>"+
                             "</li>";
                 });
-                $("#lists").html(str);
+                $("#lists").append(str);
+
+                if(res.list.length == 0){
+                    flag = true
+                }
                 $(".messages").on("click",function () {
                     var time = $(this).children("input").attr("time");
                     var title = $(this).children("input").val();

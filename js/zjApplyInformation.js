@@ -29,6 +29,7 @@ $(function () {
                 this.submitData.ShenQingBMBH = this.formData.DanJuXX.ShenQingBMBH;
                 this.submitData.BaoXiaoJE = this.formData.DanJuXX.JieKuanJE.replace(/,/gi, '');
                 this.submitData.DanJuLX = this.formData.DanJuXX.JieKuanDLX;
+                this.submitData.FileList = this.submitData.FileList[0];
                 this.submitData.Next = next;
                 // console.log(this.submitData);
                 var loading = weui.loading('正在提交', {
@@ -44,6 +45,7 @@ $(function () {
                     },
                     success: function(data) {
                         if(data.msgCode === "1") {
+                            weui.toast("审批成功",3000);
                             location.href = "applyLists.html";
                         } else {
                             weui.topTips(data.msg);

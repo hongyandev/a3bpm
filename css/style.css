@@ -5,6 +5,7 @@ a{color:rgba(25,31,37,0.72);text-decoration:none;}
 .fr{float:right;}
 h1,h2,h3,h4{padding:0;margin:0;font-weight: normal}
 ul,li{list-style: none;}
+.font14{font-size:14px!important;}
 .logo h1{
     width: 60%;
     min-height:120px;
@@ -412,6 +413,7 @@ ul,li{list-style: none;}
     padding-left:15px;
     line-height:45px;
     height:45px;
+    width:100%;
 }
 .seaDialogInfo ul.seaLists:before{
     height:0;

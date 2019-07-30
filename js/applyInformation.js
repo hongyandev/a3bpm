@@ -38,8 +38,10 @@ $(function () {
         success:function (res) {
             //console.info(res);
             if(res.msgCode=='1'){
-                $(".sqbt").html(res.DanJuXX.BaoXiaoSY);
-                $(".sqje").html(res.DanJuXX.ShenQingJE.replace(/,/gi, ''));
+                $(".sqbt").html(res.DanJuXX.BaoXiaoDLX);
+                if(res.DanJuXX.ShenQingJE){
+                    $(".sqje").html(res.DanJuXX.ShenQingJE.replace(/,/gi, ''));
+                }
                 $(".DanWeiMC").html(res.DanJuXX.DanWeiMC);
                 $(".BuMenMC").html(res.DanJuXX.BuMenMC);
                 $(".bxr").html(res.DanJuXX.BaoXiaoBM);
@@ -52,22 +54,26 @@ $(function () {
                 $("#sqbmbh").val(res.DanJuXX.ShenQingBMBH);
                 $("#bxlx").val(res.DanJuXX.BaoXiaoDLX);
                 var fjList='';
-                if(res.DanJuXX.DanJuFJ.length>0){
-                    $.each(res.DanJuXX.DanJuFJ,function (index,val){
-                        fjList+="<li>\n" +
-                            "     <div class=\"item-content\">\n" +
-                            "          <div class=\"item-media\"><i class=\"icon icon-form-email\"></i></div>\n" +
-                            "          <div class=\"item-inner\">\n" +
-                            "               <a  href='"+val.FuJianLJ+"' download>"+val.FuJianMC+"</a>\n" +
-                            "          </div>\n" +
-                            "     </div>\n" +
-                            "</li>"
-                    });
-                    $(".fjLists").html(fjList);
-                }else{
-                    $(".djfj").hide();
+                if(res.DanJuXX){
+                    if(res.DanJuXX.DanJuFJ && res.DanJuXX.DanJuFJ.length>0){
+                        $.each(res.DanJuXX.DanJuFJ,function (index,val){
+                            fjList+="<li>\n" +
+                                "     <div class=\"item-content\">\n" +
+                                "          <div class=\"item-media\"><i class=\"icon icon-form-email\"></i></div>\n" +
+                                "          <div class=\"item-inner\">\n" +
+                                "               <a  href='"+val.FuJianLJ+"' download>"+val.FuJianMC+"</a>\n" +
+                                "          </div>\n" +
+                                "     </div>\n" +
+                                "</li>"
+                        });
+                        $(".fjLists").html(fjList);
+                    }else{
+                        $(".djfj").hide();
+                    }
+                    $(".bxje").html(res.DanJuXX.ShenQingJE);
                 }
-                $(".bxje").html(res.DanJuXX.ShenQingJE);
+
+
 
                 // 支出明细
                 var str='';
@@ -395,6 +401,7 @@ $(function () {
             success: function(data) {
                 loading.hide();
                 if(data.msgCode == "1") {
+                    weui.toast("审批成功",3000);
                     location.href = "applyLists.html";
                 } else {
                     loading.hide();

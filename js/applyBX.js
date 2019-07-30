@@ -17,6 +17,9 @@ $(function () {
         props: ['id', 'title', 'config'],
         template: "#sea-dialog",
         methods:{
+            searchZbmc:function (e) {
+                this.$emit('searchmc',e)
+            },
             show:function () {
                 var sign = true;
                 if(this.config.showBeforeCallback){
@@ -230,6 +233,7 @@ $(function () {
                 options: [],
                 disField: "zhiBiaoMC",
                 keyField: "bianHao",
+                showsearch:true,
                 fields: [{
                     name: '指标名称',
                     key: 'zhiBiaoMC'
@@ -240,6 +244,13 @@ $(function () {
                     name: '可用余额',
                     key: 'keYongYE'
                 }],
+                searchZbmc:function(e){
+                    zbmcdata.BaoXiaoLX = vm.formData.bxlx;
+                    zbmcdata.DanJuBH = "";
+                    zbmcdata.ZhiBiaoMC = e.target.value;
+                    console.info(e);
+                    zbmcList(vm,zbmcdata);
+                },
                 showBeforeCallback:function () {
                     var flag = null;
                     switch (vm.formData.bxlx){
@@ -604,9 +615,11 @@ $(function () {
             });
         },
         methods:{
+
             jsfsadd: function () {
                 var newJsfs = _.cloneDeep(this.formData.jsfs[0]);
                 newJsfs.currentVal="";
+                newJsfs.JinE=0;
                 this.formData.jsfs.push(newJsfs);
             },
             jsfsdel: function (index) {
@@ -640,6 +653,10 @@ $(function () {
                 if(go=='back'){
                     $(".pageSecond").hide().siblings('.pageFirst').show();
                 }else{
+                    if(this.total=='0'){
+                        weui.topTips('报销金额不能为0');
+                        return false;
+                    }
                     $(".pageThird").show().siblings('.pageFirst,.pageSecond').hide();
                     console.info(this.ZhiChuMX);
 
@@ -737,7 +754,8 @@ $(function () {
                                     currentVal: "",
                                     key: "BianMa",
                                     dis: "MingCheng",
-                                    record: {"Content":[]}
+                                    record: {"Content":[]},
+                                    JinE:this.total
                                 });
                             //}
                             for(var i=0;i<json.list.length;i++){
@@ -750,8 +768,11 @@ $(function () {
                 }
             },
             save:function () {
-
-                     formdata = {
+                    if(this.jsfsType==''){
+                        weui.topTips('结算方式不能为空');
+                        return false;
+                    }
+                    formdata = {
                     "FlowId":"",
                     "BiaoXiaoBH":"",//新增单据:无报销编号;编辑单据:有报销编号
                     "BaoXiaoLX":this.formData.bxlx,
