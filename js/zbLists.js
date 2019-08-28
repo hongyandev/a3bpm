@@ -17,49 +17,27 @@ $(function () {
         props: ['id', 'title', 'config'],
         template: "#sea-dialog",
         methods:{
+            searchAll:function (e) {
+                if(e.target.value===''){
+                    this.searchZbmc(e)
+                }
+            },
             searchZbmc:function (e) {
                 this.$emit('searchmc',e)
             }
         }
     });
-  /*  var zbmcdata = {
-        BuMenBH: _userinfo.BuMenBH,//'GLZZ201905250002',
-        NianDu: _userinfo.NianDu,//'2019',
-        YongHuBH: _userinfo.YongHuBH,//'XTYH201905300002',
-        BaoXiaoLX:'',
+    let zbmcdata = {
+        DanWeiBH: "GLZZ201905240001",//$.fn.cookie('ShenQingDW'),
+        BuMenBH: 'GLZZ201905250002',//_userinfo.BuMenBH,
+        NianDu: '2019',//_userinfo.NianDu,//'2019',
+        YongHuBH: 'XTYH201905300002',//_userinfo.YongHuBH,
         ZhiBiaoMC: '',
-        DanJuBH:''
-    };*/
-    var result = [];
-    var formdata;
-    var vm = new Vue({
+    };
+
+    let vm = new Vue({
         el: "#zbLists",
         data: {
-            zj: false,
-            zx: false,
-            ht: false,
-            lc:false,
-            kyye:"",
-            ZhiChuMX: [],
-            fzsx:[],
-            jsfsType:[],
-            formData: {
-                bxlx: "",
-                zjApply: "",
-                zxApply: "",
-                kyye:"",
-                bxDate:"",
-                htmc: "",
-                htjd: "",
-                zbmc: "",
-                zbmcbh:"",
-                bxsy:"",
-                bxbm:"",
-                bzxx:"",
-                zcsx:"",
-                jsfs:[],
-                FileList : []
-            },
             zbmcConfig: {
                 options: [],
                 disField: "zhiBiaoMC",
@@ -67,57 +45,48 @@ $(function () {
                 showsearch:true,
                 fields: [{
                     name: '指标名称',
-                    key: 'zhiBiaoMC'
+                    key: 'ZhiBiaoMC'
                 },{
                     name: '批复金额',
-                    key: 'piFu'
+                    key: 'PiFuJE'
                 }, {
                     name: '可用余额',
-                    key: 'keYongYE'
+                    key: 'KeYongYE'
                 },{
                     name: '执行率',
-                    key: 'zhiXingLv'
+                    key: 'ZhiXingLV'
                 }],
                 searchZbmc:function(e){
-                    zbmcdata.BaoXiaoLX = vm.formData.bxlx;
                     zbmcdata.DanJuBH = "";
                     zbmcdata.ZhiBiaoMC = e.target.value;
                     console.info(e);
                     zbmcList(vm,zbmcdata);
-                },
-                showBeforeCallback:function () {
-
-                },
-                onclickCallback: function (res) {
-
                 }
             },
         },
         mounted: function () {
-
-        },
-        methods:{
-
-
-        },
-        computed: {
-
-        },
-
+            let vm = this;
+            zbmcList(vm,zbmcdata)
+        }
     })
 
 });
 function zbmcList(vm,zbmcdata) {
-    fetch(Global.baseUrl + '/bpm/common/getProjects', {
+    fetch(Global.baseUrl + '/bpm/zbcx/list', {
         method: 'post',
         body: JSON.stringify(zbmcdata),
         headers: {
             'Content-Type': 'application/json'
         }
-    })
+        })
         .then(res => res.json())
         .then(json => {
-            vm.zbmcConfig.options = json.list;
-
+            if(json.msgCode=='1'){
+                if(json.list.length>0){
+                    vm.zbmcConfig.options = json.list;
+                }else{
+                    $(".empty").show().html('当前没有指标可查询！')
+                }
+            }
         });
 }

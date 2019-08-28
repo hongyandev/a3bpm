@@ -469,6 +469,13 @@ ul,li{list-style: none;}
     -webkit-box-orient: vertical;
 }
 /*指标查询*/
+.seachBg{
+    background-color: #fff;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+}
 .zbLists .searchInput{
     width:96%;
     margin:10px 2%;
@@ -484,13 +491,14 @@ ul,li{list-style: none;}
     line-height:45px;
     height:45px;
     width:95%;
+    outline: none;
 }
 .zbLists ul.seaLists:before{
     height:0;
     background: none;
 }
 .zbLists ul.seaLists{
-    padding:5px 5%;
+    padding:70px 2% 10px;
     height:80%;
     overflow: auto;
 }
@@ -499,9 +507,14 @@ ul,li{list-style: none;}
     border:1px solid #e5e5e5;
     margin-bottom:10px;
     border-radius: 3px;
+    padding:5px;
 }
-.zbLists .seaLists li.row .col-80 p{
+.zbLists .seaLists li.row .col-100{
+    padding:5px 0;
+}
+.zbLists .seaLists li.row .col-100 p{
     overflow: auto;
+    padding: 5px 10px;
 }
 .zbLists .seaLists li.row .selectBtn{
     position: absolute;
@@ -531,4 +544,18 @@ ul,li{list-style: none;}
 }
 .toolCon .weui-tool .weui-grid:after{
     border:none;
+}
+.empty{
+    margin-top:30%;
+    text-align: center;
+    font-size:16px;
+}
+.weui-media-box{
+    padding:10px 0;
+}
+.weui-media-box__title{
+    margin:0 10px;
+}
+.weui-media-box:before{
+    left:0;
 }

@@ -12,27 +12,32 @@
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/weui.min.js"></script>
     <script src="js/config.js"></script>
-    <!--<script src="js/expendLists.js"></script>-->
 
 </head>
 <body>
-<div>
+<div id="expendLists">
     <div class="page navbar js_show">
         <div class="page__bd" style="height: 100%;">
             <div class="weui-tab">
                 <div class="weui-tab__panel">
                     <ul class="weui-cells weui-notice notice">
-                        <li class="weui-cell ">
-                            <div class="weui-cell__bd">
-                               关于全面推进行政事业单位内部控制建设的指导意见
-                            </div>
-                        </li>
+                        <li-expend @lifun="goDetail" :lists="lists" ></li-expend>
                     </ul>
                 </div>
-                <!-- <a class="entry" href="applyBX.html"><i class="iconfont">&#xe646;</i></a>-->
             </div>
         </div>
     </div>
 </div>
 </body>
+<script type="text/x-template" id="li-expend">
+    <div class="item">
+        <li v-for="(item,index) in lists" @click="click(item.BianHao)" class="weui-media-box weui-media-box_text">
+            <div class="weui-media-box__title">
+                {{item.ShiXiangMC}}
+            </div>
+        </li>
+    </div>
+</script>
+<script src="js/vue.js"></script>
+<script src="js/expendLists.js"></script>
 </html>
