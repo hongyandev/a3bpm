@@ -1,20 +1,28 @@
 $(function () {
-    var objStr = $.fn.cookie('message');
-    console.info(objStr);
-    var obj = JSON.parse(objStr);
-    $(".titles").html(obj.title);
-    $(".times").html(obj.time);
     var data = GetRequest();
-    var LeiXing= data.LeiXing;
-    var BianHao = data.BianHao;
-    $.ajax({
-        type:'post',
-        //url: Global.baseUrl + 'bpm/common/sysMUpdateState',
-        url:"http://172.30.8.95:8082/bpm/common/sysMUpdateState",
+    var BianHao = data.bh;
+   /* $.ajax({
+        type:'POST',
+        url: Global.baseUrl + 'bpm/tzgg/detail',
         contentType:'application/json',
-        data:JSON.stringify({"LeiXing":LeiXing,"BianHao":BianHao}),
+        dataType: 'json',
+        data:JSON.stringify({"BianHao":BianHao}),
         success:function (res) {
             console.info(res.msgCode)
         }
-    })
+    })*/
+    fetch(Global.baseUrl + '/bpm/tzgg/detail', {
+        method: 'post',
+        body: JSON.stringify({"BianHao":BianHao}),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+        .then(json => {
+            console.info(json);
+            if(json.msgCode=='1'){
+                $(".acTitle").html(json.detail.BiaoTi);
+                $("#content").html(json.detail.NeiRong)
+            }
+        });
 });

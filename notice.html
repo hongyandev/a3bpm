@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>通知公告</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/style.css?v=1.0.0">
+    <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
+    <script src='js/zepto.min.js' charset='utf-8'></script>
+    <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/weui.min.js"></script>
+    <script src="js/config.js"></script>
+
+</head>
+<body>
+<div id="notice">
+    <div class="page navbar js_show">
+        <div class="page__bd" style="height: 100%;">
+            <div class="weui-tab">
+                <div class="weui-tab__panel">
+                    <ul class="weui-cells weui-notice notice">
+                        <li-notice @lifun="goDetail" :lists="lists" ></li-notice>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/x-template" id="li-notice">
+    <div class="item">
+        <li v-for="(item,index) in lists" @click="click(item.BianHao)" class="weui-cell ">
+            <div class="weui-cell__bd">
+                {{item.BiaoTi}}
+            </div>
+            <div class="weui-cell__ft"><time class="font14">{{item.FaBuSJ}}</time></div>
+        </li>
+    </div>
+</script>
+<script src="js/vue.js"></script>
+<script src="js/notice.js"></script>
+
+</html>

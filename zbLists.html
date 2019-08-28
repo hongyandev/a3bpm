@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>支出指南</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/style.css?v=1.0.0">
+    <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
+    <script src='js/zepto.min.js' charset='utf-8'></script>
+    <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/weui.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/zbLists.js"></script>
+
+</head>
+<body>
+<div  id="zbLists">
+    <div class="zbLists">
+        <sea-dialog ref="zbmc" id="zbmc" title="指标名称" @searchmc="zbmcConfig.searchZbmc" :config="zbmcConfig" v-model="formData.zbmc"></sea-dialog>
+    </div>
+</div>
+
+<script type="text/x-template" id="sea-dialog">
+    <div class="item">
+        <div :id="id" class="seaDialog">
+            <div class="searchInput" v-show="config.showsearch===true ? true : false">
+                <input @keyup.enter="searchZbmc" :placeholder="'请输入' + title"/>
+            </div>
+            <ul class="seaLists">
+                <li v-for="item in config.options" class="row" @click="click(item)">
+                    <div class="col-100">
+                        <p v-for="field in config.fields">{{field.name}}：{{item[field.key]}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+<script src="js/vue.js"></script>
+</body>
+</html>

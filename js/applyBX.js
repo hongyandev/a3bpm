@@ -610,7 +610,7 @@ $(function () {
                             self.$refs.bxbm.currentDisVal = json.list[0].MingCheng;
                             self.formData.bxbm = json.list[0].BianHao;
                         });
-                    $("#bxr").val(userinfo.XingMing);
+                       $("#bxr").val(userinfo.XingMing);
                 }
             });
         },
