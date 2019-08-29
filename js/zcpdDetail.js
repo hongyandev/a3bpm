@@ -65,7 +65,18 @@ $(function () {
                 }
             },
             complete: function () {
-                // 盘点完成
+                weui.confirm('<p>将提交本次盘点最终结果，<br/>请确认盘点完成。</p>', {
+                    title: '提醒',
+                    buttons: [{
+                        label: '取消',
+                        type: 'default',
+                        onClick: function(){ console.log('no') }
+                    }, {
+                        label: '盘点完成',
+                        type: 'primary',
+                        onClick: function(){ console.log('yes') }
+                    }]
+                });
             }
         },
         mounted: function () {
