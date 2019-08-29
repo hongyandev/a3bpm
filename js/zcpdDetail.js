@@ -9,7 +9,7 @@ $(function () {
     });
     */
     let data = {
-        "PanDianDBH":"ZCPD201908290001",//$.fn.cookie('DanWeiBH'),
+        "PanDianDBH":GetRequest('bh'),
     };
     let vm = new Vue({
         el: "#zcpdDetail",
@@ -31,17 +31,39 @@ $(function () {
                     item.ShiCunSL --;
                 }
             },
-            edit: function (item) {
-                item.edited = true;
-            },
             tempSave: function () {
-
             },
             scanQrCode: function () {
-
+                var code = 'ZCKP201908220001';
+                let vm = this;
+                let sign = false;
+                $.each(vm.zcpddtl, function(index, item){
+                    if(item.ZiChanKP === code) {
+                        weui.confirm('<div style="line-height: 2.5em"><p>'+item.ZiChanMC+'</p><label>实存数量：</label><input style="line-height: 2.5em;text-align: center;" type="number" value="'+(item.ShiCunSL||1)+'"></div>', {
+                            title: item.ZiChanKP,
+                            className: 'myConfirm',
+                            buttons: [{
+                                label: '取消',
+                                type: 'default',
+                                onClick: function(){ console.log('no') }
+                            }, {
+                                label: '确定',
+                                type: 'primary',
+                                onClick: function(){
+                                    var ShiCunSL = $('.myConfirm input').val() || 0;
+                                    item.ShiCunSL = ShiCunSL > 0 ? ShiCunSL : 0;
+                                }
+                            }]
+                        });
+                        sign = true;
+                        return;
+                    }
+                })
+                if(!sign) {
+                    weui.topTips('此设备不在盘点清单內', 3000);
+                }
             },
             complete: function () {
-                
             }
         },
         mounted: function () {

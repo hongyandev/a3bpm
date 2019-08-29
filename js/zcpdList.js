@@ -19,6 +19,7 @@ $(function () {
         methods: {
             gotoDetail: function (bh) {
                 console.info(bh);
+                document.location.href = Global.h5Url + "/bpmh5/zcpdDetail.html?bh="+bh;
             }
         },
         mounted: function () {
