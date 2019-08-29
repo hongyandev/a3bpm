@@ -32,6 +32,7 @@ $(function () {
                 }
             },
             tempSave: function () {
+                // 暂存
             },
             scanQrCode: function () {
                 var code = 'ZCKP201908220001';
@@ -64,6 +65,7 @@ $(function () {
                 }
             },
             complete: function () {
+                // 盘点完成
             }
         },
         mounted: function () {
