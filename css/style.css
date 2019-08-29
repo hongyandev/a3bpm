@@ -559,3 +559,7 @@ ul,li{list-style: none;}
 .weui-media-box:before{
     left:0;
 }
+
+.btn_dingtalk {
+    background-color: #3296fa;
+}
