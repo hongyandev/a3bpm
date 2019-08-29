@@ -18,12 +18,10 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: #f6f6f6">
 <div id="zcpdDetail">
-    <article class="weui-article">
-        <h2>设备盘点</h2>
-    </article>
-    <div v-for="item in zcpddtl" class="weui-form-preview">
+    <div style="height: 5px"></div>
+    <div v-for="item in zcpddtl" class="weui-form-preview" style="margin-bottom: 5px">
         <div class="weui-form-preview__hd">
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">卡片编号</label>
@@ -33,36 +31,38 @@
         <div class="weui-form-preview__bd">
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">资产名称</label>
-                <span class="weui-form-preview__value">电动打蛋机</span>
+                <span class="weui-form-preview__value">{{item.ZiChanMC}}</span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">规格型号</label>
-                <span class="weui-form-preview__value">名字名字名字</span>
+                <span class="weui-form-preview__value">{{item.GuiGeXH}}</span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">管理部门</label>
-                <span class="weui-form-preview__value">很长很长的名字</span>
+                <span class="weui-form-preview__value"></span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">帐存数量</label>
-                <span class="weui-form-preview__value">1</span>
+                <span class="weui-form-preview__value">{{item.ShuLiang}}</span>
             </div>
-            <div class="weui-form-preview__item">
-                <label class="weui-form-preview__label">实存数量</label>
-                <span class="weui-form-preview__value">0</span>
-            </div>
+        </div>
+        <div class="weui-form-preview__ft">
+            <div class="weui-form-preview__btn weui-form-preview__btn_default">实存数量</div>
+            <button type="button" @click="sub(item)" class="weui-form-preview__btn weui-form-preview__btn_primary">-</button>
+            <input type="number" placeholder="0" class="weui-form-preview__btn weui-form-preview__btn_default" v-model="item.ShiCunSL" />
+            <button type="button" @click="add(item)" class="weui-form-preview__btn weui-form-preview__btn_primary">+</button>
         </div>
     </div>
     <div style="height: 54px"></div>
     <div class="weui-tabbar" style="position: fixed;">
         <div class="weui-tabbar__item tabbar_item">
-            <a class="weui-btn weui-btn_block btn_dingtalk">暂存</a>
+            <a class="weui-btn weui-btn_block btn_dingtalk" @click="tempSave">暂存</a>
         </div>
         <div class="weui-tabbar__item tabbar_item">
-            <a class="weui-btn weui-btn_block btn_dingtalk">扫码</a>
+            <a class="weui-btn weui-btn_block btn_dingtalk" @click="scanQrCode">扫码</a>
         </div>
         <div class="weui-tabbar__item tabbar_item">
-            <a class="weui-btn weui-btn_block btn_dingtalk">盘点完成</a>
+            <a class="weui-btn weui-btn_block btn_dingtalk" @click="complete">盘点完成</a>
         </div>
     </div>
 </div>

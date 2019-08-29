@@ -16,6 +16,34 @@ $(function () {
         data: {
             zcpddtl: [],
         },
+        methods: {
+            add: function (item) {
+                if(isNaN(item.ShiCunSL)){
+                    item.ShiCunSL = 0
+                } else {
+                    item.ShiCunSL ++;
+                }
+            },
+            sub: function (item) {
+                if(isNaN(item.ShiCunSL) || item.ShiCunSL == 0){
+                    item.ShiCunSL = 0
+                } else {
+                    item.ShiCunSL --;
+                }
+            },
+            edit: function (item) {
+                item.edited = true;
+            },
+            tempSave: function () {
+
+            },
+            scanQrCode: function () {
+
+            },
+            complete: function () {
+                
+            }
+        },
         mounted: function () {
             let vm = this;
             vm.zcpddtl = [
