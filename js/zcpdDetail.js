@@ -40,7 +40,7 @@ $(function () {
                 let sign = false;
                 $.each(vm.zcpddtl, function(index, item){
                     if(item.ZiChanKP === code) {
-                        weui.confirm('<div style="line-height: 2.5em"><p>'+item.ZiChanMC+'</p><label>实存数量：</label><input style="line-height: 2.5em;text-align: center;" type="number" value="'+(item.ShiCunSL||1)+'"></div>', {
+                        weui.confirm('<div style="line-height: 2.5em"><p>'+item.ZiChanMC+'</p><p>帐存数量：'+item.ShuLiang+'</p><label>实存数量：</label><input style="line-height: 2.5em;text-align: center;" type="number" value="'+(item.ShiCunSL||1)+'"></div>', {
                             title: item.ZiChanKP,
                             className: 'myConfirm',
                             buttons: [{
