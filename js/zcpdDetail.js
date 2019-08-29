@@ -108,7 +108,7 @@ $(function () {
                 .then(json => {
                     if(json.msgCode=='1'){
                         if(json.list.length>0){
-                            vm.zcpdrw = json.list;
+                            vm.zcpddtl = json.list;
                         }
                     }
                 });
