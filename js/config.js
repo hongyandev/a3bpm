@@ -92,9 +92,9 @@ var getParamFromUrl = function (name){
     return r
 }
 var Global = {
-    baseUrl: "http://118.31.11.115:8082",
-    h5Url: "http://118.31.11.115:8082",
-    appKey: "dingoe9bkbhog7ygthvb"
+    baseUrl: "http://wxdev.hongyancloud.com:8082",
+    h5Url: "http://wxdev.hongyancloud.com:8082",
+    appKey: "ding8ywkbdogt114zxlc"
 }
 var _config, _userinfo, _request;
 $(function () {

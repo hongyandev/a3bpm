@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>资产卡片详情</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/style.css?v=1.0.0">
+    <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
+    <script src='js/zepto.min.js' charset='utf-8'></script>
+    <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/weui.min.js"></script>
+    <script src="js/config.js"></script>
+</head>
+<body style="background-color: #f6f6f6">
+<div id="zckpDetail">
+    <div class="weui-form-preview">
+        <div class="weui-form-preview__hd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">资产编号</label>
+                <em class="weui-form-preview__value">{{item.ZiChanBH}}</em>
+            </div>
+        </div>
+        <div class="weui-form-preview__bd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">资产名称</label>
+                <span class="weui-form-preview__value">{{item.ZiChanMC}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">资产型号</label>
+                <span class="weui-form-preview__value">{{item.ChanPinXH}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">单位名称</label>
+                <span class="weui-form-preview__value">{{item.DanWeiMC}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">管理部门</label>
+                <span class="weui-form-preview__value">{{item.GuanLiBM}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">使用人</label>
+                <span class="weui-form-preview__value">{{item.ShiYongR}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">计量单位</label>
+                <span class="weui-form-preview__value">{{item.JiLiangDW}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">单价</label>
+                <span class="weui-form-preview__value">{{item.DanJia}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">数量</label>
+                <span class="weui-form-preview__value">{{item.ShuLiang}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">原值</label>
+                <span class="weui-form-preview__value">{{item.YuanZhi}}</span>
+            </div>
+        </div>
+        <div class="weui-form-preview__ft">
+            <button type="button" @click="closePage" class="weui-form-preview__btn weui-form-preview__btn_primary">关闭</button>
+        </div>
+    </div>
+</div>
+<script src="js/vue.js"></script>
+<script src="js/zckpDetail.js"></script>
+</body>
+</html>
