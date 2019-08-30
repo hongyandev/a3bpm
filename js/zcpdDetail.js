@@ -19,7 +19,7 @@ $(function () {
         computed:{
             formdata:function () {
                 let zcpdlist = [];
-                zcpdlist = vm.zcpddtl.map(item=>{return {PanDianMXBH: item.BianHao,ZiChanBH: item.ZiChanKP,ShuLiang:item.ShuLiang}})
+                zcpdlist = vm.zcpddtl.map(item=>{return {PanDianMXBH: item.BianHao,ZiChanBH: item.ZiChanKP,ShuLiang:((item.ShiCunSL || 0)+"")}});
                 return {
                     "PanDianDBH":GetRequest().bh,
                     "panList": zcpdlist
