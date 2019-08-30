@@ -10,10 +10,21 @@ $(function () {
     let data = {
         "PanDianDBH":GetRequest().bh,
     };
+
     let vm = new Vue({
         el: "#zcpdDetail",
         data: {
             zcpddtl: [],
+        },
+        computed:{
+            formdata:function () {
+                let zcpdlist = [];
+                zcpdlist = vm.zcpddtl.map(item=>{return {PanDianMXBH: item.BianHao,ZiChanBH: item.ZiChanKP,ShuLiang:item.ShuLiang}})
+                return {
+                    "PanDianDBH":GetRequest().bh,
+                    "panList": zcpdlist
+                    }
+            }
         },
         methods: {
             add: function (item) {
@@ -32,7 +43,24 @@ $(function () {
             },
             tempSave: function () {
                 // 暂存
-
+                fetch(Global.baseUrl + '/bpm/pan/panConfirm', {
+                    method: 'post',
+                    body: JSON.stringify(vm.formdata),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(res => res.json())
+                    .then(json => {
+                        if(json.msgCode=='1'){
+                            weui.toast('保存成功', {
+                                duration: 3000,
+                                className: 'custom-classname',
+                            });
+                        }else{
+                            weui.topTips(json.msg)
+                        }
+                    })
             },
             scanQrCode: function () {
                 var code;
@@ -88,18 +116,13 @@ $(function () {
                         label: '盘点完成',
                         type: 'primary',
                         onClick: function(){
-                           // console.log('yes')
-                            let formdata={
-                                "PanDianDBH":GetRequest('bh'),
-                                "panList": vm.zcpddtl
-                            }
                             fetch(Global.baseUrl + '/bpm/pan/panConfirm', {
                                 method: 'post',
-                                body: JSON.stringify(formdata),
+                                body: JSON.stringify(vm.formdata),
                                 headers: {
                                     'Content-Type': 'application/json'
                                 }
-                            })
+                                })
                                 .then(res => res.json())
                                 .then(json => {
                                     if(json.msgCode=='1'){
@@ -111,6 +134,8 @@ $(function () {
                                             }
                                         });
 
+                                    }else{
+                                        weui.topTips(json.msg)
                                     }
                                 });
                         }
@@ -118,6 +143,7 @@ $(function () {
                 });
             }
         },
+
         mounted: function () {
             let vm = this;
             /*vm.zcpddtl = [
