@@ -3,7 +3,7 @@ $(function () {
         // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
         onSuccess: function (userinfo) {
             //alert("just du it!");
-          //  $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
+            $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
         }
     });
     Vue.component("li-expend", {
@@ -31,8 +31,8 @@ $(function () {
         },
         mounted:function () {
             let data={
-                DanWeiBH:"GLZZ201905240001",//$.fn.cookie('ShenQingDW'),
-                NianDu:'2019',//_userinfo.NianDu,
+                DanWeiBH:$.fn.cookie('ShenQingDW'),//"GLZZ201905240001",
+                NianDu:_userinfo.NianDu,//'2019'
             };
             let self = this;
             fetch(Global.baseUrl + '/bpm/zczn/list', {

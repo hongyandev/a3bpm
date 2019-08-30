@@ -7,19 +7,12 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/style.css?v=1.0.0">
-    <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
+    <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
     <script src='js/zepto.min.js' charset='utf-8'></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/weui.min.js"></script>
     <script src="js/config.js"></script>
     <style>
-        li.row{
-            margin-left:0;
-            border:1px solid #e5e5e5;
-            margin-bottom:10px;
-            border-radius: 3px;
-            padding:5px;
-        }
         p {
             line-height: 1.5em;
         }
@@ -30,14 +23,16 @@
     <article class="weui-article">
         <h2>资产盘点任务</h2>
     </article>
-    <ul style="padding:2% 10px;">
-        <li v-for="item in zcpdrw" class="weui-flex row">
-            <div class="weui-flex__item">
+    <ul>
+        <li v-for="item in zcpdrw" class="weui-flex weui-row-li row">
+            <div class="weui-cell__bd weui-zc-left">
                 <p>{{item.PanDianMC}}</p>
                 <p>经办人：{{item.JingBanR}}</p>
-                <p>盘点时间：</p>
+                <p>盘点时间：{{item.startTime|formatDate}}</p>
             </div>
-            <div style="width: 30%"><a href="javascript:;" @click="gotoDetail(item.BianHao)" class="weui-btn weui-btn_block btn_dingtalk" style="height: 100%;line-height: 3.5">开始盘点</a></div>
+            <div class="weui-zc-right">
+                <a href="javascript:void(0);" @click="gotoDetail(item.BianHao)" class="weui-btn weui-zcbtn weui-btn_block btn_dingtalk" style="height: 100%;line-height: 3.5">开始盘点</a>
+            </div>
         </li>
     </ul>
     <div class="empty" style="display: none"></div>

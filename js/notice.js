@@ -31,8 +31,8 @@ $(function () {
         },
         mounted:function () {
             let data={
-                DanWeiBH:"BXBH201906130002",//$.fn.cookie('ShenQingDW'),
-                YongHuBH:'XTYH201905300002',// _userinfo.YongHuBH,
+                DanWeiBH:$.fn.cookie('ShenQingDW'),//"BXBH201906130002",
+                YongHuBH:_userinfo.YongHuBH,//'XTYH201905300002'
                 pageNum:Number.MAX_VALUE
             };
             let self = this;

@@ -1,4 +1,11 @@
 $(function () {
+    config({
+        // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
+        onSuccess: function (userinfo) {
+            //alert("just du it!");
+            $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
+        }
+    });
     let quest = GetRequest();
     let BianHao = quest.bh;
 
@@ -13,7 +20,7 @@ $(function () {
         }
     })*/
    let data={
-       DanWeiBH:"GLZZ201905240001",
+       DanWeiBH:$.fn.cookie('ShenQingDW'),//"GLZZ201905240001",
        BianHao:BianHao
    };
     fetch(Global.baseUrl + '/bpm/zczn/detail', {

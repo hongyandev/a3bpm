@@ -563,3 +563,56 @@ ul,li{list-style: none;}
 .btn_dingtalk {
     background-color: #3296fa;
 }
+/*资产盘点*/
+.weui-cells-noborder{
+    margin-top:5px;
+}
+.weui-row{
+    padding:0;
+}
+.weui-row-li{
+    border-bottom: 1px solid #e5e5e5;
+    border-top:1px solid #e5e5e5;
+}
+.weui-zc-ul li:first-child .weui-cells-noborder{
+    margin-top:0;
+}
+.weui-zc-left{
+    /*border-right:1px solid #e5e5e5;*/
+    padding:10px 15px;
+}
+.weui-zc-left p{
+    font-size:14px;
+}
+.weui-zc-right{
+    writing-mode: vertical-rl;
+    width:20%;
+    position: relative;
+    color: #ff6000;
+}
+.weui-zcbtn{
+    padding:10px;
+}
+.weui-30{
+    width:30%;
+    text-align: center;
+    color:#0a8ddf;
+}
+.weui-25{
+    width:25%;
+    font-size:25px;
+}
+.weui-num{
+    width:20%;
+    border:none;
+    text-align: center;
+}
+.weui-num-btn{
+    background: none;
+    border:none;
+    border-right:1px solid #e5e5e5;
+    border-left:1px solid #e5e5e5;
+}
+.weuibtn{
+    margin:5px;
+}

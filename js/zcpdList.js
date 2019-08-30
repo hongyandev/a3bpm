@@ -1,15 +1,13 @@
 $(function () {
-    /*
     config({
         // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
         onSuccess: function (userinfo) {
             //alert("just du it!");
-            // $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
+             $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
         }
     });
-    */
     let data = {
-        DanWeiBH: "GLZZ201905240001",//$.fn.cookie('DanWeiBH'),
+        DanWeiBH: $.fn.cookie('ShenQingDW'),//"GLZZ201905240001",
     };
     let vm = new Vue({
         el: "#zcpdList",
@@ -22,9 +20,14 @@ $(function () {
                 document.location.href = Global.h5Url + "/bpmh5/zcpdDetail.html?bh="+bh;
             }
         },
+        filters: {
+            formatDate: function (date) {
+                return date.substring(0,10);
+            }
+        },
         mounted: function () {
             let vm = this;
-            vm.zcpdrw = [
+           /* vm.zcpdrw = [
                 {
                     "BianHao": "ZCPD201908290001",
                     "JingBanBM": "办公室",
@@ -33,9 +36,8 @@ $(function () {
                     "JingBanR": "操作管理员",
                     "status": "1"
                 }
-            ];
-            /*
-            fetch(Global.baseUrl + '/bpm/panDianList', {
+            ];*/
+            fetch(Global.baseUrl + '/bpm/pan/panDianList', {
                 method: 'post',
                 body: JSON.stringify(data),
                 headers: {
@@ -52,7 +54,6 @@ $(function () {
                         }
                     }
                 });
-            */
         }
     })
 

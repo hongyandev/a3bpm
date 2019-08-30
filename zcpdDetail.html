@@ -7,14 +7,14 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/style.css?v=1.0.0">
-    <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
+    <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
     <script src='js/zepto.min.js' charset='utf-8'></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/weui.min.js"></script>
     <script src="js/config.js"></script>
     <style>
-        .tabbar_item{
-            padding: 4px
+        .weui-tabbar__item{
+            padding:5px 0 5px;
         }
     </style>
 </head>
@@ -46,23 +46,23 @@
                 <span class="weui-form-preview__value">{{item.ShuLiang}}</span>
             </div>
         </div>
-        <div class="weui-form-preview__ft">
-            <div class="weui-form-preview__btn weui-form-preview__btn_primary">实存数量</div>
-            <button type="button" @click="sub(item)" class="weui-form-preview__btn weui-form-preview__btn_primary">-</button>
-            <input type="number" placeholder="0" class="weui-form-preview__btn weui-form-preview__btn_default" v-model="item.ShiCunSL" />
-            <button type="button" @click="add(item)" class="weui-form-preview__btn weui-form-preview__btn_primary">+</button>
+        <div class="weui-form-preview__ft" style="line-height:40px;">
+            <div class="weui-30">实存数量</div>
+            <button type="button" @click="sub(item)" class="weui-25 weui-num-btn">-</button>
+            <input type="number" placeholder="0" class="weui-num" v-model="item.ShiCunSL"/>
+            <button type="button" @click="add(item)" class="weui-25 weui-num-btn">+</button>
         </div>
     </div>
-    <div style="height: 54px"></div>
+    <div style="height: 70px"></div>
     <div class="weui-tabbar" style="position: fixed;">
         <div class="weui-tabbar__item tabbar_item">
-            <a class="weui-btn weui-btn_block btn_dingtalk" @click="tempSave">暂存</a>
+            <a class="weui-btn weuibtn weui-btn_block btn_dingtalk" @click="tempSave">保存</a>
         </div>
         <div class="weui-tabbar__item tabbar_item">
-            <a class="weui-btn weui-btn_block btn_dingtalk" @click="scanQrCode">扫码</a>
+            <a class="weui-btn weuibtn weui-btn_block btn_dingtalk" @click="scanQrCode">扫码</a>
         </div>
         <div class="weui-tabbar__item tabbar_item">
-            <a class="weui-btn weui-btn_block btn_dingtalk" @click="complete">盘点完成</a>
+            <a class="weui-btn weuibtn weui-btn_block btn_dingtalk" @click="complete">盘点完成</a>
         </div>
     </div>
 </div>

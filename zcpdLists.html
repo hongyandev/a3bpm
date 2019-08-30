@@ -7,7 +7,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/style.css?v=1.0.0">
-    <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
+    <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
     <script src='js/zepto.min.js' charset='utf-8'></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/weui.min.js"></script>
@@ -16,12 +16,26 @@
 
 </head>
 <body>
-<div  id="zbLists">
-    <div class="zbLists">
-        <sea-dialog ref="zbmc" id="zbmc" title="指标名称" @searchmc="zbmcConfig.searchZbmc" :config="zbmcConfig"></sea-dialog>
-    </div>
+<div style="background: #efefef">
+    <ul class="weui-zc-ul">
+        <li>
+            <div class="weui-cells weui-cells-noborder">
+                <div class="weui-cell weui-row">
+                    <div class="weui-cell__bd weui-zc-left">
+                        <p>盘点内容</p>
+                        <p>盘点内容</p>
+                        <p>盘点内容</p>
+                        <p>盘点内容</p>
+                        <p>盘点内容</p>
+                    </div>
+                    <div class="weui-zc-right">
+                        <span style="vertical-align:middle; font-size: 17px;">开始盘点</span>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
-
 <script type="text/x-template" id="sea-dialog">
     <div class="item">
         <div :id="id" class="seaDialog">
@@ -42,6 +56,6 @@
     </div>
 </script>
 <script src="js/vue.js"></script>
-<script src="js/zbLists.js"></script>
+<script src="js/zcpdLists.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@ $(function () {
         // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
         onSuccess: function (userinfo) {
             //alert("just du it!");
-           // $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
+            $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
         }
     });
     Vue.component("sea-dialog", {
@@ -28,10 +28,10 @@ $(function () {
         }
     });
     let zbmcdata = {
-        DanWeiBH: "GLZZ201905240001",//$.fn.cookie('ShenQingDW'),
-        BuMenBH: 'GLZZ201905250002',//_userinfo.BuMenBH,
-        NianDu: '2019',//_userinfo.NianDu,//'2019',
-        YongHuBH: 'XTYH201905300002',//_userinfo.YongHuBH,
+        DanWeiBH: $.fn.cookie('ShenQingDW'),//"GLZZ201905240001",
+        BuMenBH: _userinfo.BuMenBH,//'GLZZ201905250002',
+        NianDu: _userinfo.NianDu,//'2019',
+        YongHuBH: _userinfo.YongHuBH,//'XTYH201905300002',
         ZhiBiaoMC: '',
     };
 

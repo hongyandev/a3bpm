@@ -1,15 +1,14 @@
 $(function () {
-    /*
     config({
         // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
         onSuccess: function (userinfo) {
             //alert("just du it!");
-            // $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
+             $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
+
         }
     });
-    */
     let data = {
-        "PanDianDBH":GetRequest('bh'),
+        "PanDianDBH":GetRequest().bh,
     };
     let vm = new Vue({
         el: "#zcpdDetail",
@@ -33,36 +32,48 @@ $(function () {
             },
             tempSave: function () {
                 // 暂存
+
             },
             scanQrCode: function () {
-                var code = 'ZCKP201908220001';
+                var code;
                 let vm = this;
-                let sign = false;
-                $.each(vm.zcpddtl, function(index, item){
-                    if(item.ZiChanKP === code) {
-                        weui.confirm('<div style="line-height: 2.5em"><p>'+item.ZiChanMC+'</p><p>帐存数量：'+item.ShuLiang+'</p><label>实存数量：</label><input style="line-height: 2.5em;text-align: center;" type="number" value="'+(item.ShiCunSL||1)+'"></div>', {
-                            title: item.ZiChanKP,
-                            className: 'myConfirm',
-                            buttons: [{
-                                label: '取消',
-                                type: 'default',
-                                onClick: function(){ console.log('no') }
-                            }, {
-                                label: '确定',
-                                type: 'primary',
-                                onClick: function(){
-                                    var ShiCunSL = $('.myConfirm input').val() || 0;
-                                    item.ShiCunSL = ShiCunSL > 0 ? ShiCunSL : 0;
+                dd.ready(function() {
+                    dd.biz.util.scan({
+                        type: 'qrCode' , // type 为 all、qrCode、barCode，默认是all。
+                        onSuccess: function(data) {
+                            code =  data.text;
+                            let sign = false;
+                            $.each(vm.zcpddtl, function(index, item){
+                                if(item.ZiChanKP === code) {
+                                    weui.confirm('<div style="line-height: 2.5em"><p>'+item.ZiChanMC+'</p><p>帐存数量：'+item.ShuLiang+'</p><label>实存数量：</label><input style="line-height: 2.5em;text-align: center;" type="number" value="'+(item.ShiCunSL||1)+'"></div>', {
+                                        title: item.ZiChanKP,
+                                        className: 'myConfirm',
+                                        buttons: [{
+                                            label: '取消',
+                                            type: 'default',
+                                            onClick: function(){ console.log('no') }
+                                        }, {
+                                            label: '确定',
+                                            type: 'primary',
+                                            onClick: function(){
+                                                var ShiCunSL = $('.myConfirm input').val() || 0;
+                                                item.ShiCunSL = ShiCunSL > 0 ? ShiCunSL : 0;
+                                            }
+                                        }]
+                                    });
+                                    sign = true;
+                                    return;
                                 }
-                            }]
-                        });
-                        sign = true;
-                        return;
-                    }
-                })
-                if(!sign) {
-                    weui.topTips('此设备不在盘点清单內', 3000);
-                }
+                            });
+                            if(!sign) {
+                                weui.topTips('此设备不在盘点清单內', 3000);
+                            }
+                        },
+                        onFail : function(err) {}
+                    })
+                });
+
+
             },
             complete: function () {
                 weui.confirm('<p>将提交本次盘点最终结果，<br/>请确认盘点完成。</p>', {
@@ -70,18 +81,46 @@ $(function () {
                     buttons: [{
                         label: '取消',
                         type: 'default',
-                        onClick: function(){ console.log('no') }
+                        onClick: function(){
+
+                        }
                     }, {
                         label: '盘点完成',
                         type: 'primary',
-                        onClick: function(){ console.log('yes') }
+                        onClick: function(){
+                           // console.log('yes')
+                            let formdata={
+                                "PanDianDBH":GetRequest('bh'),
+                                "panList": vm.zcpddtl
+                            }
+                            fetch(Global.baseUrl + '/bpm/pan/panConfirm', {
+                                method: 'post',
+                                body: JSON.stringify(formdata),
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                                .then(res => res.json())
+                                .then(json => {
+                                    if(json.msgCode=='1'){
+                                        weui.toast('盘点成功', {
+                                            duration: 3000,
+                                            className: 'custom-classname',
+                                            callback: function(){
+                                                location.href="zcpdList.html"
+                                            }
+                                        });
+
+                                    }
+                                });
+                        }
                     }]
                 });
             }
         },
         mounted: function () {
             let vm = this;
-            vm.zcpddtl = [
+            /*vm.zcpddtl = [
                 {
                     "BianHao": "PDMX201908290003",
                     "ZiChanKP": "ZCKP201908220001",
@@ -106,9 +145,8 @@ $(function () {
                     "ShiCunSL": "",
                     "ShuLiang": "1"
                 }
-            ];
-            /*
-            fetch(Global.baseUrl + '/bpm/panDetial', {
+            ];*/
+            fetch(Global.baseUrl + '/bpm/pan/panDetial', {
                 method: 'post',
                 body: JSON.stringify(data),
                 headers: {
@@ -123,7 +161,6 @@ $(function () {
                         }
                     }
                 });
-            */
         }
     })
 
