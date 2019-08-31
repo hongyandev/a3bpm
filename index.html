@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/iconfont1.css">
     <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
+    <!--<script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>-->
     <script src='js/zepto.min.js' charset='utf-8'></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/config.js?v=28"></script>
@@ -150,14 +150,15 @@
                // document.location.href = "applyLists.html";
             }
         });
-        $(".fzTool").on("click",function (e) {
+        $(".fzTool").on("click", function(e){
             $(".toolCon").show();
+            $(".dialogBg").on("click", function(){
+                $(".toolCon").hide();
+            });
+            e.stopPropagation();
         });
-        $(document).mouseup(function(e){
-            var _con = $('.dialogInfo');   	// 设置目标区域
-            if(_con.has(e.target).length === 0){ 	// Mark 1
-               $(".toolCon").hide();
-            }
+        $(".toolCon").on("click", function(e){
+            e.stopPropagation();
         });
         $(".icon-shangchuan").click(function (e) {
             dd.ready(function() {
