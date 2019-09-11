@@ -4,14 +4,20 @@ Vue.component("weui-ocr", {
             _id: 0,
             api: "",
             apis: [{
+                index: 2,
                 key: "vat_invoice",
-                value: "增值税发票"
+                value: "增值税发票",
+                title: "扫发票"
             }, {
+                index: 1,
                 key: "train_ticket",
-                value: "火车票"
+                value: "火车票",
+                title: "扫车票"
             }, {
+                index: 3,
                 key: "bankcard",
-                value: "银行卡"
+                value: "银行卡",
+                title: "银行卡"
             }],
             options: {}
         }
@@ -20,13 +26,11 @@ Vue.component("weui-ocr", {
         apilist() {
             var list = [];
             var self = this;
-            $.each(this.config.useapi, function (i, o) {
-                list.push(_.find(self.apis, {'key': o}))
-            })
+            list.push(_.find(self.apis, {'index': self.ocr}));
             return list;
         }
     },
-    props: ["id","config","title","target"],
+    props: ["id","config","ocr","target"],
     mounted: function () {
         var self = this;
         var options = $.extend({
@@ -204,7 +208,7 @@ Vue.component("weui-ocr", {
     },
     template:
     '    <div>\n' +
-    '        <button class="weui-btn" :class="config.class" @click="click()">{{title}}</button>\n' +
+    '        <button class="weui-btn" :class="config.class" @click="click()">{{apilist.length==1 ? apilist[0].title : "扫一扫"}}</button>\n' +
     '        <div v-if="apilist.length > 1" class="selectDialog" style="display: none;">\n' +
     '            <div class="dialogInfo">\n' +
     '                <h3 class="selectTitle">请选择</h3>\n' +

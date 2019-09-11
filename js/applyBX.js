@@ -501,7 +501,7 @@ $(function () {
             },
             ocrConfig:{
                 class: "weui-btn_mini weui-btn_default",
-                useapi: ["train_ticket"], // 允许此组件扫描的类型，vat_invoice=增值税发票，train_ticket=火车票，bankcard=银行卡
+                useapi: ["train_ticket", "vat_invoice"], // 允许此组件扫描的类型，vat_invoice=增值税发票，train_ticket=火车票，bankcard=银行卡
                 // useapi: ["train_ticket"],
                 options : {
                     url : Global.baseUrl + "/bpm/common/ocrbase64", // type=file,url=/bpm/common/ocrfile
@@ -526,18 +526,27 @@ $(function () {
                         console.log('Target', target);
                         var setValues = function (fymx) {
                             _.forEach(fymx, function (value, key) {
-                                switch (value.BianHao) {
-                                    case 'FYMX201903240030': // 起点
+                                switch (value.OcrCode) {
+                                    case 'startStation': // 起点
                                         value.FeiYongMXZ = ret.origin;
                                         break;
-                                    case 'FYMX201903240031':
+                                    case 'arriveStation':
                                         value.FeiYongMXZ = ret.destination;
                                         break;
-                                    case 'FYMX201903240033':
+                                    case 'ticketPrice':
                                         value.FeiYongMXZ = ret.price;
                                         break;
-                                    case 'FYMX201903240034' :
-                                        value.FeiYongMXZ = "1";
+                                    case 'name' :
+                                        value.FeiYongMXZ = ret.name;
+                                        break;
+                                    case 'date' :
+                                        value.FeiYongMXZ = ret.date;
+                                        break;
+                                    case 'trainNum' :
+                                        value.FeiYongMXZ = ret.number;
+                                        break;
+                                    case 'seatCategory' :
+                                        value.FeiYongMXZ = ret.level;
                                         break;
                                 }
                             })

@@ -411,8 +411,8 @@
             <div class="weui-cell__bd">
                 <input class="weui-input" type="number" placeholder="请输入金额" v-model="item.JinE">
             </div>
-            <div class="" v-if="item.BianHao=='ZCMX201903240229'">
-                <weui-ocr id="ZCMX201903240229" title="扫车票" :config="ocrconfig" v-model="item.FeiYongMX" :target="item.FeiYongMX"></weui-ocr>
+            <div class="" v-if="item.IsOcr!='0'">
+                <weui-ocr id="item.BianHao" :ocr="item.IsOcr" :config="ocrconfig" v-model="item.FeiYongMX" :target="item.FeiYongMX"></weui-ocr>
             </div>
             <div class="weui-cell__ft" v-if="item.FeiYongMX.length > 0">
                 <button class="weui-vcode-btn" @click="add(item.FeiYongMX)">添加</button>
