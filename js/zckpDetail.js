@@ -9,12 +9,12 @@ $(function () {
     });
     */
     let data = {
-        "ZiChanKPBH":GetRequest('bh'),
+        "ZiChanKPBH":GetRequest().bh,
     };
     let vm = new Vue({
         el: "#zckpDetail",
         data: {
-            item: {},
+            item: [],
         },
         methods: {
             closePage: function () {
@@ -28,7 +28,7 @@ $(function () {
         },
         mounted: function () {
             let vm = this;
-            vm.item = {
+            /*vm.item = {
                 "DanWeiMC": "xxx局",
                 "ZiChanBH": "ZCKP201908100001",
                 "ZiChanMC": "Dell微塔式服务器",
@@ -41,9 +41,8 @@ $(function () {
                 "DanJia": "88888",
                 "ShuLiang": "1",
                 "YuanZhi": "88888"
-            };
-            /*
-            fetch(Global.baseUrl + '/bpm/panDetial', {
+            };*/
+            fetch(Global.baseUrl + '/bpm/common/ZiChanXiangXiXX', {
                 method: 'post',
                 body: JSON.stringify(data),
                 headers: {
@@ -52,13 +51,17 @@ $(function () {
             })
                 .then(res => res.json())
                 .then(json => {
+                   // alert(JSON.stringify(json.list));
                     if(json.msgCode=='1'){
                         if(json.list.length>0){
-                            vm.zcpddtl = json.list;
+                            debugger
+                            vm.item = json.list;
+                        }else{
+                            $("#zckpDetail").hide();
+                            $(".empty").show().html("没有与此编号对应的资产！")
                         }
                     }
                 });
-            */
         }
     })
 
