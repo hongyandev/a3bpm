@@ -114,7 +114,7 @@
                     <p class="weui-grid__label">资产盘点</p>
                 </a>
                 <a href="javascript:;" class="weui-grid">
-                    <div class="weui-grid__icon disable">
+                    <div class="weui-grid__icon">
                         <i class="iconfont icon-weixinsaoma"></i>
                     </div>
                     <p class="weui-grid__label">发票验证</p>
@@ -126,7 +126,7 @@
                     <p class="weui-grid__label">资产扫码</p>
                 </a>
                 <a href="javascript:;" class="weui-grid">
-                    <div class="weui-grid__icon disable">
+                    <div class="weui-grid__icon">
                         <i class="iconfont icon-saomafukuan-"></i>
                     </div>
                     <p class="weui-grid__label">单据扫码</p>
@@ -182,6 +182,37 @@
                     onSuccess: function(data) {
                         dd.biz.util.openLink({
                             url: Global.h5Url + "/bpmh5/zckpDetail.html?bh=" + data.text,//要打开链接的地址
+                            onSuccess : function(result) {},
+                            onFail : function(err) {}
+                        })
+                    },
+                    onFail : function(err) {}
+                })
+            });
+        });
+        $(".icon-weixinsaoma").click(function (e) {
+            dd.ready(function() {
+                dd.biz.util.scan({
+                    type: 'qrCode' , // type 为 all、qrCode、barCode，默认是all。
+                    onSuccess: function(data) {
+                        var arr = data.text.split(",");
+                        dd.biz.util.openLink({
+                            url: Global.h5Url + "/bpmh5/fpyzDetail.html?fphm=" +arr[2]+"&fpdm="+arr[3],//要打开链接的地址
+                            onSuccess : function(result) {},
+                            onFail : function(err) {}
+                        })
+                    },
+                    onFail : function(err) {}
+                })
+            });
+        });
+        $(".icon-saomafukuan-").click(function (e) {
+            dd.ready(function() {
+                dd.biz.util.scan({
+                    type: 'qrCode' , // type 为 all、qrCode、barCode，默认是all。
+                    onSuccess: function(data) {
+                        dd.biz.util.openLink({
+                            url: '',//要打开链接的地址
                             onSuccess : function(result) {},
                             onFail : function(err) {}
                         })
