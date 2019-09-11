@@ -153,7 +153,8 @@
                         <div class="item-inner">
                             <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>报销日期</div>
                             <div class="item-input">
-                                <input style="padding:0" class="font14" id="bxDate" type="date"  data-toggle='date' v-model="formData.bxDate">
+                                <!--<input style="padding:0" class="font14" id="bxDate" value="[new Date().getMonth(), new Date().getDate(), new Date().getFullYear()]" type="date" data-toggle='date' v-model="formData.bxDate">-->
+                                <input style="padding:0" id="bxDate" type="date" class="font14" v-model="formData.bxDate"/>
                             </div>
                         </div>
                     </div>
