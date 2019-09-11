@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>发票验证详情</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/style.css?v=1.0.0">
+    <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
+    <script src='js/zepto.min.js' charset='utf-8'></script>
+    <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/weui.min.js"></script>
+    <script src="js/config.js"></script>
+</head>
+<body style="background-color: #f6f6f6">
+<div id="fpyzDetail">
+    <div class="weui-form-preview">
+        <div class="weui-form-preview__hd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">报销单编号</label>
+                <em class="weui-form-preview__value">{{item.BaoXiaoBH}}</em>
+            </div>
+        </div>
+        <div class="weui-form-preview__bd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">报销日期</label>
+                <span class="weui-form-preview__value">{{item.BaoXiaoRQ}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">经办人</label>
+                <span class="weui-form-preview__value">{{item.JingBanR}}</span>
+            </div>
+        </div>
+        <div class="weui-form-preview__ft">
+            <button type="button" @click="closePage" class="weui-form-preview__btn weui-form-preview__btn_primary">关闭</button>
+        </div>
+    </div>
+</div>
+<div  class="empty" style="display: none"></div>
+<script src="js/vue.js"></script>
+<script src="js/fpyzDetail.js"></script>
+</body>
+</html>
