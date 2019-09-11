@@ -6,8 +6,7 @@ Vue.component("weui-ocr", {
             apis: [{
                 index: 2,
                 key: "vat_invoice",
-                value: "增值税发票",
-                title: "扫发票"
+                value: "增值税发票"
             }, {
                 index: 1,
                 key: "train_ticket",
@@ -16,8 +15,7 @@ Vue.component("weui-ocr", {
             }, {
                 index: 3,
                 key: "bankcard",
-                value: "银行卡",
-                title: "银行卡"
+                value: "银行卡"
             }],
             options: {}
         }
@@ -208,7 +206,7 @@ Vue.component("weui-ocr", {
     },
     template:
     '    <div>\n' +
-    '        <button class="weui-btn" :class="config.class" @click="click()">{{apilist.length==1 ? apilist[0].title : "扫一扫"}}</button>\n' +
+    '        <button class="weui-btn" :class="config.class" @click="click()">扫一扫</button>\n' +
     '        <div v-if="apilist.length > 1" class="selectDialog" style="display: none;">\n' +
     '            <div class="dialogInfo">\n' +
     '                <h3 class="selectTitle">请选择</h3>\n' +
