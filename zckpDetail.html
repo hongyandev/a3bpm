@@ -19,45 +19,45 @@
         <div class="weui-form-preview__hd">
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">资产编号</label>
-                <em class="weui-form-preview__value">{{item.ZiChanBH}}</em>
+                <em class="weui-form-preview__value">{{item[0].ZiChanBH}}</em>
             </div>
         </div>
         <div class="weui-form-preview__bd">
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">资产名称</label>
-                <span class="weui-form-preview__value">{{item.ZiChanMC}}</span>
+                <span class="weui-form-preview__value">{{item[0].ZiChanMC}}</span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">资产型号</label>
-                <span class="weui-form-preview__value">{{item.ChanPinXH}}</span>
+                <span class="weui-form-preview__value">{{item[0].ChanPinXH}}</span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">单位名称</label>
-                <span class="weui-form-preview__value">{{item.DanWeiMC}}</span>
+                <span class="weui-form-preview__value">{{item[0].DanWeiMC}}</span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">管理部门</label>
-                <span class="weui-form-preview__value">{{item.GuanLiBM}}</span>
+                <span class="weui-form-preview__value">{{item[0].GuanLiBM}}</span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">使用人</label>
-                <span class="weui-form-preview__value">{{item.ShiYongR}}</span>
+                <span class="weui-form-preview__value">{{item[0].ShiYongR}}</span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">计量单位</label>
-                <span class="weui-form-preview__value">{{item.JiLiangDW}}</span>
+                <span class="weui-form-preview__value">{{item[0].JiLiangDW}}</span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">单价</label>
-                <span class="weui-form-preview__value">{{item.DanJia}}</span>
+                <span class="weui-form-preview__value">{{item[0].DanJia}}</span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">数量</label>
-                <span class="weui-form-preview__value">{{item.ShuLiang}}</span>
+                <span class="weui-form-preview__value">{{item[0].ShuLiang}}</span>
             </div>
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">原值</label>
-                <span class="weui-form-preview__value">{{item.YuanZhi}}</span>
+                <span class="weui-form-preview__value">{{item[0].YuanZhi}}</span>
             </div>
         </div>
         <div class="weui-form-preview__ft">
@@ -65,6 +65,7 @@
         </div>
     </div>
 </div>
+<div class="empty" style="display: none"></div>
 <script src="js/vue.js"></script>
 <script src="js/zckpDetail.js"></script>
 </body>
