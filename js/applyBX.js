@@ -124,9 +124,9 @@ $(function () {
         props:["item"],
     });
     var zbmcdata = {
-        BuMenBH: _userinfo.BuMenBH,//'GLZZ201905250002',
-        NianDu: _userinfo.NianDu,//'2019',
-        YongHuBH: _userinfo.YongHuBH,//'XTYH201905300002',
+        BuMenBH:'GLZZ201905250002', //_userinfo.BuMenBH,//'GLZZ201905250002',
+        NianDu:'2019', //_userinfo.NianDu,//
+        YongHuBH:'XTYH201905300002',// _userinfo.YongHuBH,//
         BaoXiaoLX:'',
         ZhiBiaoMC: '',
         DanJuBH:''
@@ -569,8 +569,17 @@ $(function () {
                 }
             }
         },
-        mounted: function () {
+        created:function(){
+            let now = new Date();
+            let year = now.getFullYear() + "";
+            let month = (now.getMonth() + 1) + "";
+            let date = now.getDate();
+            this.formData.bxDate = year+'-'+ Appendzero(month)+'-'+ Appendzero(date);
 
+        },
+        mounted: function () {
+            //$("#bxDate").val(this.formData.bxDate);
+            //console.info($("#bxDate").val())
             //报销类型
             fetch(Global.baseUrl + '/bpm/common/getBaoXiaoLX', {
                 method: 'post',
@@ -959,4 +968,8 @@ function saveData(data) {
                 location.href="applyLists.html"
             }
         });
+}
+function Appendzero(obj){
+    if(obj<10) return "0" +""+ obj;
+    else return obj;
 }
