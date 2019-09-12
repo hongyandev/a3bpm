@@ -16,6 +16,7 @@ $(function () {
         el: "#fpyzDetail",
         data: {
             item: {},
+            sfbx:true
         },
         methods: {
             closePage: function () {
@@ -40,19 +41,14 @@ $(function () {
                 .then(res => res.json())
                 .then(json => {
                     if(json.msgCode=='1'){
-                            if(json.ShiFouBX=='FALSE'){
-                                $("#fpyzDetail").hide();
-                                $(".empty").show().html('此发票未报销过')
-                            }else{
-                                var list = {
-                                    BaoXiaoBH: json.BaoXiaoBH,
-                                    BaoXiaoRQ: json.BaoXiaoRQ,
-                                    JingBanR: json.JingBanR,
-                                    ShiFouBX:json.ShiFouBX
-                                };
-                                //alert(JSON.stringify(list));
-                                vm.item = list;
-                            }
+                        vm.sfbx = json.ShiFouBX=='TRUE';
+                        vm.item = vm.sfbx ? json : {
+                            BaoXiaoBH: GetRequest().fpdm,
+                            BaoXiaoHM: GetRequest().fphm,
+                            BaoXiaoRQ: GetRequest().sj,
+                            JiaoYanMa:GetRequest().jym,
+                            Jine:GetRequest().jg,
+                        };
 
                     }
                 });

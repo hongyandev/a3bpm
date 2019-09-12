@@ -14,8 +14,8 @@
     <script src="js/config.js"></script>
 </head>
 <body style="background-color: #f6f6f6">
-<div id="fpyzDetail">
-    <div class="weui-form-preview">
+<div  id="fpyzDetail">
+    <div v-if="sfbx" class="weui-form-preview">
         <div class="weui-form-preview__hd">
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">报销单编号</label>
@@ -31,6 +31,37 @@
                 <label class="weui-form-preview__label">经办人</label>
                 <span class="weui-form-preview__value">{{item.JingBanR}}</span>
             </div>
+        </div>
+        <div class="weui-form-preview__ft">
+            <button type="button" @click="closePage" class="weui-form-preview__btn weui-form-preview__btn_primary">关闭</button>
+        </div>
+    </div>
+
+    <div v-else class="weui-form-preview">
+        <div class="weui-form-preview__hd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">发票代码</label>
+                <em class="weui-form-preview__value">{{item.BaoXiaoBH}}</em>
+            </div>
+        </div>
+        <div class="weui-form-preview__bd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">发票号码</label>
+                <em class="weui-form-preview__value">{{item.BaoXiaoHM}}</em>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">开票日期</label>
+                <span class="weui-form-preview__value">{{item.BaoXiaoRQ}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">校验码</label>
+                <span class="weui-form-preview__value">{{item.JiaoYanMa}}</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">金额</label>
+                <em class="weui-form-preview__value">{{item.Jine}}</em>
+            </div>
+
         </div>
         <div class="weui-form-preview__ft">
             <button type="button" @click="closePage" class="weui-form-preview__btn weui-form-preview__btn_primary">关闭</button>
