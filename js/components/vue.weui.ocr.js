@@ -4,16 +4,16 @@ Vue.component("weui-ocr", {
             _id: 0,
             api: "",
             apis: [{
-                index: 2,
+                index: '2',
                 key: "vat_invoice",
                 value: "增值税发票"
             }, {
-                index: 1,
+                index: '1',
                 key: "train_ticket",
                 value: "火车票",
                 title: "扫车票"
             }, {
-                index: 3,
+                index: '3',
                 key: "bankcard",
                 value: "银行卡"
             }],
@@ -23,8 +23,7 @@ Vue.component("weui-ocr", {
     computed: {
         apilist() {
             var list = [];
-            var self = this;
-            list.push(_.find(self.apis, {'index': self.ocr}));
+            list.push(_.find(this.apis, {'index': this.ocr}));
             return list;
         }
     },
