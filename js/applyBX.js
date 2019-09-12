@@ -100,6 +100,7 @@ $(function () {
         props: ["item", "ocrconfig"],
         methods: {
             callback: function (target) {
+                alert(JSON)
                 this.$set(this.item, target);
             },
             add: function(FeiYongMX){
@@ -524,7 +525,7 @@ $(function () {
                         // 成功的回调
                         console.log('Success', ret);
                         console.log('Target', target);
-                        var FeiYongMX = target.FeiYongMX;
+                        // var FeiYongMX = target.FeiYongMX;
                         var setValues = function (fymx) {
                             _.forEach(fymx, function (value, key) {
                                 switch (value.OcrCode) {
@@ -588,13 +589,13 @@ $(function () {
                                 }
                             })
                         }
-                        if (FeiYongMX.length === 1 && (FeiYongMX[0][0].FeiYongMXZ === undefined || FeiYongMX[0][0].FeiYongMXZ.length === 0)){
-                            setValues(FeiYongMX[0]);
-                            console.log(FeiYongMX);
+                        if (target.length === 1 && (target[0][0].FeiYongMXZ === undefined || target[0][0].FeiYongMXZ.length === 0)){
+                            setValues(target[0]);
+                            console.log(target);
                         } else {
-                            var newmx = _.cloneDeep(FeiYongMX[0]);
+                            var newmx = _.cloneDeep(target[0]);
                             setValues(newmx)
-                            FeiYongMX.push(newmx);
+                            target.push(newmx);
                         }
                     },
                     onError: function (err) {

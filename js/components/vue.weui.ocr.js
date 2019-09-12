@@ -22,9 +22,10 @@ Vue.component("weui-ocr", {
     },
     computed: {
         apilist() {
-            var list = [];
-            list.push(_.find(this.apis, {'index': this.ocr+''}));
-            return list;
+            //var list = [];
+            return this.apis.filter(api => api.index === this.ocr+'')[0];
+            //list.push(_.find(this.apis, {'index': this.ocr+''}));
+            //return list;
         }
     },
     props: ["id","config","ocr","target"],
@@ -41,6 +42,7 @@ Vue.component("weui-ocr", {
             onSuccess: $.noop,
             onError: $.noop
         }, this.config.options);
+        alert(this.ocr + ":::" + JSON.stringify(options))
         if(options.compress !== false){
             options.compress = $.extend({
                 width: 1600,
@@ -51,7 +53,9 @@ Vue.component("weui-ocr", {
         if(options.onBeforeSend){
             const onBeforeSend = options.onBeforeSend;
             options.onBeforeSend = function(file, data, headers){
+                alert(self.api)
                 $.extend(data, {api: self.api});
+                alert(JSON.stringify(data))
                 const ret = onBeforeSend.call(file, data, headers);
                 if(ret === false){
                     return false;
@@ -102,16 +106,17 @@ Vue.component("weui-ocr", {
     },
     methods: {
         click: function () {
-            if(this.apilist.length > 1) {
+            /*if(this.apilist.length > 1) {
                 $(this.$el).find(".selectDialog").show();
             } else {
-                this.selected(this.apilist[0]);
-            }
+            }*/
+            this.selected(this.apilist);
         },
         selected: function(item) {
             this.api = item.key;
-            $(this.$el).find(".selectDialog").hide();
-            $(this.$el).find('input[type="file"]').click();
+            alert(JSON.stringify(item))
+            //$(this.$el).find(".selectDialog").hide();
+            $('#'+this.id).click();
         },
         close: function () {
             $(this.$el).find(".selectDialog").hide();
@@ -204,7 +209,11 @@ Vue.component("weui-ocr", {
         }
     },
     template:
-    '    <div>\n' +
+    '<div>' +
+    '<button class="weui-btn" :class="config.class" @click="click()">扫一扫</button>' +
+    '<input :id="id" class="weui-uploader__input" style="z-index: -999; width: 1px; height: 1px" type="file" accept="image/!*" capture="camera" />' +
+    '</div>'
+    /*'    <div>\n' +
     '        <button class="weui-btn" :class="config.class" @click="click()">扫一扫</button>\n' +
     '        <div v-if="apilist.length > 1" class="selectDialog" style="display: none;">\n' +
     '            <div class="dialogInfo">\n' +
@@ -222,6 +231,7 @@ Vue.component("weui-ocr", {
     '            </div>\n' +
     '            <div class="dialogBg"></div>\n' +
     '        </div>\n' +
-    '        <input class="weui-uploader__input" style="z-index: -999; width: 1px; height: 1px" type="file" accept="image/*" capture="camera" />\n' +
-    '    </div>'
+    '        <input class="weui-uploader__input" style="z-index: -999; width: 1px; height: 1px" type="file" accept="image/!*" capture="camera" />\n' +
+    '    </div>'*/
+
 });
