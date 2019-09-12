@@ -23,7 +23,7 @@ Vue.component("weui-ocr", {
     computed: {
         apilist() {
             var list = [];
-            list.push(_.find(this.apis, {'index': this.ocr}));
+            list.push(_.find(this.apis, {'index': this.ocr+''}));
             return list;
         }
     },

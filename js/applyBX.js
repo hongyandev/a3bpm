@@ -528,13 +528,13 @@ $(function () {
                             _.forEach(fymx, function (value, key) {
                                 switch (value.OcrCode) {
                                     case 'startStation': // 起点
-                                        value.FeiYongMXZ = ret.origin;
+                                        value.FeiYongMXZ = ret.startStation;
                                         break;
                                     case 'arriveStation':
-                                        value.FeiYongMXZ = ret.destination;
+                                        value.FeiYongMXZ = ret.arriveStation;
                                         break;
                                     case 'ticketPrice':
-                                        value.FeiYongMXZ = ret.price;
+                                        value.FeiYongMXZ = ret.ticketPrice;
                                         break;
                                     case 'name' :
                                         value.FeiYongMXZ = ret.name;
@@ -543,15 +543,51 @@ $(function () {
                                         value.FeiYongMXZ = ret.date;
                                         break;
                                     case 'trainNum' :
-                                        value.FeiYongMXZ = ret.number;
+                                        value.FeiYongMXZ = ret.trainNum;
                                         break;
                                     case 'seatCategory' :
-                                        value.FeiYongMXZ = ret.level;
+                                        value.FeiYongMXZ = ret.seatCategory;
+                                        break;
+                                    case 'code' :
+                                        value.FeiYongMXZ = ret.code;
+                                        break;
+                                    case 'number' :
+                                        value.FeiYongMXZ = ret.number;
+                                        break;
+                                    case 'type' :
+                                        value.FeiYongMXZ = ret.type;
+                                        break;
+                                    case 'issueDate' :
+                                        value.FeiYongMXZ = ret.issueDate;
+                                        break;
+                                    case 'sellerName' :
+                                        value.FeiYongMXZ = ret.sellerName;
+                                        break;
+                                    case 'sellerId' :
+                                        value.FeiYongMXZ = ret.sellerId;
+                                        break;
+                                    case 'sellerBank' :
+                                        value.FeiYongMXZ = ret.sellerBank;
+                                        break;
+                                    case 'buyerName' :
+                                        value.FeiYongMXZ = ret.buyerName;
+                                        break;
+                                    case 'buyerId' :
+                                        value.FeiYongMXZ = ret.buyerId;
+                                        break;
+                                    case 'subtotalAmount' :
+                                        value.FeiYongMXZ = ret.subtotalAmount;
+                                        break;
+                                    case 'subtotalTax' :
+                                        value.FeiYongMXZ = ret.subtotalTax;
+                                        break;
+                                    case 'total' :
+                                        value.FeiYongMXZ = ret.total;
                                         break;
                                 }
                             })
                         }
-                        if (target.length == 1 && target[0][0].FeiYongMXZ == undefined){
+                        if (target.length === 1 && (target[0][0].FeiYongMXZ === undefined || target[0][0].FeiYongMXZ.length === 0)){
                             setValues(target[0]);
                             console.log(target);
                         } else {
