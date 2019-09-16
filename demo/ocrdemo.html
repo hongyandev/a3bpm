@@ -15,15 +15,25 @@
 </head>
 <body>
 <div id="demo">
-    <weui-ocr id="ocrdemo" :ocr="2" :config="demoConfig" :target="log"></weui-ocr>
-    <div>{{log}}</div>
+    <div v-for="(item, index) in log">
+        <weui-ocr :id="index" :key="index" :ocr="item.ocr" :config="demoConfig" :target="item.info"></weui-ocr>
+        <div>{{index}}: {{item.info}}</div>
+    </div>
+    <div>{{err}}</div>
 </div>
 </body>
 <script>
     const vm = new Vue({
         el: "#demo",
         data: {
-            log: "",
+            err: '',
+            log: [{
+                ocr: '1',
+                info : 'info_1'
+            }, {
+                ocr: '2',
+                info : 'info_2'
+            }],
             demoConfig: {
                 class: "weui-btn_mini weui-btn_default",
                 useapi: ["vat_invoice", "train_ticket"], // 允许此组件扫描的类型，vat_invoice=增值税发票，train_ticket=火车票，bankcard=银行卡
@@ -43,17 +53,17 @@
                         // $.extend(data, { test: 1 }); // 可以扩展此对象来控制上传参数
                         // $.extend(headers, { Origin: 'http://127.0.0.1' }); // 可以扩展此对象来控制上传头部
                         // return false; // 阻止上传
-                        console.log('BeforeSend', data);
+                        // console.log('BeforeSend', data);
                     },
-                    onSuccess: function (ret) {
+                    onSuccess: function (ret, target) {
                         // 成功的回调
-                        console.log('Success', ret);
-                        vm.log = ret;
+                        // console.log('Success', ret);
+                        target = JSON.stringify(ret);
                     },
                     onError: function (err) {
                         // 失败的回调
                         console.log('Error', err);
-                        vm.log = err;
+                        vm.err = err;
                     }
                 }
             }
@@ -61,6 +71,9 @@
         methods: {
             action: function (go) {
                 console.log(go);
+            },
+            callback: function (target) {
+
             }
         }
     })

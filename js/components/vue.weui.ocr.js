@@ -30,91 +30,85 @@ Vue.component("weui-ocr", {
     },
     props: ["id","config","ocr","target"],
     mounted: function () {
-        var self = this;
-        var options = $.extend({
-            target: this.target,
-            url: '',
-            auto: true,
-            type: 'file',
-            fileVal: 'file',
-            xhrFields: {},
-            onBeforeSend: $.noop,
-            onSuccess: $.noop,
-            onError: $.noop
-        }, this.config.options);
-        alert(this.ocr + ":::" + JSON.stringify(options))
-        if(options.compress !== false){
-            options.compress = $.extend({
-                width: 1600,
-                height: 1600,
-                quality: .8
-            }, options.compress);
-        }
-        if(options.onBeforeSend){
-            const onBeforeSend = options.onBeforeSend;
-            options.onBeforeSend = function(file, data, headers){
-                alert(self.api)
-                $.extend(data, {api: self.api});
-                alert(JSON.stringify(data))
-                const ret = onBeforeSend.call(file, data, headers);
-                if(ret === false){
-                    return false;
-                }
-            };
-        }
-        if(options.onSuccess){
-            const onSuccess = options.onSuccess;
-            options.onSuccess = function(file, ret, target){
-                file.status = 'success';
-                if(!onSuccess.call(file, ret, target)){
-                    if(self.$parent.callback)
-                        self.$parent.callback(target);
-                }
-            };
-        }
-        if(options.onError){
-            const onError = options.onError;
-            options.onError = function(file, err){
-                file.status = 'fail';
-                if(!onError.call(file, err)){
-                }
-            };
-        }
-        this.options = options;
-        $(".weui-uploader__input").on("change", function (evt) {
-            const files = evt.target.files;
-            if (files.length === 0) {
-                return;
+        this.$nextTick(function () {
+            var self = this;
+            var options = $.extend({
+                url: '',
+                auto: true,
+                type: 'file',
+                fileVal: 'file',
+                xhrFields: {},
+                onBeforeSend: $.noop,
+                onSuccess: $.noop,
+                onError: $.noop
+            }, this.config.options);
+            if(options.compress !== false){
+                options.compress = $.extend({
+                    width: 1600,
+                    height: 1600,
+                    quality: .8
+                }, options.compress);
             }
-            if(options.compress === false && options.type == 'file'){
-                // 以原文件方式上传
-                Array.prototype.forEach.call(files, (file) => {
-                    file.id = ++self._id;
-                    self.setUploadFile(file);
-                });
-            }else{
-                // base64上传 和 压缩上传
-                Array.prototype.forEach.call(files, (file) => {
-                    file.id = ++self._id;
-                    compress(file, options, function(blob){
-                        if(blob) self.setUploadFile(blob);
+            if(options.onBeforeSend){
+                const onBeforeSend = options.onBeforeSend;
+                options.onBeforeSend = function(file, data, headers){
+                    $.extend(data, {api: self.api});
+                    const ret = onBeforeSend.call(file, data, headers);
+                    if(ret === false){
+                        return false;
+                    }
+                };
+            }
+            if(options.onSuccess){
+                const onSuccess = options.onSuccess;
+                options.onSuccess = function(file, ret, target){
+                    file.status = 'success';
+                    if(!onSuccess.call(file, ret, target)){
+                        if(self.$parent.callback)
+                            self.$parent.callback(target);
+                    }
+                };
+            }
+            if(options.onError){
+                const onError = options.onError;
+                options.onError = function(file, err){
+                    file.status = 'fail';
+                    if(!onError.call(file, err)){
+                    }
+                };
+            }
+            this.options = options;
+            $("#"+this.id).on("change", function (evt) {
+                const files = evt.target.files;
+                if (files.length === 0) {
+                    return;
+                }
+                if(options.compress === false && options.type == 'file'){
+                    // 以原文件方式上传，不压缩
+                    Array.prototype.forEach.call(files, (file) => {
+                        file.id = ++self._id;
+                        self.setUploadFile(file);
                     });
-                });
-            }
-            this.value = '';
+                }else{
+                    // base64上传 和 压缩上传
+                    Array.prototype.forEach.call(files, (file) => {
+                        file.id = ++self._id;
+                        compress(file, options, function(blob){
+                            if(blob) self.setUploadFile(blob);
+                        });
+                    });
+                }
+                this.value = '';
+            })
         })
+
     },
     methods: {
         click: function () {
-            /*if(this.apilist.length > 1) {
-                $(this.$el).find(".selectDialog").show();
-            } else {
-            }*/
             this.selected(this.apilist);
         },
         selected: function(item) {
             this.api = item.key;
-            alert(JSON.stringify(item))
             //$(this.$el).find(".selectDialog").hide();
             $('#'+this.id).click();
         },
@@ -125,21 +119,21 @@ Vue.component("weui-ocr", {
             const self = this;
             file.url = URL.createObjectURL(file);
             file.status = 'ready';
-            file.upload = function () {
+            file.upload = function (target) {
                 self.upload($.extend({
                     file: file
-                }, self.options));
+                }, self.options), target);
             };
             file.stop = function(){
                 this.xhr.abort();
             };
-            if(self.options.auto) file.upload();
+            if(self.options.auto) file.upload(self.target);
         },
-        upload: function(options) {
-            var loading = weui.loading('loading', {
+        upload: function(options, target) {
+            var loading = weui.loading('识别中...', {
                 className: 'custom-classname'
             });
-            const {url, file, fileVal, onBeforeSend, onError, onSuccess, xhrFields, target} = options;
+            const {url, file, fileVal, onBeforeSend, onError, onSuccess, xhrFields} = options;
             const {name, type, lastModifiedDate} = file;
             const data = {
                 name: name,
@@ -193,15 +187,11 @@ Vue.component("weui-ocr", {
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     success: function (ret) {
-                        loading.hide(function() {
-                            console.log('`loading` has been hidden');
-                        });
+                        loading.hide();
                         onSuccess(file, ret, target);
                     },
                     error: function (xhr, type) {
-                        loading.hide(function() {
-                            console.log('`loading` has been hidden');
-                        });
+                        loading.hide();
                         onError(file, new Error('XMLHttpRequest response status is ' + xhr.status));
                     }
                 });

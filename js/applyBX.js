@@ -100,7 +100,6 @@ $(function () {
         props: ["item", "ocrconfig"],
         methods: {
             callback: function (target) {
-                alert(JSON)
                 this.$set(this.item, target);
             },
             add: function(FeiYongMX){
@@ -519,15 +518,14 @@ $(function () {
                         // $.extend(data, { test: 1 }); // 可以扩展此对象来控制上传参数
                         // $.extend(headers, { Origin: 'http://127.0.0.1' }); // 可以扩展此对象来控制上传头部
                         // return false; // 阻止上传
-                        console.log('BeforeSend', data);
+                        // console.log('BeforeSend', data);
                     },
                     onSuccess: function (ret, target) {
                         // 成功的回调
-                        console.log('Success', ret);
-                        console.log('Target', target);
-                        // var FeiYongMX = target.FeiYongMX;
+                        // alert("Before: " + JSON.stringify(target));
                         var setValues = function (fymx) {
                             _.forEach(fymx, function (value, key) {
+                                value.edited = true;
                                 switch (value.OcrCode) {
                                     case 'startStation': // 起点
                                         value.FeiYongMXZ = ret.startStation;
@@ -589,14 +587,16 @@ $(function () {
                                 }
                             })
                         }
-                        if (target.length === 1 && (target[0][0].FeiYongMXZ === undefined || target[0][0].FeiYongMXZ.length === 0)){
+                        /*
+                        if (target.length === 1 && target[0][0].edited === undefined ){
                             setValues(target[0]);
-                            console.log(target);
                         } else {
-                            var newmx = _.cloneDeep(target[0]);
-                            setValues(newmx)
-                            target.push(newmx);
                         }
+                        */
+                        var newmx = _.cloneDeep(target[0]);
+                        setValues(newmx)
+                        target.push(newmx);
+                        // alert("After: " + JSON.stringify(target));
                     },
                     onError: function (err) {
                         weui.topTips(err);
