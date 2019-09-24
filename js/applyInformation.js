@@ -24,6 +24,12 @@ $(function () {
     var theRequest = GetRequest();
     var messObj = $.fn.cookie('messStr');
     var messStr = JSON.parse(messObj);
+    var yb = theRequest.yb;
+    if(yb=='1'){
+        $(".buttons-tab .last").hide()
+    }else{
+        $(".buttons-tab .last").show()
+    }
     $(".buttons-tab a").click(function(){
         $(this).addClass('active').siblings().removeClass('active');
         var idx=$(this).index();
