@@ -93,7 +93,7 @@ var getParamFromUrl = function (name){
 }
 var Global = {
     baseUrl: "http://wxdev.hongyancloud.com:8082",
-    h5Url: "http://wxdev.hongyancloud.com:9997",
+    h5Url: "http://wxdev.hongyancloud.com:8082",
     appKey: "ding8ywkbdogt114zxlc"
 }
 var _config, _userinfo, _request;
