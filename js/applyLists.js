@@ -150,6 +150,15 @@ function getData(yhbh,pageNum) {
                         }else if(val.DanJuLeiXing=='3'){
                             str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zjApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
                                 "<i><span style='color:#fe75ff' class=\"iconfont\">&#xe653;</span></i>\n";
+                        }else if(val.DanJuLeiXing=='4'){
+                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='cgApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
+                                "<i><span style='color:#cfff65' class=\"iconfont\">&#xe6ce;</span></i>\n";
+                        }else if(val.DanJuLeiXing=='5'){
+                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='htApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
+                                "<i><span style='color:#ffa566' class=\"iconfont\">&#xe624;</span></i>\n";
+                        }else if(val.DanJuLeiXing=='6'){
+                            str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='htbgApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"'>"+
+                                "<i><span style='color:#ff2e73' class=\"iconfont\">&#xe624;</span></i>\n";
                         };
                         str+="     <div class=\"listsInfo\">\n" +
                             "       <h4>"+val.BiaoTi+"</h4>\n" +

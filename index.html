@@ -209,12 +209,31 @@
         $(".icon-saomafukuan-").click(function (e) {
             dd.ready(function() {
                 dd.biz.util.scan({
-                    type: 'qrCode' , // type 为 all、qrCode、barCode，默认是all。
+                    type: 'barCode' , // type 为 all、qrCode、barCode，默认是all。
                     onSuccess: function(data) {
+                       // alert('data:'+JSON.stringify(data));
+                        let url;
+                        let bh = data.text.substring(0,4);
+                        if(bh=='BXBH'){
+                            url = Global.h5Url +'/bpmh5/applyInformation.html?BianHao='+data.text;
+                        }else if(bh=='ZXSQ'){
+                            url = Global.h5Url +'/bpmh5/zxApplyInformation.html?BianHao='+data.text;
+                        }else if(bh=='HTDJ'){
+                            url = Global.h5Url +'/bpmh5/htApplyInformation.html?BianHao='+data.text;
+                        }else if(bh=='HTBG'){
+                            url = Global.h5Url +'/bpmh5/htbgApplyInformation.html?BianHao='+data.text;
+                        }else if(bh=='XQHZ'){
+                            url = Global.h5Url +'/bpmh5/cgApplyInformation.html?BianHao='+data.text;
+                        }else if(bh=='JKDH'){
+                            url = Global.h5Url +'/bpmh5/zjApplyInformation.html?BianHao='+data.text;
+                        }
                         dd.biz.util.openLink({
-                            url: '',//要打开链接的地址
-                            onSuccess : function(result) {},
-                            onFail : function(err) {}
+                            url: url,//要打开链接的地址
+                            onSuccess : function(result) {
+                            },
+                            onFail : function(err) {
+                                alert('err:'+JSON.stringify(err))
+                            }
                         })
                     },
                     onFail : function(err) {}

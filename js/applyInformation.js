@@ -40,7 +40,7 @@ $(function () {
         type:'post',
         url: Global.baseUrl + '/bpm/dbsp/detail',
         contentType:'application/json',
-        data:JSON.stringify({"BianHao":theRequest.BianHao,"RenWuID":theRequest.RenWuID, "LiuChengId":theRequest.LiuChengId,"DangQianJD": theRequest.DangQianJD}),
+        data:JSON.stringify({"BianHao":theRequest.BianHao,"RenWuID":theRequest.RenWuID || '', "LiuChengId":theRequest.LiuChengId || '',"DangQianJD": theRequest.DangQianJD || ''}),
         success:function (res) {
             //console.info(res);
             if(res.msgCode=='1'){

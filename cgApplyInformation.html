@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>详情</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="css/sm.css">
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        [v-cloak] {
+            display: none !important;
+        }
+
+        .weui-panel__hd {
+            font-size: 15px;
+            color: #3296fa;
+        }
+
+        .weui-media-box {
+            padding: 0 15px;
+        }
+
+        .weui-media-box__desc {
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        .weui-media-box__title {
+            font-size: 16px;
+        }
+        .weui-media-box__info {
+            margin-top: 10px !important;
+            padding-bottom: 10px !important;
+        }
+        .list-block li {
+            line-height: 2em;
+            padding-left: 15px;
+            box-sizing: border-box;
+            position: relative;
+        }
+    </style>
+    <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/config.js"></script>
+</head>
+<body>
+<div class="weui-tab" id="tab" v-cloak>
+    <div class="weui-navbar">
+        <div class="weui-navbar__item">申请信息</div>
+        <div class="weui-navbar__item">流程</div>
+        <div class="weui-navbar__item" v-if="yb==0">审批</div>
+    </div>
+    <div class="weui-tab__panel">
+        <div class="weui-tab__content">
+            <div class="weui-panel weui-panel_access" v-if="formData.DanJuXX">
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">经办人及部门</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.ShenQingBM}}{{formData.DanJuXX.ShenQingR}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">采购金额</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.CaiGouJE}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">需求名称</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.CaiGouXQMC}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">申请单位</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.ShenQingBM}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">需求编号</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.BianHao}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">登记时间</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.DengJiRQ}}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--申请信息页-->
+            <div class="weui-panel weui-panel_access" v-if="formData.DanJuXX">
+                <div class="weui-panel__hd">基本信息</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">采购类别</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.CaiGouLB}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">投标人资格要求</p>
+                                <h4 class="weui-media-box__title">{{formData.DanJuXX.TouBiaoRZGYQ}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div  v-if="formData.ShouLiXX">
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">组织形式</p>
+                                <h4 class="weui-media-box__title">{{formData.ShouLiXX.ZuZhiXS}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">招标代理机构</p>
+                                <h4 class="weui-media-box__title">{{formData.ShouLiXX.ZhaoBiaoDLJG}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">采购方式</p>
+                                <h4 class="weui-media-box__title">{{formData.ShouLiXX.CaiGouFS}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">预选供应商库</p>
+                                <h4 class="weui-media-box__title">{{formData.ShouLiXX.YuXuanGYSK}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">受理人</p>
+                                <h4 class="weui-media-box__title">{{formData.ShouLiXX.ShouLiR}}</h4>
+                            </div>
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">受理时间</p>
+                                <h4 class="weui-media-box__title">{{formData.ShouLiXX.ShouLiSJ}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text" v-if="formData.DanJuXX.DanJuFJ && formData.DanJuXX.DanJuFJ.length > 0">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">附件</p>
+                                <div class="list-block">
+                                    <ul>
+                                        <li v-for="item in formData.DanJuXX.DanJuFJ">
+                                            <div class="item-content">
+                                                <div class="item-media"><i class="icon icon-form-email"></i></div>
+                                                <div class="item-inner">
+                                                    <a :href="item.FuJianLJ" download>{{item.FuJianMC}}</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-panel weui-panel_access" v-if="formData.ShenPiXX && formData.ShenPiXX.length > 0">
+                <div class="weui-panel__hd">审批信息</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text" v-for="item in formData.ShenPiXX">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">审批环节：{{item.ShenPiHJ}}</p>
+                                <h4 class="weui-media-box__title">{{item.ShenPiYJ}}</h4>
+                            </div>
+                        </div>
+                        <div class="weui-flex" v-if="item.ShenPiYS && item.ShenPiYS.length > 0">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">审批要素</p>
+                                <h4 v-for="obj in item.ShenPiYS" class="weui-media-box__title">{{obj.YaoSuMC}}： {{obj.YaoSuZ}}</h4>
+                            </div>
+                        </div>
+                        <div class="weui-flex" v-if="item.ShenPiFJ && item.ShenPiFJ.length > 0">
+                            <div class="weui-flex__item">
+                                <p class="weui-media-box__desc">附件</p>
+                                <div class="list-block">
+                                    <ul>
+                                        <li v-for="file in item.ShenPiFJ">
+                                            <a :href="file.FuJianLJ" download>{{file.FuJianMC}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="weui-media-box__info">
+                            <li class="weui-media-box__info__meta">{{item.ShenPiR}}</li>
+                            <li class="weui-media-box__info__meta">{{item.ShenPiSJ}}</li>
+                            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{item.ChuLiSC}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 15px">
+                <a href="javascript:;" class="weui-btn weui-btn_block weui-btn_ding" @click="gotoTab(2)">去审批</a>
+            </div>
+        </div>
+        <div class="weui-tab__content">
+            <!--流程图-->
+            <div class="content-block" v-if="formData.DanJuXX">
+                <p class="img"><img :src="formData.DanJuXX.LiuChengTuLJ"/></p>
+            </div>
+        </div>
+        <div class="weui-tab__content" v-if="yb==0">
+            <!--审批页-->
+            <div class="weui-panel weui-panel_access">
+                <div class="weui-panel__hd">审批意见</div>
+                <div class="weui-panel__bd">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <textarea v-model.trim="submitData.ShenPiYJ" class="weui-textarea" placeholder="请输入审批意见" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <shenpi-yaosu id="ShenPiYS" title="审批要素" v-if="formData.YaoSuXX && formData.YaoSuXX.length > 0" :yaosuxx="formData.YaoSuXX" v-model="submitData.ShenPiYS"></shenpi-yaosu>
+            <weui-uploader id="ShenPiFJ" title="上传附件" :options="uploaderOptions" :files="submitData.FileList"></weui-uploader>
+            <div class="weui-flex" style="padding: 7px">
+                <div class="weui-flex__item" style="padding: 7px">
+                    <a class="weui-btn weui-btn_warn" @click="submitForm('back')" href="javascript:">驳回</a>
+                </div>
+                <div class="weui-flex__item" style="padding: 7px">
+                    <a class="weui-btn weui-btn_ding" @click="submitForm('pass')" href="javascript:">批准</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script src="js/testData.js"></script>-->
+<script src="js/weui.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/components/shenpi-yaosu.js"></script>
+<script src="js/components/vue.weui.uploader.js"></script>
+<script src="js/cgApplyInformation.js?v=1.0.1"></script>
+</body>
+</html>
