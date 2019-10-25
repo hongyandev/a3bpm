@@ -795,6 +795,14 @@ $(function () {
                 if(go=='back'){
                     $(".pageThird").hide().siblings('.pageSecond').show();
                 }else{
+                    if(this.fzsx.length>0){
+                        for(var i=0;i<this.fzsx.length;i++){
+                            if(!this.fzsx[i].FuZhuZ){
+                                weui.topTips('辅助项填写不完整！');
+                                return false;
+                            }
+                        }
+                    }
                     $(".pageFour").show().siblings('.pageFirst,.pageSecond,.pageThird').hide();
 
                     fetch(Global.baseUrl + '/bpm/common/accounts',{
