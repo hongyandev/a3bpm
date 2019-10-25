@@ -270,7 +270,9 @@
                             <div class="item-inner">
                                 <div class="item-title label">{{item.MingCheng}}</div>
                                 <div class="item-input">
-                                    <option v-for="opt in item.Options" :selected="opt.ShiFouXZ" :value="opt.Value">{{opt.Text}}</option>                                </div>
+                                    <select v-model="item.FuZhuZ">
+                                        <option v-for="opt in item.Options" :selected="opt.ShiFouXZ" :value="opt.Value">{{opt.Text}}</option>                                </div>
+                                    </select>
                             </div>
                             </div>
                         </li>
@@ -466,6 +468,6 @@
 <script src="js/vue.js"></script>
 <script src="js/components/vue.weui.uploader.js"></script>
 <script src="js/components/vue.weui.ocr.js"></script>
-<script src="js/applyBX.js"></script>
+<script src="js/applyBX.js?v=1.0.2"></script>
 
 </html>
