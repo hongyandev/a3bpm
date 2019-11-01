@@ -23,7 +23,7 @@
     <article class="weui-article">
         <h2>资产盘点任务</h2>
     </article>
-    <ul>
+    <ul v-if="zcpdrw.length > 0">
         <li v-for="item in zcpdrw" class="weui-flex weui-row-li row">
             <div class="weui-cell__bd weui-zc-left">
                 <p>{{item.PanDianMC}}</p>
@@ -35,7 +35,7 @@
             </div>
         </li>
     </ul>
-    <div class="empty" style="display: none"></div>
+    <div v-else class="empty">当前没有盘点任务！</div>
 </div>
 <script src="js/vue.js"></script>
 <script src="js/zcpdList.js"></script>
