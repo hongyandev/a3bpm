@@ -23,8 +23,7 @@
     <article class="weui-article">
         <h2>资产盘点任务</h2>
     </article>
-    <ul v-if="zcpdrw.length > 0">
-        {{zcpdrw.length}}
+    <ul v-if="zcpdrw && zcpdrw.length > 0">
         <li v-for="item in zcpdrw" class="weui-flex weui-row-li row">
             <div class="weui-cell__bd weui-zc-left">
                 <p>{{item.PanDianMC}}</p>
