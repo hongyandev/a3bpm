@@ -163,9 +163,9 @@ $(function () {
             },
             uploaderFiles: [],
             uploaderOptions : {
-                url : Global.baseUrl + "/bpm/common/upload2",
-                type : "base64",
-                fileval : "fileBase64",
+                url : Global.baseUrl + "/bpm/common/upload3",
+                type : 'file',
+                fileval : 'file',
                 filekey : "FuJianMC",
                 maxsize : 5,
                 maxcount : 10,

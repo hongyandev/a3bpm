@@ -11,7 +11,7 @@ Vue.component('weui-uploader', {
             url: self.options.url,
             auto: true,
             type: self.options.type || 'file',
-            fileVal: self.options.fileval,
+            fileVal: self.options.fileval || 'file',
             compress: {
                 width: 1600,
                 height: 1600,
