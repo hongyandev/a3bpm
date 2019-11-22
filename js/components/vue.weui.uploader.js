@@ -113,7 +113,7 @@ Vue.component('weui-uploader', {
     '                        <div class="weui-uploader__bd">\n' +
     '                            <ul class="weui-uploader__files"></ul>\n' +
     '                            <div class="weui-uploader__input-box">\n' +
-    '                                <input class="weui-uploader__input" type="file" accept="image/*" capture="camera" multiple="" />\n' +
+    '                                <input class="weui-uploader__input" type="file" accept="image/*" multiple="" />\n' +
     '                            </div>' +
     '                        </div>\n' +
     '                    </div>\n' +
