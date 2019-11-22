@@ -83,8 +83,10 @@ function zbmcList(vm,zbmcdata) {
         .then(json => {
             if(json.msgCode=='1'){
                 if(json.list.length>0){
+                    $(".seaLists").show();
                     vm.zbmcConfig.options = json.list;
                 }else{
+                    $(".seaLists").hide();
                     $(".empty").show().html('当前没有指标可查询！')
                 }
             }
