@@ -201,7 +201,7 @@ Vue.component("weui-ocr", {
     template:
     '<div>' +
     '<button class="weui-btn" :class="config.class" @click="click()">扫一扫</button>' +
-    '<input :id="id" class="weui-uploader__input" style="z-index: -999; width: 1px; height: 1px" type="file" accept="image/!*" capture="camera" />' +
+    '<input :id="id" class="weui-uploader__input" style="z-index: -999; width: 1px; height: 1px" type="file" accept="image/*" capture="camera" />' +
     '</div>'
     /*'    <div>\n' +
     '        <button class="weui-btn" :class="config.class" @click="click()">扫一扫</button>\n' +
