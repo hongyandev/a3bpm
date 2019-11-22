@@ -124,9 +124,9 @@ $(function () {
         props:["item"],
     });
     var zbmcdata = {
-        BuMenBH:'GLZZ201905250002', //_userinfo.BuMenBH,//'GLZZ201905250002',
-        NianDu:'2019', //_userinfo.NianDu,//
-        YongHuBH:'XTYH201905300002',// _userinfo.YongHuBH,//
+        BuMenBH:_userinfo.BuMenBH, //_userinfo.BuMenBH,//'GLZZ201905250002',
+        NianDu:_userinfo.NianDu, //_userinfo.NianDu,//
+        YongHuBH:_userinfo.YongHuBH,// _userinfo.YongHuBH,//
         BaoXiaoLX:'',
         ZhiBiaoMC: '',
         DanJuBH:''
@@ -211,6 +211,7 @@ $(function () {
                     zbmcdata.DanJuBH = res.BianHao;
                     zbmcdata.ZhiBiaoMC = res.ZhiBiaoMC;
                     zbmcdata.BaoXiaoLX = '4';
+                    vm.htjdConfig.options = res.HeTongJD
                 }
             },
             htjdConfig: {
@@ -224,9 +225,12 @@ $(function () {
                     }else{
                         console.info(vm.htmcConfig.options);
                         $.each(vm.htmcConfig.options,function (i,o) {
-                            vm.htjdConfig.options = o.HeTongJD;
+                            this.options = o.HeTongJD;
                         })
                     }
+                },
+                callback:function (res) {
+                    vm.formData.htjd = res.JieDuanBH
                 }
             },
             zbmcConfig: {
@@ -268,8 +272,8 @@ $(function () {
                                 flag = false;
                             } else {
 
-                                zbmcList(vm,zbmcdata);
-                                flag = true;
+                               // zbmcList(vm,zbmcdata);
+                               // flag = true;
                             }
                             break;
                         }
@@ -710,10 +714,10 @@ $(function () {
                 if(go=='back'){
                     $(".pageSecond").hide().siblings('.pageFirst').show();
                 }else{
-                    if(this.total=='0'){
+                    /*if(this.total=='0'){
                         weui.topTips('报销金额不能为0');
                         return false;
-                    }
+                    }*/
                     $(".pageThird").show().siblings('.pageFirst,.pageSecond').hide();
                     console.info(this.ZhiChuMX);
 
@@ -832,7 +836,10 @@ $(function () {
 
                 }
             },
-            save:function () {
+            save:function (go) {
+                    if(go=='back'){
+                        $(".pageFour").hide().siblings('.pageThird').show();
+                    }
                     if(this.jsfsType==''){
                         weui.topTips('结算方式不能为空');
                         return false;
@@ -891,6 +898,16 @@ $(function () {
                         ]
                     }]*/
                 };
+                if(this.fzsx.length>0){
+                  var fzsxList = this.fzsx.map(item=>{
+                        return{
+                            FuZhuSXBH:item.BianHao,
+                            FuZhuSXZ:item.FuZhuZ
+                        }
+                    });
+                    formdata.FuZhuSX = fzsxList;
+                    console.info(fzsxList)
+                }
                 if(this.ZhiChuMX.length>0){
                     var _ZhiCuXX = [];
                     _.forEach(this.ZhiChuMX, function (value, key) {
@@ -943,7 +960,6 @@ $(function () {
                     formdata.JieSuanXX = JieSuanXX;
                 }
 
-                console.info(formdata);
 
                 var lcData = {
                     YuSuanND:_userinfo.NianDu,
@@ -965,6 +981,8 @@ $(function () {
                         if(json.msgCode=='1'){
                             if(json.list.length == 1){
                                 formdata.FlowId = json.list[0].BianHao;
+                                //alert(JSON.stringify(formdata));
+                                //console.info(formdata);
                                 saveData(formdata);
                             }else if(json.list.length > 1){
                                 vm.lc = true;

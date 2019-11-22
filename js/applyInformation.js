@@ -25,10 +25,10 @@ $(function () {
     var messObj = $.fn.cookie('messStr');
     var messStr = JSON.parse(messObj);
     var yb = theRequest.yb;
-    if(yb=='1'){
-        $(".buttons-tab .last").hide()
+    if(yb=='1' || !theRequest.RenWuID){
+        $(".buttons-tab .last,.spyj,.spys,.scfj").hide()
     }else{
-        $(".buttons-tab .last").show()
+        $(".buttons-tab .last,.spyj,.spys,.scfj").show()
     }
     $(".buttons-tab a").click(function(){
         $(this).addClass('active').siblings().removeClass('active');
@@ -263,7 +263,6 @@ $(function () {
                     baseArrs.pop();
                     baseArrs.push(json);
                     console.info(baseArrs);
-                    return;
                     var loading = weui.loading('正在提交...', {
                         className: 'custom-classname'
                     });
@@ -347,14 +346,13 @@ $(function () {
         submitdata.ShenPiYJ=$("#option").val();
         //submitdata.DanJuLX=$("#bxlx").val();
         submitdata.Next="pass";
-        console.info(submitdata);
         if(fj){
             submitdata.FileList = fj[0];
         }
         if(arr.length>0){
             submitdata.ShenPiYS=arr
         }
-
+        console.info(submitdata);
         var loading = weui.loading('正在提交...', {
             className: 'custom-classname'
         });

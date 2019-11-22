@@ -25,10 +25,10 @@ $(function () {
     var messObj = $.fn.cookie('zxmessStr');
     var messStr = JSON.parse(messObj);
     var yb = theRequest.yb;
-    if(yb=='1'){
-        $(".buttons-tab .last").hide()
+    if(yb=='1'||!theRequest.RenWuID){
+        $(".buttons-tab .last,.spyj,.spys,.scfj").hide()
     }else{
-        $(".buttons-tab .last").show()
+        $(".buttons-tab .last,.spyj,.spys,.scfj").show()
     }
     $(".buttons-tab a").click(function () {
         $(this).addClass('active').siblings().removeClass('active');

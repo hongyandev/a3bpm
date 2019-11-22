@@ -202,11 +202,10 @@
         </div>
     </div>
     <div class="pageSecond" style="display: none">
-
         <div v-if="zj">
             <zjzc-mx v-for="item in ZhiChuMX" :items="item"></zjzc-mx>
         </div>
-        <div v-else>
+        <div>
             <zhichu-mingxi v-for="(item, index) in ZhiChuMX" :key="index" :item="item" :ocrconfig="ocrConfig"></zhichu-mingxi>
         </div>
         <div class="weui-cells weui-cells_form">
@@ -339,17 +338,20 @@
                             </a>
                         </div>
                         <div class="col-20" style="text-align: center;float: right">
-
                             <a href="#" @click="jsfsdel(index)"><i><span style='color:#3cc51f' class="iconfont">&#xe695;</span></i>删除</a>
                         </div>
-
                     </li>
                 </ul>
             </template>
         </div>
         <select-dialog ref="lcxx" id="lcxx" v-show="lc" title="流程信息" :config="lcConfig"></select-dialog>
-        <div class="content-block">
-            <a @click="save()" href="javascript:void(0);" class="weui-btn weui-btn_primary">完成</a>
+        <div class="weui-flex" style="padding: 7px">
+            <div class="weui-flex__item" style="padding: 7px">
+                <a class="weui-btn weui-btn_ding" @click="save('back')" href="javascript:">上一步</a>
+            </div>
+            <div class="weui-flex__item" style="padding: 7px">
+                <a class="weui-btn weui-btn_ding" @click="save()" href="javascript:">完成</a>
+            </div>
         </div>
     </div>
 </div>
@@ -468,6 +470,6 @@
 <script src="js/vue.js"></script>
 <script src="js/components/vue.weui.uploader.js"></script>
 <script src="js/components/vue.weui.ocr.js"></script>
-<script src="js/applyBX.js?v=1.0.2"></script>
+<script src="js/applyBX.js?v=1.0.9"></script>
 
 </html>

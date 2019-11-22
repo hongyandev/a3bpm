@@ -51,7 +51,7 @@
 <div class="buttons-tab">
     <a href="#tab1" class="tab-link active button">申请信息</a>
     <a href="#tab2" class="tab-link button">流程</a>
-    <a href="#tab3" class="tab-link button last">审批</a>
+    <a href="#tab3" class="tab-link button">审批</a>
 </div>
 <input type="hidden" id="sqbmbh" value=""/>
 <input type="hidden" id="ShenQingJE" value=""/>
@@ -214,14 +214,14 @@
                         </div>
                         <div id="tab3" class="tab" style="padding-bottom:55px;">
                             <div class="content-block">
-                                <div class="weui-cells weui-cells_form">
+                                <div class="weui-cells weui-cells_form spyj">
                                     <div class="weui-cell">
                                         <div class="weui-cell__bd">
                                             <textarea id="option" class="weui-textarea" placeholder="请输入审批意见" rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="list-block">
+                                <div class="list-block spys">
                                     <ul class="ysXX">
                                         <!--<li>
                                             <div class="item-content">
@@ -239,27 +239,29 @@
                                         </li>-->
                                     </ul>
                                 </div>
-                                <div class="content-block-title">上传附件</div>
-                                <div class="weui-gallery" id="gallery">
-                                    <div class="weui-closed">
-                                        <span>关闭</span>
+                                <div class="scfj">
+                                    <div class="content-block-title">上传附件</div>
+                                    <div class="weui-gallery" id="gallery">
+                                        <div class="weui-closed">
+                                            <span>关闭</span>
+                                        </div>
+                                        <img style="-webkit-touch-callout:default;" class="weui-gallery__img" id="galleryImg"/>
+                                        <!--<div class="weui-gallery__opr">
+                                            <a href="javascript:" class="weui-gallery__del">
+                                                <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                                            </a>
+                                        </div>-->
                                     </div>
-                                    <img style="-webkit-touch-callout:default;" class="weui-gallery__img" id="galleryImg"/>
-                                    <!--<div class="weui-gallery__opr">
-                                        <a href="javascript:" class="weui-gallery__del">
-                                            <i class="weui-icon-delete weui-icon_gallery-delete"></i>
-                                        </a>
-                                    </div>-->
-                                </div>
-                                <div class="weui-cells weui-cells_form">
-                                    <div class="weui-cell">
-                                        <div class="weui-cell__bd">
-                                            <div class="weui-uploader">
-                                                <div class="weui-uploader__bd">
-                                                    <ul class="weui-uploader__files" id="galleryFiles">
-                                                    </ul>
-                                                    <div class="weui-uploader__input-box">
-                                                        <input id="galleryInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                                    <div class="weui-cells weui-cells_form">
+                                        <div class="weui-cell">
+                                            <div class="weui-cell__bd">
+                                                <div class="weui-uploader">
+                                                    <div class="weui-uploader__bd">
+                                                        <ul class="weui-uploader__files" id="galleryFiles">
+                                                        </ul>
+                                                        <div class="weui-uploader__input-box">
+                                                            <input id="galleryInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -304,7 +306,7 @@
                                     </div>
                                 </div>
                                 <div class="fixBottom">
-                                    <div class="weui-flex">
+                                    <div class="weui-flex last">
                                         <div class="weui-flex__item"><a id="submit" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">审核通过</a></div>
                                         <div class="weui-flex__item"><a id="back" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">退回</a></div>
                                     </div>
