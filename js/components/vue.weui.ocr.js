@@ -164,7 +164,7 @@ Vue.component("weui-ocr", {
                                 onError(file, err);
                             }
                         } else {
-                            onError(file, new Error('XMLHttpRequest response status is ' + xhr.status));
+                            onError(file, new Error('识别失败，请拍摄清晰完整的票面。'));
                         }
                     }
                 };
@@ -192,7 +192,7 @@ Vue.component("weui-ocr", {
                     },
                     error: function (xhr, type) {
                         loading.hide();
-                        onError(file, new Error('XMLHttpRequest response status is ' + xhr.status));
+                        onError(file, new Error('识别失败，请拍摄清晰完整的票面。'));
                     }
                 });
             }

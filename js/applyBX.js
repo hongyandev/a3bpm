@@ -844,6 +844,10 @@ $(function () {
                         weui.topTips('结算方式不能为空');
                         return false;
                     }
+                    if(!this.total){
+                        weui.topTips('报销金额不能为0');
+                        return false;
+                    }
                     formdata = {
                     "FlowId":"",
                     "BiaoXiaoBH":"",//新增单据:无报销编号;编辑单据:有报销编号
