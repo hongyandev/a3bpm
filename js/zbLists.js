@@ -87,7 +87,8 @@ function zbmcList(vm,zbmcdata) {
                     vm.zbmcConfig.options = json.list;
                 }else{
                     $(".seaLists").hide();
-                    $(".empty").show().html('当前没有指标可查询！')
+                    vm.zbmcConfig.options = [];
+                    weui.topTips('当前没有指标可查询');
                 }
             }
         });

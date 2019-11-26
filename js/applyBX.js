@@ -808,16 +808,16 @@ $(function () {
                         }
                     }
                     $(".pageFour").show().siblings('.pageFirst,.pageSecond,.pageThird').hide();
-
-                    fetch(Global.baseUrl + '/bpm/common/accounts',{
-                        method: 'post',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(res => res.json())
-                    .then(json => {
-                           // if (vm.formData.jsfs.length == 0 ) {
+                    if (vm.formData.jsfs.length == 0 ) {
+                        fetch(Global.baseUrl + '/bpm/common/accounts',{
+                            method: 'post',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                            })
+                            .then(res => res.json())
+                            .then(json => {
+                                // if (vm.formData.jsfs.length == 0 ) {
                                 vm.formData.jsfs.push({
                                     options:json.list,
                                     currentVal: "",
@@ -826,19 +826,22 @@ $(function () {
                                     record: {"Content":[]},
                                     JinE:this.total
                                 });
-                            //}
-                            for(var i=0;i<json.list.length;i++){
-                                if(json.list[i].Content != "" && json.list[i].Content.length>0){
-                                    vm.jsfsType = json.list[i].Content;
-                            }
-                        }
-                });
+                                //}
+                                for(var i=0;i<json.list.length;i++){
+                                    if(json.list[i].Content != "" && json.list[i].Content.length>0){
+                                        vm.jsfsType = json.list[i].Content;
+                                    }
+                                }
+                            });
+                    }
 
                 }
             },
             save:function (go) {
                     if(go=='back'){
+                        vm.lc = false;
                         $(".pageFour").hide().siblings('.pageThird').show();
+                        return;
                     }
                     if(this.jsfsType==''){
                         weui.topTips('结算方式不能为空');
