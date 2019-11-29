@@ -230,13 +230,13 @@
             <template v-for="item in fzsx">
                 <div class="list-block">
                     <ul>
-                        <li v-if="item.Type=='1'" class="item-content">
+                        <li v-if="item.Type=='1'">
                             <div class="item-content">
                                 <div class="item-media"><i class="icon icon-form-gender"></i></div>
                                 <div class="item-inner">
                                     <div class="item-title label">{{item.MingCheng}}</div>
                                     <div class="item-input">
-                                        <input type="number" placeholder="" value="" v-model="item.FuZhuZ">
+                                        <input type="number" value="" v-model.number="item.FuZhuZ">
                                     </div>
                                 </div>
                             </div>
@@ -247,7 +247,7 @@
                                 <div class="item-inner">
                                     <div class="item-title label">{{item.MingCheng}}</div>
                                     <div class="item-input">
-                                        <input type="text" placeholder="" value="" v-model="item.FuZhuZ">
+                                        <input type="text" value="" v-model="item.FuZhuZ">
                                     </div>
                                 </div>
                             </div>
@@ -258,7 +258,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">{{item.MingCheng}}</div>
                                 <div class="item-input">
-                                    <input type="date" placeholder="" value="" v-model="item.FuZhuZ">
+                                    <input type="date" value="" v-model="item.FuZhuZ">
                                 </div>
                             </div>
                             </div>
@@ -270,6 +270,7 @@
                                 <div class="item-title label">{{item.MingCheng}}</div>
                                 <div class="item-input">
                                     <select v-model="item.FuZhuZ">
+                                        <option value=""></option>
                                         <option v-for="opt in item.Options" :selected="opt.ShiFouXZ" :value="opt.Value">{{opt.Text}}</option>                                </div>
                                     </select>
                             </div>
@@ -286,7 +287,7 @@
                     <div class="item-inner">
                         <div class="item-title label">辅助事项</div>
                         <div class="item-input">
-                            <input type="text" placeholder="" value="" readonly>
+                            <input type="text" value="" readonly>
                         </div>
                     </div>
                 </li>
@@ -338,7 +339,7 @@
                             </a>
                         </div>
                         <div class="col-20" style="text-align: center;float: right">
-                            <a href="#" @click="jsfsdel(index)"><i><span style='color:#3cc51f' class="iconfont">&#xe695;</span></i>删除</a>
+                            <a v-show="formData.jsfs.length > 1" href="#" @click="jsfsdel(index)"><i><span style='color:#3cc51f' class="iconfont">&#xe695;</span></i>删除</a>
                         </div>
                     </li>
                 </ul>
@@ -435,6 +436,7 @@
                             <option v-for="opt in field.Options" :value="opt.Value">{{opt.Text}}</option>
                         </select>
                         <span v-else-if="field.Type==0" class="weui-input">{{field.FeiYongMXZ}}</span>
+                        <img v-else-if="field.Type==-1 && field.FuJianKey" :src="field.FeiYongMXZ" style="width: 77px;height: 77px;border: 1px solid #d9d9d9;">
                     </div>
                 </div>
                 <div class="weui-cell weui-cell_access" @click="del(item.FeiYongMX, index)" v-if="item.FeiYongMX.length > 1">

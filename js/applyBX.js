@@ -526,7 +526,11 @@ $(function () {
                     },
                     onSuccess: function (ret, target) {
                         // 成功的回调
-                        // alert("Before: " + JSON.stringify(target));
+                        let msg = ret.msg;
+                        if (msg.length > 0) {
+                            weui.topTips(msg);
+                            return;
+                        }
                         var setValues = function (fymx) {
                             _.forEach(fymx, function (value, key) {
                                 value.edited = true;
@@ -589,19 +593,32 @@ $(function () {
                                     case 'total' :
                                         value.FeiYongMXZ = ret.total;
                                         break;
+                                    case 'FuJianXX':
+                                        value.FeiYongMXZ = ret.fuJianLJ;
+                                        value.FuJianMC = ret.fuJianMC;
+                                        value.FuJianKey = ret.fuJianKey;
+                                        break;
                                 }
                             })
                         }
-                        /*
-                        if (target.length === 1 && target[0][0].edited === undefined ){
-                            setValues(target[0]);
+                        _.forEach(target, function (fymx, key) {
+                            if (msg.length > 0) {
+                                return false;
+                            }
+                            _.forEach(fymx, function (value, key) {
+                                if (value.OcrCode == 'FuJianXX' && value.FuJianKey == ret.FuJianKey) {
+                                    msg = '请勿重复添加同一票据。';
+                                    return false;
+                                }
+                            })
+                        });
+                        if (msg.length === 0) {
+                            var newmx = _.cloneDeep(target[0]);
+                            setValues(newmx)
+                            target.push(newmx);
                         } else {
+                            weui.topTips(msg);
                         }
-                        */
-                        var newmx = _.cloneDeep(target[0]);
-                        setValues(newmx)
-                        target.push(newmx);
-                        // alert("After: " + JSON.stringify(target));
                     },
                     onError: function (err) {
                         weui.topTips(err);
@@ -676,7 +693,12 @@ $(function () {
             });
         },
         methods:{
-
+            handleInput: function (e) {
+                let a = e.key.replace(/[^\d]/g, "");
+                if (!a) {
+                    e.preventDefault();
+                }
+            },
             jsfsadd: function () {
                 var newJsfs = _.cloneDeep(this.formData.jsfs[0]);
                 newJsfs.currentVal="";
@@ -706,6 +728,20 @@ $(function () {
                         .then(json =>{
                             $(".pageSecond").show().siblings('.pageFirst').hide();
                             vm.ZhiChuMX = json.list;
+                            $.each(vm.ZhiChuMX, function (j, p) {
+                                if(p.IsOcr == '1') {
+                                    $.each(p.FeiYongMX, function (k, q) {
+                                        q.push({
+                                            'Type': -1,
+                                            'OcrCode': 'FuJianXX',
+                                            'FeiYongMXMC': '附件',
+                                            'FeiYongMXZ': '',
+                                            'FuJianMC' : '',
+                                            'FuJianKey': ''
+                                        })
+                                    })
+                                }
+                            })
                         });
                 }
                 //console.info("1:"+this.formData);
@@ -918,6 +954,18 @@ $(function () {
                 if(this.ZhiChuMX.length>0){
                     var _ZhiCuXX = [];
                     _.forEach(this.ZhiChuMX, function (value, key) {
+                        if(value.IsOcr == '1') {
+                            _.forEach(value.FeiYongMX, function (row, key) {
+                                _.forEach(row, function (field, key) {
+                                    if (field.Type == -1 && field.FuJianKey) {
+                                        formdata.FuJianXX.push({
+                                            "FuJianMC": field.FuJianMC,
+                                            "FuJianLJ": field.FeiYongMXZ
+                                        });
+                                    }
+                                });
+                            });
+                        }
                         var c = _.flatMapDepth(value.FeiYongMX, function (value, key, collection) {
                             return value;
                         }, 1);
