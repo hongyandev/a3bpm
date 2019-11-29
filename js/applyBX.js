@@ -566,8 +566,7 @@ $(function () {
                                         value.FeiYongMXZ = ret.type;
                                         break;
                                     case 'issueDate' :
-                                        let issueDate = moment(ret.issueDate, ['YYYY年M月D日']).format('YYYY-MM-DD');
-                                        value.FeiYongMXZ = issueDate;
+                                        value.FeiYongMXZ = ret.issueDate;
                                         break;
                                     case 'sellerName' :
                                         value.FeiYongMXZ = ret.sellerName;
