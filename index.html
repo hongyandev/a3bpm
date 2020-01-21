@@ -11,6 +11,8 @@
     <script type="text/javascript" src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
     <script src='js/zepto.min.js' charset='utf-8'></script>
     <script src="js/zepto.cookie.min.js"></script>
+    <script src="source/js/lib/weui.min.js"></script>
+    <script src="source/js/lib/moment/2.24.0/moment.min.js"></script>
     <script src="js/config.js?v=28"></script>
     <style>
         body{
@@ -41,10 +43,20 @@
         }
     </style>
 
-
 </head>
 <body>
-   <img class="launchImage" src="img/111.jpg">
+   <div class="title_div"></div>
+   <div class="yusuan-div">
+       <div id="NianDu">
+           <label></label>
+           <label>年度预算</label>
+       </div>
+       <div class="line"></div>
+       <div id="DanWei">
+           <label>test01</label>
+           <label>单位名称</label>
+       </div>
+   </div>
    <div class="weui-cells__title"></div>
    <div class="weui-grids">
        <a href="applyLists.html" class="weui-grid js_grid">
@@ -63,7 +75,7 @@
                已办
            </p>
        </a>
-       <a href="applyBX.html" class="weui-grid js_grid">
+       <a href="BX/applyBX.html" class="weui-grid js_grid">
                <div class="weui-grid__icon">
                    <i class="iconfont bxsq">&#xe689;</i>
                </div>
@@ -103,14 +115,14 @@
                辅助工具
            </p>
        </a>
-       <a href="BX/applyBX.html" class="weui-grid js_grid">
+       <!--<a href="BX/applyBX.html" class="weui-grid js_grid">
            <div class="weui-grid__icon">
                <i class="iconfont bxsq">&#xe689;</i>
            </div>
            <p class="weui-grid__label">
                报销申请(新)
            </p>
-       </a>
+       </a>-->
    </div>
    <div class="selectDialog toolCon" style="display: none">
        <div class="dialogInfo">
@@ -151,13 +163,121 @@
    </div>
 <script>
     $(document).ready(function () {
+        if (!$.fn.cookie('NianDu')){
+            var NianDu = moment().years();
+            $("#NianDu label:first-child").html(NianDu);
+            $.fn.cookie('NianDu', NianDu);
+        }else{
+            $("#NianDu label:first-child").html($.fn.cookie('NianDu'));
+        }
+        if ($.fn.cookie('DanWei')){
+            var DW = JSON.parse($.fn.cookie('DanWei'));
+            $("#DanWei label:first-child").html(DW.DanWeiMC);
+        }
+        var YongHuDW = [];
         config({
             // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
             onSuccess: function (userinfo) {
                 $.fn.cookie('ShenQingDW',_userinfo.DanWeiBH);
+                $.each(userinfo.YongHuDW, function (k, v) {
+                    YongHuDW.push({
+                        label: v.MingCheng,
+                        onClick: function () {
+                            $("#DanWei label:first-child").html(v.MingCheng);
+                            $.fn.cookie('DanWei', JSON.stringify({DanWeiBH: v.BianHao, DanWeiMC: v.MingCheng}));
+                        }
+                    })
+                });
                // document.location.href = "applyLists.html";
+                if (!$.fn.cookie('DanWei')) {
+                    $("#DanWei label:first-child").html(userinfo.DanWeiMC);
+                    $.fn.cookie('DanWei', JSON.stringify({DanWeiBH: userinfo.DanWeiBH, DanWeiMC: userinfo.DanWeiMC}));
+                }
             }
         });
+        $("#NianDu").on("click", function (e) {
+            var NianDu = moment().years();
+            weui.actionSheet([
+                {
+                    label: NianDu-4,
+                    onClick: function () {
+                        $("#NianDu label:first-child").html(NianDu-4);
+                        $.fn.cookie('NianDu', NianDu-4);
+                    }
+                }, {
+                    label: NianDu-3,
+                    onClick: function () {
+                        $("#NianDu label:first-child").html(NianDu-3);
+                        $.fn.cookie('NianDu', NianDu-3);
+                    }
+                }, {
+                    label: NianDu-2,
+                    onClick: function () {
+                        $("#NianDu label:first-child").html(NianDu-2);
+                        $.fn.cookie('NianDu', NianDu-2);
+                    }
+                },
+                {
+                    label: NianDu-1,
+                    onClick: function () {
+                        $("#NianDu label:first-child").html(NianDu-1);
+                        $.fn.cookie('NianDu', NianDu-1);
+                    }
+                },
+                {
+                    label: NianDu,
+                    onClick: function () {
+                        $("#NianDu label:first-child").html(NianDu);
+                        $.fn.cookie('NianDu', NianDu);
+                    }
+                },
+                {
+                    label: NianDu+1,
+                    onClick: function () {
+                        $("#NianDu label:first-child").html(NianDu+1);
+                        $.fn.cookie('NianDu', NianDu+1);
+                    }
+                },
+                {
+                    label: NianDu+2,
+                    onClick: function () {
+                        $("#NianDu label:first-child").html(NianDu+2);
+                        $.fn.cookie('NianDu', NianDu+2);
+                    }
+                },
+                {
+                    label: NianDu+3,
+                    onClick: function () {
+                        $("#NianDu label:first-child").html(NianDu+3);
+                        $.fn.cookie('NianDu', NianDu+3);
+                    }
+                },
+                {
+                    label: NianDu+4,
+                    onClick: function () {
+                        $("#NianDu label:first-child").html(NianDu+4);
+                        $.fn.cookie('NianDu', NianDu+4);
+                    }
+                }
+            ], [
+                {
+                    label: '取消',
+                    onClick: $.noop
+                }
+            ], {
+                title: '预算年度'
+            });
+        });
+        $("#DanWei").on("click", function () {
+            weui.actionSheet(YongHuDW, [
+                {
+                    label: '取消',
+                    onClick: $.noop
+                }
+            ], {
+                title: '预算单位'
+            });
+        })
         $(".fzTool").on("click", function(e){
             $(".toolCon").show();
             $(".dialogBg").on("click", function(){

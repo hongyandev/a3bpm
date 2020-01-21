@@ -1,7 +1,9 @@
 define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'components/SelectDialog', 'components/SeaDialog', 'components/WeuiUploader', 'components/ZjzcMx', 'components/ZhiChuMingXi', 'components/JieSuanFS'], function (Vue, config, baseData, weui, _, account, moment, SelectDialog, SeaDialog, WeuiUploader, ZjzcMx, ZhiChuMingXi, JieSuanFS) {
-//config.jsApi({
-  //  onSuccess: function (userinfo) { //"YongHuBH":"XTYH201806130020","NianDu":"2019","BuMenBH":"GLZZ201806130002"
-        var userinfo = {
+config.jsApi({
+    onSuccess: function (userinfo) { //"YongHuBH":"XTYH201806130020","NianDu":"2019","BuMenBH":"GLZZ201806130002"
+        var NianDu = $.fn.cookie('NianDu') || userinfo.NianDu;
+        var DanWeiBH = JSON.parse($.fn.cookie('DanWei')).DanWeiBH || userinfo.DanWeiBH;
+        /*var userinfo = {
             "YongHuBH":"XTYH201806130020",
             "DanWeiBH":"GLZZ201806130001",
             "NianDu":"2019",
@@ -9,7 +11,7 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
             "GangWeiBH":"YWGW201806130001",
             "debug": true,
             "DengLuM": "test0103"
-        }
+        }*/
         new Vue({
             el: '#applybx',
             components: {
@@ -202,22 +204,31 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
                 
                 <!--第二页-->
                 <div v-show="currentPage === 2">
+                    <!-- 资金申请单调整 
                     <div v-if="formData.BaoXiaoLX === '2'">
                         <zjzc-mx v-for="(item, index) in ZhiChuMX" :key="item.ZCMXBianHao" :item="item"></zjzc-mx>
                     </div>
                     <div v-else>
                         <zhichu-mingxi v-for="(item, index) in ZhiChuMX" :key="item.BianHao" :item="item" :ocrOptions="ocrOptions"></zhichu-mingxi>
                     </div>
+                    -->
+                    
+                    <!--支出明细-->
+                    <zhichu-mingxi v-for="(item, index) in ZhiChuMX" :key="item.BianHao" :item="item" :ocrOptions="ocrOptions"></zhichu-mingxi>
+                    
                     <div class="weui-cells weui-cells_form">
                         <div  class="weui-cell">
                             <div class="weui-cell__hd"><label class="weui-label">报销金额</label></div>
                             <div class="weui-cell__bd">
+                                <!--  资金申请单调整                       
                                 <template v-if="formData.BaoXiaoLX === '2'">
                                     {{total}}
                                 </template>
                                 <template v-else>
                                      <input type="text" @click="getTotalMoney" readonly="readonly" :value="total" class="weui-input inputTotal"/>     
                                 </template>
+                                -->
+                                <input type="text" @click="getTotalMoney" readonly="readonly" :value="total" class="weui-input inputTotal"/>
                             </div>
                         </div>
                     </div>
@@ -350,8 +361,8 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
                       "BaoXiaoLX":"",   //"报销类型",
                       "ZhiBiaoBH":"",   //"指标编号",
                       "ShenQingR":userinfo.YongHuBH,   //"申请人-（经办人）编号",
-                      "NianDu":userinfo.NianDu,  //"年度",
-                      "ShenQingDW":userinfo.DanWeiBH,  //"申请单位编号-（管理组织）",
+                      "NianDu":NianDu,  //"年度",
+                      "ShenQingDW":DanWeiBH,  //"申请单位编号-（管理组织）",
                       "ShenQingBM":userinfo.BuMenBH,   //"申请部门编号",
                       "ShenQingJE":0,         //"申请金额-（报销金额）",
                       "BaoXiaoR":userinfo.DengLuM,     //"报销人",
@@ -459,7 +470,7 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
                       zjApplyParams: {
                           BuMenBH: userinfo.BuMenBH,
                           YongHuBH: userinfo.YongHuBH,
-                          YuSuanND: userinfo.NianDu
+                          YuSuanND: NianDu
                       },
                       beforeShow: function () {
                           var loading = weui.loading('loading'), self = this;
@@ -494,8 +505,8 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
                               // 支出事项
                               var zcsxRecord = {BianHao: record["ZCSXBianHao"], MingCheng: record["ZCSXMingCheng"]}
                               self.$refs['ZhiChuSX'].select(zcsxRecord)
-                              // 支出明细
-                              self.ZhiChuMX = record["ZCMXlist"]
+                              // 支出明细 -- 资金申请单调整
+                              // self.ZhiChuMX = record["ZCMXlist"]
                           }
                       }
                   },
@@ -506,7 +517,7 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
                       zxApplyParams: {
                           BuMenBH: userinfo.BuMenBH,
                           YongHuBH: userinfo.YongHuBH,
-                          YuSuanND: userinfo.NianDu
+                          YuSuanND: NianDu
                       },
                       beforeShow: function () {
                           var loading = weui.loading('loading'), self = this
@@ -615,7 +626,7 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
                       zbmcParams: {
                           BuMenBH: userinfo.BuMenBH,
                           YongHuBH: userinfo.YongHuBH,
-                          NianDu: userinfo.NianDu,
+                          NianDu: NianDu,
                           BaoXiaoLX: "",
                           ZhiBiaoMC: "",
                           DanJuBH: ""
@@ -759,7 +770,8 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
                       selected: function (record, oldRecord) {
                           var self = this
                           if (!_.isEqual(record, oldRecord) && record['BianHao']) {
-                              if (self.formData.BaoXiaoLX !== '2') {
+                              // 资金申请单调整
+                              // if (self.formData.BaoXiaoLX !== '2') {
                                   var loading = weui.loading('loading')
                                   // 支出明细
                                   fetch(config.baseUrl + '/bpm/common/getDetail', {
@@ -804,7 +816,7 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
                                       loading.hide();
                                       weui.topTips(err, 3000);
                                   })
-                              }
+                              //}
                               // 辅助事项
                               fetch(config.baseUrl + '/bpm/common/auxiliary', {
                                   method: 'post',
@@ -1240,8 +1252,8 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
 
                     // 流程信息
                     var flowData = {
-                        YuSuanND: userinfo.NianDu,
-                        DanWeiBH: userinfo.DanWeiBH,
+                        YuSuanND: NianDu,
+                        DanWeiBH: DanWeiBH,
                         ZhiChuSX: self.formData.ZhiChuSX,
                         ZhiBiao: self.formData.ZhiBiaoBH,
                         DanJUBH: self.formData.BaoXiaoLX
@@ -1351,6 +1363,6 @@ define(['vue', 'config', 'baseData', 'weui', 'lodash', 'account', 'moment', 'com
                 }
             }
         })
-    //}
-//})
+    }
+ })
 })
