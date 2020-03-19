@@ -4,7 +4,6 @@ $(function () {
         // jsApiList: ['biz.util.open','device.geolocation.get'], // 需要鉴权使用的jsapi
         onSuccess: function (userinfo) {
             //alert("just du it!");
-            // $.fn.cookie('ShenQingDW',userinfo.DanWeiBH);
         }
     });
     */

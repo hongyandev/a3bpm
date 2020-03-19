@@ -3,6 +3,7 @@ config.jsApi({
     onSuccess: function (userinfo) { //"YongHuBH":"XTYH201806130020","NianDu":"2019","BuMenBH":"GLZZ201806130002"
         var NianDu = $.fn.cookie('NianDu') || userinfo.NianDu;
         var DanWeiBH = JSON.parse($.fn.cookie('DanWei')).DanWeiBH || userinfo.DanWeiBH;
+        var BuMenBH =  JSON.parse($.fn.cookie('DanWei')).BuMenBH || userinfo.BuMenBH;
         /*var userinfo = {
             "YongHuBH":"XTYH201806130020",
             "DanWeiBH":"GLZZ201806130001",
@@ -363,7 +364,7 @@ config.jsApi({
                       "ShenQingR":userinfo.YongHuBH,   //"申请人-（经办人）编号",
                       "NianDu":NianDu,  //"年度",
                       "ShenQingDW":DanWeiBH,  //"申请单位编号-（管理组织）",
-                      "ShenQingBM":userinfo.BuMenBH,   //"申请部门编号",
+                      "ShenQingBM":BuMenBH,   //"申请部门编号",
                       "ShenQingJE":0,         //"申请金额-（报销金额）",
                       "BaoXiaoR":userinfo.DengLuM,     //"报销人",
                       "BaoXiaoBM":"",   //"报销部门编号",
@@ -468,7 +469,7 @@ config.jsApi({
                           }
                       ],
                       zjApplyParams: {
-                          BuMenBH: userinfo.BuMenBH,
+                          BuMenBH: BuMenBH,
                           YongHuBH: userinfo.YongHuBH,
                           YuSuanND: NianDu
                       },
@@ -515,7 +516,7 @@ config.jsApi({
                       key: 'BianHao',
                       name: 'BiaoTi',
                       zxApplyParams: {
-                          BuMenBH: userinfo.BuMenBH,
+                          BuMenBH: BuMenBH,
                           YongHuBH: userinfo.YongHuBH,
                           YuSuanND: NianDu
                       },
@@ -554,7 +555,7 @@ config.jsApi({
                       key: 'BianHao',
                       name: 'HeTongMC',
                       htmcParams: {
-                          "BuMenBH": userinfo.BuMenBH,
+                          "BuMenBH": BuMenBH,
                           "YongHuBH": userinfo.YongHuBH,
                       },
                       beforeShow: function () {
@@ -624,7 +625,7 @@ config.jsApi({
                       ],
                       searchable: true,
                       zbmcParams: {
-                          BuMenBH: userinfo.BuMenBH,
+                          BuMenBH: BuMenBH,
                           YongHuBH: userinfo.YongHuBH,
                           NianDu: NianDu,
                           BaoXiaoLX: "",
@@ -1335,7 +1336,7 @@ config.jsApi({
                 // 报销部门
                 fetch(config.baseUrl + '/bpm/common/getDept', {
                     method: 'post',
-                    body: JSON.stringify({BuMenBH: userinfo.BuMenBH}),
+                    body: JSON.stringify({BuMenBH: BuMenBH}),
                     headers: {
                         'Content-Type': 'application/json'
                     }

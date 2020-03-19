@@ -48,9 +48,10 @@ $(function () {
             //alert("just du it!");
             var NianDu = $.fn.cookie('NianDu') || userinfo.NianDu;
             var DanWeiBH = JSON.parse($.fn.cookie('DanWei')).DanWeiBH || userinfo.DanWeiBH;
+            var BuMenBH =  JSON.parse($.fn.cookie('DanWei')).BuMenBH || userinfo.BuMenBH;
             let zbmcdata = {
                 DanWeiBH: DanWeiBH,//"GLZZ201905240001",
-                BuMenBH: userinfo.BuMenBH,//'GLZZ201905250002',
+                BuMenBH: BuMenBH,//'GLZZ201905250002',
                 NianDu: NianDu,//'2019',
                 YongHuBH: userinfo.YongHuBH,//'XTYH201905300002',
                 ZhiBiaoMC: '',
