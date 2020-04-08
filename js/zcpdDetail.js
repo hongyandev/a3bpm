@@ -13,6 +13,7 @@ $(function () {
         el: "#zcpdDetail",
         data: {
             zcpddtl: [],
+            pdzt:'SAVE'
         },
         computed:{
             formdata:function () {
@@ -20,9 +21,10 @@ $(function () {
                 zcpdlist = vm.zcpddtl.map(item=>{return {PanDianMXBH: item.BianHao,ZiChanBH: item.ZiChanKP,ShuLiang:((item.ShiCunSL || 0)+"")}});
                 return {
                     "PanDianDBH":GetRequest().bh,
+                    "PanDianCZ":this.pdzt,
                     "panList": zcpdlist
                     }
-            }
+            },
         },
         methods: {
             add: function (item) {
@@ -41,6 +43,7 @@ $(function () {
             },
             tempSave: function () {
                 // 暂存
+                this.pdzt='SAVE';
                 fetch(Global.baseUrl + '/bpm/pan/panConfirm', {
                     method: 'post',
                     body: JSON.stringify(vm.formdata),
@@ -63,6 +66,7 @@ $(function () {
             scanQrCode: function () {
                 var code;
                 let vm = this;
+                this.pdzt='SUBMIT';
                 dd.ready(function() {
                     dd.biz.util.scan({
                         type: 'qrCode' , // type 为 all、qrCode、barCode，默认是all。
@@ -116,7 +120,7 @@ $(function () {
                         onClick: function(){
                             fetch(Global.baseUrl + '/bpm/pan/panConfirm', {
                                 method: 'post',
-                                body: JSON.stringify(vm.formdata),
+                                body: JSON.stringify(vm.comfirmdata),
                                 headers: {
                                     'Content-Type': 'application/json'
                                 }
