@@ -164,7 +164,7 @@ config.jsApi({
                                     <div class="item-inner">
                                         <div class="item-title label"><span class="iconfont btIcon">&#xe7ff;</span>报销事由</div>
                                         <div class="item-input">
-                                            <textarea v-model="formData.BaoXiaoSY"></textarea>
+                                            <textarea style="margin:5px 0;border:1px solid #e5e5e5" v-model="formData.BaoXiaoSY"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@ config.jsApi({
                                     <div class="item-inner">
                                         <div class="item-title label">备注</div>
                                         <div class="item-input">
-                                            <textarea v-model="formData.BeiZhu"></textarea>
+                                            <textarea style="margin:5px 0;border:1px solid #e5e5e5" v-model="formData.BeiZhu"></textarea>
                                         </div>
                                     </div>
                                 </div>
