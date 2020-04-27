@@ -9,7 +9,7 @@ define(['vue', 'weui'], function (Vue, weui) {
                     <div class="weui-uploader__bd">
                         <ul class="weui-uploader__files"></ul>
                         <div class="weui-uploader__input-box">
-                            <input class="weui-uploader__input" type="file" accept="image/*" capture="camera" multiple="" />
+                            <input class="weui-uploader__input" type="file" accept="image/*" multiple="" />
                         </div>
                     </div>
                 </div>
