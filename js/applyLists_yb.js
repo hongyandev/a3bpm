@@ -13,13 +13,13 @@ function getData(yhbh,pageNum) {
                 $.each(res.list,function (index,val){
                     str+="<li>\n";
                     if(val.DanJuLeiXing=='1'){
-                        str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"&yb="+1+"'>"+
+                        str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='applyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(val.DangQianJD)+"&yb="+1+"'>"+
                             "<i><span style='color:#1e90ff' class=\"iconfont\">&#xe721;</span></i>\n";
                     }else if(val.DanJuLeiXing=='2'){
-                        str+="<a class='zxApply' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zxApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"&yb="+1+"'>"+
+                        str+="<a class='zxApply' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zxApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(val.DangQianJD)+"&yb="+1+"'>"+
                             "<i><span style='color:#34dbe4' class=\"iconfont\">&#xe637;</span></i>\n";
                     }else if(val.DanJuLeiXing=='3'){
-                        str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zjApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(encodeURI(val.DangQianJD))+"&yb="+1+"'>"+
+                        str+="<a class='listItem' rwid='"+val.RenWuID+"' jd='"+val.DangQianJD+"' href='zjApplyInformation.html?LiuChengId="+val.LiuChengId+"&BianHao="+val.DanJuBH+"&LeiXing="+val.LeiXing+"&RenWuID="+val.RenWuID+"&DangQianJD="+encodeURI(val.DangQianJD)+"&yb="+1+"'>"+
                             "<i><span style='color:#fe75ff' class=\"iconfont\">&#xe653;</span></i>\n";
                     }/*else{
                             str+="<a href='javascript:void(0)'>"+
@@ -130,62 +130,5 @@ $(function(){
     //getData('BXBH201906130002','XTYH201905300002');
 });
 
-/*dd.ready(function() {
-    var arr = [];
-    console.info(JSON.stringify(_userinfo.YongHuDW));
-    $.each(_userinfo.YongHuDW,function (i,o) {
-       var json = {"id":o.BianHao,"text":o.MingCheng};
-       arr.push(json);
-    });
-   console.info(JSON.stringify(arr));
-    var str="";
-    console.info(_userinfo.DanWeiBH);
-    for(var i = 0;i<arr.length;i++){
-        if(_userinfo.DanWeiBH == arr[i].id){
-            str+="<li dwid='"+arr[i].id+"' class='active'><a href='javascript:void(0)'>"+arr[i].text+"</a></li>";
-        }else{
-            str+="<li dwid='"+arr[i].id+"'><a href='javascript:void(0)'>"+arr[i].text+"</a></li>";
-        }
-    }
-    $(".dw").html(str);
-    dd.biz.navigation.setTitle({
-        title : $(".dw li.active").children().html(),//控制标题文本，空字符串表示显示默认文本
-        onSuccess : function(result) {},
-        onFail : function(err) {}
-    });
-    $(".dw li").on("click",function () {
-        $(this).addClass('active').siblings().removeClass('active');
-        getData($(this).attr('dwid'),_userinfo.YongHuBH);
-        $.fn.cookie('ShenQingDW',$(this).attr('dwid'));
 
-        $("#dialogDefined").hide();
-        dd.biz.navigation.setTitle({
-            title : $(".dw li.active").children().html(),//控制标题文本，空字符串表示显示默认文本
-            onSuccess : function(result) {
-            },
-            onFail : function(err) {}
-        });
-    });
-
-    console.info($(".dw li.active").children().html());
-
-    dd.biz.navigation.setRight({
-        show: true,//控制按钮显示， true 显示， false 隐藏， 默认true
-        control: true,//是否控制点击事件，true 控制，false 不控制， 默认false
-        text: '切换单位',//控制显示文本，空字符串表示显示默认文本
-        onSuccess : function(result) {
-            //如果control为true，则onSuccess将在发生按钮点击事件被回调
-            if($('#dialogDefined').css("display") == "none"){
-                $("#dialogDefined").show();
-                var dialogH = $(".dialogInfo").height();
-                $(".dialogInfo").css("margin-top",-dialogH/2);
-
-            }else{
-                $("#dialogDefined").hide();
-            }
-
-        },
-        onFail : function(err) {}
-    });
-})*/
 
