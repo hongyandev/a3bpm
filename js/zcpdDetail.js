@@ -57,7 +57,12 @@ $(function () {
                             weui.toast('保存成功', {
                                 duration: 3000,
                                 className: 'custom-classname',
+                                callback: function () {
+                                    location.href = "zcpdList.html"
+                                }
                             });
+
+
                         }else{
                             weui.topTips(json.msg)
                         }
