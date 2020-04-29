@@ -415,7 +415,7 @@ config.jsApi({
                   JieSuanXX: [
                       {
                           "JieSuanFS" : "", //结算方式
-                          "JieSuanJE" : "0",  //结算金额
+                          "JieSuanJE" : 0,  //结算金额
                           "JieSuanType": [], //结算类型
                           "Content": [] //结算拓展
                       }
@@ -1073,7 +1073,8 @@ config.jsApi({
                         $.each(self.ZhiChuMX, function (i, v) {
                             $.each(result, function (p, q) {
                                if (v.BianHao === q.ZhiChuMXBH) {
-                                   v.JinE = q.ZhiChuMXZJE;
+                                   if (q.ZhiChuMXZJE)
+                                       v.JinE = q.ZhiChuMXZJE;
                                    if (v.IsShowBZZ === 'true') {  //是否显示标准费用
                                        $.each(v.FeiYongMX, function (u, w) {
                                           $.each(w, function (x, y) {
@@ -1122,8 +1123,10 @@ config.jsApi({
                         .then(res => res.json())
                         .then(json => {
                             loading.hide();
-                            if (json.list)
-                               self.JieSuanXX[0].JieSuanType  = json.list
+                            if (json.list){
+                                self.JieSuanXX[0].JieSuanType  = json.list
+                                self.JieSuanXX[0].JieSuanJE = self.total
+                            }
                             if (self.JieSuanXX[0].JieSuanType.length < 1 && userinfo.debug)
                                 self.JieSuanXX[0].JieSuanType = baseData.jsxx.list
                         })
