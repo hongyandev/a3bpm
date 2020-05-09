@@ -907,38 +907,7 @@ $(function () {
                     "KeYongYE":this.kyye.replace(/,/gi, ''),
                     "HeTongJD":this.formData.htjd,//"合同阶段编号",
                     "FuJianXX":this.formData.FileList,
-                    /*"ZhiChuXX":[//支出明细
-                        {
-                            "ZhiChuMXBH":"支出明细编号",
-                            "JinE":"申请金额",
-                            "BiaoZhuFY":"标准费用",
-                            "FeiYongMX":[
-                                {
-                                    "MingXiBH":"费用明细编号",
-                                    "MingXiZ":[             //明细值
-                                        "值1","值2"
-                                    ]
-                                }
-                            ]
-                        }
-                    ],*/
                     "FuZhuSX":[],
-                    /*"FuZhuSX":[
-                        {
-                            "FuZhuSXBH":"辅助事项编号",
-                            "FuZhuSXZ":"辅助事项值"
-                        }
-                    ],*/
-                    /*"JieSuanXX":[{
-                        "JieSuanFS":"结算方式",
-                        "JieSuanJE":"结算金额",
-                        "Content":[
-                            {
-                                "Key":"结算方式对应的key",
-                                "Value":"填写的值"
-                            }
-                        ]
-                    }]*/
                 };
                 if(this.fzsx.length>0){
                   var fzsxList = this.fzsx.map(item=>{

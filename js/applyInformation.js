@@ -35,12 +35,11 @@ $(function () {
         var idx=$(this).index();
         $(".tabs .tab").eq(idx).show().siblings().hide();
     });
-
     $.ajax({
         type:'post',
         url: Global.baseUrl + '/bpm/dbsp/detail',
         contentType:'application/json',
-        data:JSON.stringify({"BianHao":theRequest.BianHao,"RenWuID":theRequest.RenWuID || '', "LiuChengId":theRequest.LiuChengId || '',"DangQianJD": theRequest.DangQianJD || ''}),
+        data:JSON.stringify({"BianHao":theRequest.BianHao,"RenWuID":theRequest.RenWuID || '', "LiuChengId":theRequest.LiuChengId || '',"DangQianJD": decodeURI(theRequest.DangQianJD) || ''}),
         success:function (res) {
             //console.info(res);
             if(res.msgCode=='1'){
@@ -67,7 +66,7 @@ $(function () {
                                 "     <div class=\"item-content\">\n" +
                                 "          <div class=\"item-media\"><i class=\"icon icon-form-email\"></i></div>\n" +
                                 "          <div class=\"item-inner\">\n" +
-                                "               <a  href='"+val.FuJianLJ+"' download>"+val.FuJianMC+"</a>\n" +
+                                "               <a style='color:#0062ff' href='"+val.FuJianLJ+"' download>"+val.FuJianMC+"</a>\n" +
                                 "          </div>\n" +
                                 "     </div>\n" +
                                 "</li>"
@@ -108,7 +107,7 @@ $(function () {
                 //审批
                 var ysxx="";
                 if(res.YaoSuXX.length>0){
-                    $.erch(res.YaoSuXX,function (index,val) {
+                    $.each(res.YaoSuXX,function (index,val) {
                         ysxx+="<li ysbh='"+val.BianHao+"'>\n" +
                             "      <div class=\"item-content\">\n" +
                             "         <div class=\"item-media\"><i class=\"icon icon-form-gender\"></i></div>\n" +
@@ -116,8 +115,8 @@ $(function () {
                             "              <div class=\"item-title ys label\">"+val.YaoSuMC+"</div>\n" +
                             "              <div class=\"item-input\">\n" +
                             "                 <select class='selYs_"+index+"'>\n";
-                                $.earch(val.YaoSuZ,function (i,o) {
-                                        ysxx+="<option>"+o[i]+"</option>\n" ;
+                                $.each(val.YaoSuZ,function (i,o) {
+                                        ysxx+="<option>"+o+"</option>\n" ;
                                 })
                                 ysxx+="      </select>\n" +
                             "            </div>\n" +
