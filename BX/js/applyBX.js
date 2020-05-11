@@ -790,7 +790,7 @@ config.jsApi({
                                       if (self.ZhiChuMX.length > 1 && userinfo.debug)
                                           self.ZhiChuMX = baseData.zcmx.list
                                       $.each(self.ZhiChuMX, function (j, p) {
-                                          if (p.IsOcr) {
+                                          if (p.IsOcr && p.IsOcr != 0) {
                                               $.each(p.FeiYongMX, function (k, q) {
                                                   q.push({
                                                       'Type': -1,
