@@ -677,3 +677,6 @@ ul,li{list-style: none;}
     height: 80%;
     background: rgb(222,222,222);
 }
+.ysValue li{
+    color:#b2b2b2;
+}
