@@ -3,7 +3,9 @@ define(function () {
         baseUrl: "../source/js",
         paths: {
             "vue": "lib/vue",
-            "dingtalk": "lib/dingtalk.open",
+            "dingbase": "lib/jsapi",
+            "dingtalk": "lib/dingtalk-adapter",
+            // "dingtalk": "lib/dingtalk.open",
             "zepto": "lib/zepto.min",
             "zcookie": "lib/zepto.cookie.min",
             "weui": "lib/weui.min",
@@ -25,6 +27,9 @@ define(function () {
             },
             "config":{
                 deps:["zcookie"]
+            },
+            "dingtalk":{
+                deps:["dingbase"]
             }
         }
     });
