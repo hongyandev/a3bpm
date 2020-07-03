@@ -3,6 +3,7 @@ define(['dingtalk'], function (dd) {
         baseUrl: "http://wxdev.hongyancloud.com:8082",
         h5Url: "http://wxdev.hongyancloud.com:8082",
         appKey: "ding8ywkbdogt114zxlc",
+        gov: true,
         jsApi: function (options) {
             var auth = !(options.jsApiList == null || options.length === 0);
             var self = this;
@@ -10,14 +11,21 @@ define(['dingtalk'], function (dd) {
                 if (res.code === 200) {
                     _config = res.data;
                     if (auth) {
-                        dd.config({
-                            agentId: _config.agentId,
-                            corpId: _config.corpId,
-                            timeStamp: _config.timeStamp,
-                            nonceStr: _config.nonceStr,
-                            signature: _config.signature,
-                            jsApiList: options.jsApiList || []
-                        });
+                        if (gov) {
+                            dd.authConfig({
+                                ticket: _config.ticket,
+                                jsApiList: options.jsApiList || []
+                            })
+                        } else {
+                            dd.config({
+                                agentId: _config.agentId,
+                                corpId: _config.corpId,
+                                timeStamp: _config.timeStamp,
+                                nonceStr: _config.nonceStr,
+                                signature: _config.signature,
+                                jsApiList: options.jsApiList || []
+                            });
+                        }
                     }
                     dd.error(function (err) {
                         alert('dd error:' + JSON.stringify(err));
